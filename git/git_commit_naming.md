@@ -1,14 +1,16 @@
-# Git Commit Naming Conventions
+# Git
+
+Miscellaneous Git stuff.
+
+## Git Commit Naming Conventions
 
 Commit naming conventions stolen from Angular.
 
-## Content
+### Content
 
-```
-<type>(<scope>): <subject>
-```
+    <type>(<scope>): <subject>
 
-### type
+**type**
 
 Must be one of the following:
 
@@ -22,10 +24,14 @@ Must be one of the following:
 - **style:** Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
 - **test:** Adding missing tests or correcting existing tests
 
-### scope
+**scope**
 
 The feature being modified / created / deleted.
 
-### subject
+**subject**
 
 Description of change.
+
+## Git Aliases
+
+    git config --global alias.logline "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit"
