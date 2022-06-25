@@ -9,6 +9,8 @@
 <summary>Table of Contents</summary>
 
 - [About](#about)
+- [Content](#content)
+- [Demo](#demo)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -27,19 +29,23 @@ prod by blvnk.
 
 ### Built With <!-- omit in toc -->
 
+## Content <!-- optional -->
+
+## Demo <!-- optional -->
+
 ## Getting Started
 
-### Prerequisites
+### Prerequisites <!-- optional -->
 
-### Installation
+### Installation <!-- optional -->
 
-### Execution
+### Execution <!-- optional -->
 
-## Usage
+## Usage <!-- optional -->
 
-## Roadmap
+## Roadmap <!-- optional -->
 
-## License
+## License <!-- optional -->
 
 This project is licensed under the terms of the MIT license.
 
