@@ -75,6 +75,7 @@ _NOTE: all commands are executed in home directory unless specified._
 3. enable Panel Edit Mode:
    - select Remove 'Menu', Remove 'Show Desktop', Remove 'Show Group Window List'.
    - move Cinnamenu to the left.
+   - move Calendar to the middle.
 4. disable Panel Edit Mode.
 5. Panel Settings -> modify Panel Height to 22
 6. select Applets -> configure Calendar -> enable Use A Custom Date Format -> type `%B %e %H:%M` into Date Format
@@ -195,6 +196,33 @@ sudo apt install vlc
 1. Download from [code.visualstudio.com/download](https://code.visualstudio.com/download).
 2. `sudo dpkg -i ~/Downloads/<vs_code>.deb`
 3. System Settings -> Preferred Applications -> Plain Text -> Visual Studio Code
+4. install extensions with the following:
+   - ```sh
+     # linting + intellisense
+     code --install-extension christian-kohler.path-intellisense
+     code --install-extension esbenp.prettier-vscode
+     code --install-extension foxundermoon.shell-format
+     code --install-extension ms-python.python
+     code --install-extension ms-python.vscode-pylance
+     code --install-extension njpwerner.autodocstring
+     code --install-extension redhat.vscode-yaml
+     code --install-extension SonarSource.sonarlint-vscode
+     code --install-extension VisualStudioExptTeam.vscodeintellicode
+     code --install-extension yzhang.markdown-all-in-one
+     # git
+     code --install-extension eamodio.gitlens
+     # themes
+     code --install-extension hoovercj.vscode-power-mode
+     code --install-extension PKief.material-icon-theme
+     code --install-extension zhuangtongfa.material-theme
+     # QoL
+     code --install-extension adpyke.codesnap
+     code --install-extension alefragnani.Bookmarks
+     code --install-extension hediet.vscode-drawio
+     code --install-extension marp-team.marp-vscode
+     code --install-extension streetsidesoftware.code-spell-checker
+     code --install-extension wayou.vscode-todo-highlight
+     ```
 
 **qBittorrent**
 
@@ -271,11 +299,11 @@ alias c=clear" \
 
 1. prerequisite: **Install Python 3.9** in [Basics](#basics):
    - for Python 3.9+:
-      - add the following to `bash aliases` in `~/.bashrc`:
-        - ```sh
-          alias python=python3.9
-          alias py=python3.9
-          ```
+     - add the following to `bash aliases` in `~/.bashrc`:
+       - ```sh
+         alias python=python3.9
+         alias py=python3.9
+         ```
 
 **Bash Better Auto-completion**
 
