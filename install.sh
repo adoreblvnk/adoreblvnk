@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 echo "BASICS"
 
 printf "\ngetting latest updates & upgrading . . .\n"
