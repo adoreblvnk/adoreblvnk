@@ -24,7 +24,7 @@ _NOTE: all commands are executed in home directory unless specified._
 
 **Get Latest Updates**
 
-    sudo apt update && sudo apt upgrade --with-new-pkgs
+    sudo apt-get update && sudo apt-get upgrade --with-new-pkgs
 
 **[Optional] Install Drivers**
 
@@ -32,11 +32,11 @@ _NOTE: all commands are executed in home directory unless specified._
 
 **Install Basic Utils**
 
-    sudo apt install apt-transport-https ca-certificates curl software-properties-common
+    sudo apt-get install apt-get-transport-https ca-certificates curl software-properties-common
 
 **Install Git**
 
-    sudo apt install git
+    sudo apt-get install git
     git config --global user.email "<you@example.com>"
     git config --global user.name "<Your Name>"
 
@@ -48,8 +48,8 @@ _NOTE: all commands are executed in home directory unless specified._
 **Install Python 3.9**
 
     sudo add-apt-repository ppa:deadsnakes/ppa
-    sudo apt update
-    sudo apt install python3.9 python3-pip python3.9-venv
+    sudo apt-get update
+    sudo apt-get install python3.9 python3-pip python3.9-venv
 
 1. [Optional] see **Bash Aliases** in [[Optional] QoL (Quality of Life)](#optional-qol-quality-of-life) for adding Python aliases.
 
@@ -101,18 +101,17 @@ cd cinnamon-transparent-panels/ && ./utils.sh install
 **MacOS Theme Set**
 
 ```sh
-# WhiteSur GTK Theme
 git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-cd WhiteSur-gtk-theme/ && ./install.sh
-# WhiteSur Icon Theme
+cd WhiteSur-gtk-theme/ && ./install.sh && cd
 git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
-cd WhiteSur-icon-theme/ && ./install.sh
-# WhiteSur Cursors
+cd WhiteSur-icon-theme/ && ./install.sh && cd
 git clone https://github.com/vinceliuice/WhiteSur-cursors.git
-cd WhiteSur-cursors/ && sudo ./install.sh
+cd WhiteSur-cursors/ && sudo ./install.sh && cd
+git clone https://github.com/vinceliuice/WhiteSur-firefox-theme.git
+cd WhiteSur-firefox-theme/ && ./install.sh && cd
 ```
 
-3. System Settings -> Themes:
+1. System Settings -> Themes:
    - Window Borders -> WhiteSur-Dark
    - Icons -> WhiteSur-dark
    - Controls -> WhiteSur-Dark
@@ -130,7 +129,7 @@ cd WhiteSur-cursors/ && sudo ./install.sh
 
 ```sh
 # https://launchpad.net/plank
-sudo apt install plank
+sudo apt-get install -y plank
 cp -r ~/WhiteSur-gtk-theme/src/other/plank/theme-Light ~/WhiteSur-gtk-theme/src/other/plank/theme-Dark ~/.local/share/plank/themes
 ```
 
@@ -146,7 +145,7 @@ cp -r ~/WhiteSur-gtk-theme/src/other/plank/theme-Light ~/WhiteSur-gtk-theme/src/
 
 ```sh
 # https://gitlab.gnome.org/GNOME/nautilus
-sudo apt install nautilus
+sudo apt-get install nautilus
 ```
 
 1. System Settings -> Preferred Applications -> File manager -> select the 2nd Files from the dropdown
@@ -183,8 +182,8 @@ sudo apt install nautilus
 
 ```sh
 # https://www.videolan.org/vlc/
-sudo apt update
-sudo apt install vlc
+sudo apt-get update
+sudo apt-get install vlc
 ```
 
 1. System Settings -> Preferred Applications:
@@ -228,14 +227,14 @@ sudo apt install vlc
 
 ```sh
 # https://www.qbittorrent.org/
-sudo apt update
-sudo apt install qbittorrent
+sudo apt-get update
+sudo apt-get install qbittorrent
 ```
 
 **Docker**
 
 ```sh
-sudo apt install docker.io docker-compose
+sudo apt-get install docker.io docker-compose
 sudo systemctl start docker
 # or use `sudo systemctl enable --now docker` to start on boot.
 # execute docker commands without using sudo by adding user to docker group.
@@ -245,7 +244,7 @@ sudo usermod -aG docker <user_id>
 **Microsoft Fonts**
 
 ```sh
-sudo apt install ttf-mscorefonts-installer
+sudo apt-get install ttf-mscorefonts-installer
 ```
 
 **Bitwarden**
@@ -262,7 +261,7 @@ sudo apt install ttf-mscorefonts-installer
 
 ```sh
 # https://gitlab.com/OldManProgrammer/unix-tree
-sudo apt install tree
+sudo apt-get install tree
 ```
 
 **Bash Prompt (w/ Git Branch)**
@@ -309,7 +308,7 @@ alias c=clear" \
 
 ```sh
 # file ~/.inputrc should not exist.
-echo \
+echo "
 # bash better auto-completion
 set show-all-if-ambiguous on
 set completion-ignore-case on
@@ -320,22 +319,22 @@ set completion-ignore-case on
 
 ```sh
 # https://github.com/andreafrancia/trash-cli
-sudo apt install trash-cli
+sudo apt-get install trash-cli
 ```
 
 ### [Optional] Fun
 
 **Neofetch**
 
-    sudo apt update
-    sudo apt install neofetch
+    sudo apt-get update
+    sudo apt-get install neofetch
 
 **Asciiquarium**
 
 ```sh
 # https://robobunny.com/projects/asciiquarium/html/
 # https://github.com/YtvwlD/asciiquarium-debian
-sudo add-apt-repository ppa:ytvwld/asciiquarium
+sudo add-apt repository ppa:ytvwld/asciiquarium
 sudo apt update && sudo apt install asciiquarium
 ```
 
