@@ -1,69 +1,80 @@
 #!/bin/bash
-echo "BASICS"
+set -e
 
-printf "\ngetting latest updates & upgrading . . .\n"
-sudo apt-get update && sudo apt-get upgrade -y --with-new-pkgs
-printf "\ninstalling multi-media codecs.\n"
-sudo apt-get install -y mint-meta-codecs
-printf "\ndownloading basic utils.\n"
-sudo apt-get install -y apt-get-transport-https ca-certificates software-properties-common
+# logfile path
+log_file="mint.log"
 
-printf "\ninstalling git.\n"
-sudo apt-get install -y git
-read -p "add Git logline alias (y/n)? " logline_input
-if [ $logline_input == "y" ]; then
-     git config --global alias.logline "log --graph --pretty=format:'%Cred%h%C(yellow)%d %Creset%s %C(bold blue)<%an>'"
-fi
+# colors
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+YELLOW=$(tput setaf 3)
+NORMAL=$(tput sgr0)
 
-printf "\ninstalling python3.0.\n"
-sudo add-apt-repository ppa:deadsnakes/ppa
-sudo apt-get update
-sudo apt-get install python3.9 python3-pip python3.9-venv
+# echo "-----BASICS-----"
 
-printf "\ninstalling Microsoft fonts.\n"
-sudo apt-get install -y ttf-mscorefonts-installer
+# printf "\ngetting latest updates & upgrading . . .\n"
+# sudo apt-get update -q
+# sudo apt-get upgrade -qy --with-new-pkgs
 
+# printf "\ninstalling multi-media codecs.\n"
+# sudo apt-get install -qy mint-meta-codecs
 
-echo "INSTALLING MACOS THEME"
+# printf "\ninstalling git.\n"
+# sudo apt-get install -qy git
+# read -p "add Git logline alias (y/n)? " logline_input
+# if [ $logline_input == "y" ]; then
+#     git config --global alias.logline "log --graph --pretty=format:'%Cred%h%C(yellow)%d %Creset%s %C(bold blue)<%an>'"
+#     echo "added Git logline alias. run with \"git logline\"."
+# fi
 
-printf "\ninstalling transparent taskbar.\n"
-# install polib dependency.
-# https://github.com/izimobil/polib
-pip install polib
-git clone https://github.com/germanfr/cinnamon-transparent-panels.git
-cd cinnamon-transparent-panels/ && ./utils.sh install; cd
+# printf "\ninstalling python3.9.\n"
+# sudo add-apt-repository -y ppa:deadsnakes/ppa
+# sudo apt-get update -q
+# sudo apt-get install -qy python3.9 python3-pip python3.9-venv
 
-printf "\ninstalling WhiteSur GTK theme.\n"
-git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-cd WhiteSur-gtk-theme/ && ./install.sh; cd
-printf "\ninstalling WhiteSur icon theme.\n"
-git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
-cd WhiteSur-icon-theme/ && ./install.sh; cd
-printf "\ninstalling WhiteSur cursors.\n"
-git clone https://github.com/vinceliuice/WhiteSur-cursors.git
-cd WhiteSur-cursors/ && sudo ./install.sh; cd
-printf "\ninstalling WhiteSur Firefox theme.\n"
-git clone https://github.com/vinceliuice/WhiteSur-firefox-theme.git
-cd WhiteSur-firefox-theme/ && ./install.sh; cd
-
-printf "\ninstalling plank dock.\n"
-# https://launchpad.net/plank
-sudo apt-get install -y plank
-plank
-cp -r ~/WhiteSur-gtk-theme/src/other/plank/theme-Light ~/WhiteSur-gtk-theme/src/other/plank/theme-Dark ~/.local/share/plank/themes
-
-printf "\ninstalling Nautilus file manager.\n"
-# https://gitlab.gnome.org/GNOME/nautilus
-sudo apt-get install -y nautilus
+# printf "\ninstalling Microsoft fonts.\n"
+# sudo apt-get install -qy ttf-mscorefonts-installer
 
 
-echo "ENABLE ADDITIONAL CONFIGURATIONS"
+# echo "-----INSTALLING MACOS THEME-----"
 
-read -p "enable additional configurations (eg tree, bash prompt modification, bash auto-completion) (y/n)? " add_conf_input
+# printf "\ninstalling transparent taskbar.\n"
+# # install polib dependency: https://github.com/izimobil/polib
+# pip install polib
+# git clone https://github.com/germanfr/cinnamon-transparent-panels.git
+# cd cinnamon-transparent-panels/ && ./utils.sh install && cd
+
+# printf "\ninstalling WhiteSur GTK theme.\n"
+# git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
+# cd WhiteSur-gtk-theme/ && ./install.sh && cd
+# printf "\ninstalling WhiteSur icon theme.\n"
+# git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
+# cd WhiteSur-icon-theme/ && ./install.sh && cd
+# printf "\ninstalling WhiteSur cursors.\n"
+# git clone https://github.com/vinceliuice/WhiteSur-cursors.git
+# cd WhiteSur-cursors/ && sudo ./install.sh && cd
+# printf "\ninstalling WhiteSur Firefox theme.\n"
+# git clone https://github.com/vinceliuice/WhiteSur-firefox-theme.git
+# cd WhiteSur-firefox-theme/ && ./install.sh && cd
+
+# printf "\ninstalling plank dock.\n"
+# # https://launchpad.net/plank
+# sudo apt-get install -qy plank
+# mkdir -p ~/.local/share/plank/themes
+# cp -r ~/WhiteSur-gtk-theme/src/other/plank/theme-Light ~/WhiteSur-gtk-theme/src/other/plank/theme-Dark ~/.local/share/plank/themes
+
+# printf "\ninstalling Nautilus file manager.\n"
+# # https://gitlab.gnome.org/GNOME/nautilus
+# sudo apt-get install -qy nautilus
+
+
+echo "-----ENABLE ADDITIONAL CONFIGURATIONS-----"
+
+read -p "enable additional configurations (eg bash prompt modification, bash auto-completion) (y/n)? " add_conf_input
 if [ $add_conf_input == "y" ]; then
     printf "\nmodifying bash prompt.\n"
     # downloading git-prompt.sh from https://github.com/git/git & creating ~/.git-prompt file.
-    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
+    curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
     # customising bash prompt.
     echo "
     # bash prompt w/ git branch
@@ -104,31 +115,31 @@ if [ $add_conf_input == "y" ]; then
         set completion-ignore-case on
         " > ~/.inputrc
     else
-        echo "~/.inputrc file exists. adding bash better autocompletion skipped."
+        echo "~/.inputrc file exists. adding bash better autocompletion skipped. please manually the required lines from \`install.sh\`."
     fi
 fi
 
 
-echo "EXTRAS"
+# echo "-----EXTRAS-----"
 
-printf "\ninstalling tree.\n"
-# https://gitlab.com/OldManProgrammer/unix-tree
-sudo apt-get install -y tree
+# printf "\ninstalling tree.\n"
+# # https://gitlab.com/OldManProgrammer/unix-tree
+# sudo apt-get install -qy tree
 
-printf "\ninstalling trash-cli.\n"
-# https://github.com/andreafrancia/trash-cli
-sudo apt-get install -y trash-cli
+# printf "\ninstalling trash-cli.\n"
+# # https://github.com/andreafrancia/trash-cli
+# sudo apt-get install -qy trash-cli
 
-printf "\ninstalling neofetch.\n"
-sudo apt-get install -y neofetch
+# printf "\ninstalling neofetch.\n"
+# sudo apt-get install -qy neofetch
 
 
-echo "APPS"
+# echo "-----APPS-----"
 
-printf "\ninstalling VLC.\n"
-sudo apt-get install -y vlc
+# printf "\ninstalling VLC.\n"
+# sudo apt-get install -qy vlc
 
-printf "\ninstalling VS Code.\n"
-curl -o code.deb -L http://go.microsoft.com/fwlink/?LinkID=760868
-sudo apt install -y ./code.deb
-rm -f code.deb
+# printf "\ninstalling VS Code.\n"
+# curl -s -o code.deb -L http://go.microsoft.com/fwlink/?LinkID=760868
+# sudo dpkg -i code.deb
+# rm -f code.deb
