@@ -69,10 +69,10 @@ echo "-----ENABLE ADDITIONAL CONFIGURATIONS-----"
 read -p "enable additional configurations (eg bash prompt modification, bash auto-completion) (y/n)? " add_conf_input
 if [[ $add_conf_input == "y" ]]; then
     printf "\nmodifying bash prompt.\n"
-    downloading git-prompt.sh from https://github.com/git/git & creating ~/.git-prompt file.
+    # downloading git-prompt.sh from https://github.com/git/git
     curl -s https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o .git-prompt.sh
     chmod ug+x .git-prompt.sh
-    customising bash prompt.
+    # customising bash prompt.
     echo "
 # bash prompt w/ git branch
 source ~/.git-prompt.sh
