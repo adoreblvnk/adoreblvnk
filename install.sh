@@ -77,7 +77,7 @@ if [[ $add_conf_input == "y" ]]; then
 # bash prompt w/ git branch
 source ~/.git-prompt.sh
 #    show chroot if in chroot            work dir  show git branch       prompt symbol
-PS1='\${debian_chroot:+(\$debian_chroot)}\e[0;33m\w\e[1;34m\$(__git_ps1) \e[1;35m\\$  \e[00m'" >> .bashrc
+PS1='\${debian_chroot:+(\$debian_chroot)}\e[0;32m\w\e[1;34m\$(__git_ps1) \e[1;35m\\$\e[00m '" >> .bashrc
 
     printf "\nadding aliases.\n"
     echo \
