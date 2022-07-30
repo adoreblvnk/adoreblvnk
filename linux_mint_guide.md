@@ -346,3 +346,5 @@ terminal
 1
 
 edit -> profile preferences -> general -> show menubar by default in new terminals
+
+https://github.com/GitCredentialManager/git-credential-manager.git
