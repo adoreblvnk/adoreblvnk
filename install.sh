@@ -36,7 +36,7 @@ echo "-----INSTALLING MACOS THEME-----"
 
 printf "\ninstalling transparent taskbar.\n"
 # install polib dependency: https://github.com/izimobil/polib
-pip install polib
+sudo pip install polib
 git clone https://github.com/germanfr/cinnamon-transparent-panels.git
 cd cinnamon-transparent-panels/ && ./utils.sh install && cd
 
