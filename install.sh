@@ -76,12 +76,18 @@ if [[ $add_conf_input == "y" ]]; then
     echo "
 # bash prompt w/ git branch
 source ~/.git-prompt.sh
-#    show chroot if in chroot            work dir  show git branch       prompt symbol
-PS1='\${debian_chroot:+(\$debian_chroot)}\e[0;32m\w\e[1;34m\$(__git_ps1) \e[1;35m\\$\e[00m '" >> .bashrc
+# display chroot name if in chroot
+PS1='\${debian_chroot:+(\$debian_chroot)}'
+# add working directory
+PS1+='\[\033[01;34m\]\w\[\033[00m\]'
+# add git branch if exists
+PS1+='\[\033[01;33m\]$(__git_ps1)\[\033[00m\] '
+# prompt symbol
+PS1+='\[\033[01;35m\]\\$\[\033[00m\] '" >> .bashrc
 
     printf "\nadding aliases.\n"
-    echo \
-"# bash aliases
+    echo "
+# bash aliases
 alias c=clear" >> .bash_aliases
     if [[ -n $(which python3.9) ]]; then
         echo \
