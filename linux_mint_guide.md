@@ -339,3 +339,10 @@ sudo apt update && sudo apt install asciiquarium
 ```
 
 ### [Optional] Hardware
+
+terminal
+
+
+1
+
+edit -> profile preferences -> general -> show menubar by default in new terminals
