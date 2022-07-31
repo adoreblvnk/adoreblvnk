@@ -348,3 +348,7 @@ terminal
 edit -> profile preferences -> general -> show menubar by default in new terminals
 
 https://github.com/GitCredentialManager/git-credential-manager.git
+
+git credential manager + apt install pass
+
+bat (cat replacement with syntax highlighting)

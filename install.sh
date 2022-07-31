@@ -31,6 +31,10 @@ sudo apt-get install -qy python3.9 python3-pip python3.9-venv
 printf "\ninstalling Microsoft fonts.\n"
 sudo apt-get install -qy ttf-mscorefonts-installer
 
+printf "\ninstalling trash-cli.\n"
+# https://github.com/andreafrancia/trash-cli
+sudo apt-get install -qy trash-cli
+
 
 echo "-----INSTALLING MACOS THEME-----"
 
@@ -38,26 +42,31 @@ printf "\ninstalling transparent taskbar.\n"
 # install polib dependency: https://github.com/izimobil/polib
 sudo pip install polib
 git clone https://github.com/germanfr/cinnamon-transparent-panels.git
-cd cinnamon-transparent-panels/ && ./utils.sh install && cd
+cd cinnamon-transparent-panels/ && ./utils.sh install
+cd && trash cinnamon-transparent-panels/
 
 printf "\ninstalling WhiteSur GTK theme.\n"
 git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-cd WhiteSur-gtk-theme/ && ./install.sh && cd
-printf "\ninstalling WhiteSur icon theme.\n"
-git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
-cd WhiteSur-icon-theme/ && ./install.sh && cd
-printf "\ninstalling WhiteSur cursors.\n"
-git clone https://github.com/vinceliuice/WhiteSur-cursors.git
-cd WhiteSur-cursors/ && sudo ./install.sh && cd
-printf "\ninstalling WhiteSur Firefox theme.\n"
-git clone https://github.com/vinceliuice/WhiteSur-firefox-theme.git
-cd WhiteSur-firefox-theme/ && ./install.sh && cd
+cd WhiteSur-gtk-theme/ && ./install.sh
+# install tweaks for Firefox
+./tweaks.sh -f
 
 printf "\ninstalling plank dock.\n"
 # https://launchpad.net/plank
 sudo apt-get install -qy plank
 mkdir -p ~/.local/share/plank/themes
 cp -r ~/WhiteSur-gtk-theme/src/other/plank/theme-Light ~/WhiteSur-gtk-theme/src/other/plank/theme-Dark ~/.local/share/plank/themes
+cd && trash WhiteSur-gtk-theme/
+
+printf "\ninstalling WhiteSur icon theme.\n"
+git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
+cd WhiteSur-icon-theme/ && ./install.sh
+cd && trash WhiteSur-icon-theme/
+
+printf "\ninstalling WhiteSur cursors.\n"
+git clone https://github.com/vinceliuice/WhiteSur-cursors.git
+cd WhiteSur-cursors/ && sudo ./install.sh
+cd && trash WhiteSur-cursors/
 
 printf "\ninstalling Nautilus file manager.\n"
 # https://gitlab.gnome.org/GNOME/nautilus
@@ -86,9 +95,9 @@ PS1+='\[\033[01;33m\]$(__git_ps1)\[\033[00m\] '
 PS1+='\[\033[01;35m\]\\$\[\033[00m\] '" >> .bashrc
 
     printf "\nadding aliases.\n"
-    echo "
-# bash aliases
-alias c=clear" >> .bash_aliases
+    echo \
+"# bash aliases
+alias c=clear" > .bash_aliases
     if [[ -n $(which python3.9) ]]; then
         echo \
 "alias python=python3.9
@@ -116,10 +125,6 @@ printf "\ninstalling tree.\n"
 # https://gitlab.com/OldManProgrammer/unix-tree
 sudo apt-get install -qy tree
 
-printf "\ninstalling trash-cli.\n"
-# https://github.com/andreafrancia/trash-cli
-sudo apt-get install -qy trash-cli
-
 printf "\ninstalling neofetch.\n"
 sudo apt-get install -qy neofetch
 
@@ -132,4 +137,4 @@ sudo apt-get install -qy vlc
 printf "\ninstalling VS Code.\n"
 curl -s -o code.deb -L http://go.microsoft.com/fwlink/?LinkID=760868
 sudo dpkg -i code.deb
-rm -f code.deb
+trash code.deb
