@@ -2,6 +2,23 @@
 
 work in progress
 
+<details>
+<summary>Table of Contents</summary>
+
+- [Pre-Installation](#pre-installation)
+- [Installation](#installation)
+- [Post Installation](#post-installation)
+  - [Basics](#basics)
+  - [MacOS Theme](#macos-theme)
+  - [[Optional] Additional Tweaks](#optional-additional-tweaks)
+- [Utilities & Additional](#utilities--additional)
+  - [Apps](#apps)
+  - [[Optional] QoL (Quality of Life)](#optional-qol-quality-of-life)
+  - [[Optional] Fun](#optional-fun)
+  - [[Optional] Hardware](#optional-hardware)
+- [Credits](#credits)
+</details>
+
 ## Pre-Installation
 
 Linux Mint 20.3 "Una" Cinnamon
@@ -352,3 +369,5 @@ https://github.com/GitCredentialManager/git-credential-manager.git
 git credential manager + apt install pass
 
 bat (cat replacement with syntax highlighting)
+
+## Credits
