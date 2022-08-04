@@ -93,3 +93,9 @@ The script is divided into 5 sections:
 1. Terminal -> Preferences
 2. Under "Colors" group, disable "Use Transparency From System Theme". Enable "Use Transparent Background", & tune transparency to your preference.
 3. Under "General" left panel, disable "Show Menubar by Default in New Terminals".
+
+**[Optional] Fonts**
+
+1. Menu -> Font Selection
+2. Select "DejaVu Sans Book" font for "Default Font", "Desktop Font", "Document Font", "Window Title Font".
+3. Select "DejaVu Sans Mono Book" font for "Monospace Font".
