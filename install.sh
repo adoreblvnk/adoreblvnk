@@ -3,6 +3,7 @@ set -e
 
 echo "checking if script is executed in \$HOME directory."
 if [[ $(pwd) != $(echo $HOME) ]]; then
+    echo "not in \$HOME directory!"
     exit 1
 fi
 
@@ -38,12 +39,12 @@ sudo apt-get install -qy trash-cli
 
 echo "-----INSTALLING MACOS THEME-----"
 
-printf "\ninstalling transparent taskbar.\n"
-# install polib dependency: https://github.com/izimobil/polib
-sudo pip install polib
-git clone https://github.com/germanfr/cinnamon-transparent-panels.git
-cd cinnamon-transparent-panels/ && ./utils.sh install
-cd && trash cinnamon-transparent-panels/
+# printf "\ninstalling transparent taskbar.\n"
+# # install polib dependency: https://github.com/izimobil/polib
+# sudo pip install polib
+# git clone https://github.com/germanfr/cinnamon-transparent-panels.git
+# cd cinnamon-transparent-panels/ && ./utils.sh install
+# cd && trash cinnamon-transparent-panels/
 
 printf "\ninstalling WhiteSur GTK theme.\n"
 git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
