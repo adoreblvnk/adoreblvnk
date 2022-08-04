@@ -4,16 +4,92 @@ This guide has been tested on Linux Mint 20.3 ["Una"](https://www.linuxmint.com/
 
 ## Linux Mint Installation
 
-<details>
-<summary>[Optional] Enable Home Folder Encryption</summary>
+Download Linux Mint ISO from [linuxmint.com](https://linuxmint.com/).
 
-1. In "Who Are You?", enable "Encrypt My Home Folder".
-</details>
+Follow the default installation instructions.
 
-## Post-Installation
+## Tweaks
 
-Download & run `install.sh`. Select your preferred options within the script.
+**Prerequisites:** Finished Linux Mint installation.
 
-Troubleshooting:
+There are 2 parts to the tweaks: running the script & manual configuration. Manual configuration is necessary as I'm too lazy to find the specific gsettings to configure everything via a script.
 
-- If `apt update` returns "Mirror sync in progress", this is a temporary problem on packages.linuxmint.com. Switch to a different mirror in "Software Sources" tool.
+The script is divided into 5 sections:
+
+- Basics
+- MacOS Theme
+- [Optional] Additional Configurations: Pretty prompt, aliases, better autocompletion.
+- Extras: Command line utilities.
+- Apps: VLC, VS Code.
+
+### Executing the Script
+
+1. Launch Firefox.
+2. Download `./install.sh` & place in user home directory (`~`).
+3. Run the following commands. For `./install.sh`, it is recommended to agree to all the optional features, but the script will work fine even if not.
+   - ```sh
+     chmod ug+x ./install.sh
+     ./install.sh
+     ```
+
+### Manual Configurations
+
+*NOTE: The "Windows" key is referred to as the "Super" key.*
+
+*NOTE: Launch the Menu via the Super key.*
+
+**Applying MacOS Theme**
+
+1. Menu -> Themes
+2. Select "WhiteSur-Dark" for "Icons", "Applications", & "Desktop".
+3. Select "WhiteSur-Cursors" for "Mouse Pointer".
+4. Menu -> Windows
+5. Select "Left" for "Buttons Layout".
+6. Under "Alt-Tab" group, select "Coverflow (3D)" for "Alt-Tab Switcher Style".
+
+**Menu Bar**
+
+1. Right-click panel, then move panel to top.
+2. Menu -> Panel. Reduce "Panel Height" to 25.
+3. Menu -> Applets.
+4. Disable "Menu", "Show Desktop", & "Grouped Window List". We will be replacing the default Menu.
+5. Configure "Calendar". Enable "Use a Custom Date Format", & type `%B %e %H:%M` for the "Date Format". 
+6. Under "Download" group, download "Cinnamenu".
+7. Under "Manage" group, enable "Cinnamenu".
+8. Configure "Cinnamenu":
+   - Select "Top" for "Sidebar Location".
+   - Disable "Show Bookmarks and Places", "Show Recent Items".
+   - Under "Search", select "None" for "Web Search Option".
+   - Disable "Web Search Suggestions".
+   - Under "Appearance", enable "Use a Custom Icon".
+   - Decrease "Applications Grid Icon Size (Pixels)" to 32.
+9. Right-click panel, then enable "Panel Edit Mode". Drag Cinnamenu to the left. Disable "Panel Edit Mode".
+
+**Plank (Dock)**
+
+1. Menu -> Plank
+2. Ctrl Right-click the Plank, then select "Theme-Dark" for "Theme".
+3. [Optional] Decrease "Icon Size" to 32.
+4. Under "Docklets" group, drag "Trash" to Plank.
+5. Menu -> Startup Applications. We will be adding Plank to startup.
+6. Add -> Choose Application -> Plank
+7. [Optional] Add your applications to Plank.
+
+**File Menu (Nautilus)**
+
+1. Menu -> Preferred Applications
+2. Select "Nautilus" for "File Manager". If 2 "Files" are shown, select the 2nd option.
+3. [Optional] Configure other preferred applications here.
+
+**Firefox**
+
+1. Firefox -> Application Menu -> More Tools -> Customize Toolbar
+2. Drag "New Tab" button to the right of the address bar.
+3. Uncheck "Title Bar" at the bottom.
+4. [Optional] Additional Firefox customisation.
+
+**[Optional] Terminal Tweaks**
+
+1. Terminal -> Preferences
+2. Under "Colors" group, disable "Use Transparency From System Theme". Enable "Use Transparent Background", & tune transparency to your preference.
+3. Under "General" left panel, disable "Show Menubar by Default in New Terminals".

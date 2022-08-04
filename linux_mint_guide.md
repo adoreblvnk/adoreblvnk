@@ -23,6 +23,8 @@ work in progress
 
 Linux Mint 20.3 "Una" Cinnamon
 
+TODO: linux mint "vanessa" 21
+
 ## Installation
 
 **Multimedia Codecs**

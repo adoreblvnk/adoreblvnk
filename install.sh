@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# run this script in $HOME directory!
+
 set -e
 
 echo "checking if script is executed in \$HOME directory."
@@ -129,6 +132,9 @@ sudo apt-get install -qy tree
 printf "\ninstalling neofetch.\n"
 sudo apt-get install -qy neofetch
 
+printf "\ninstalling batcat (& adding aliases)\n"
+sudo apt-get install -qy bat
+echo "alias cat=\"batcat -pp\"" >> ~/.bash_aliases
 
 echo "-----APPS-----"
 
@@ -138,4 +144,6 @@ sudo apt-get install -qy vlc
 printf "\ninstalling VS Code.\n"
 curl -s -o code.deb -L http://go.microsoft.com/fwlink/?LinkID=760868
 sudo dpkg -i code.deb
+code --install-extension PKief.material-icon-theme
+code --install-extension zhuangtongfa.material-theme
 trash code.deb
