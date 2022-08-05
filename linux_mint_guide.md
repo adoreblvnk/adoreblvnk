@@ -1,375 +1,118 @@
-# Linux Mint Guide
+# Linux Mint Setup Guide
 
-work in progress
+This guide has been tested on Linux Mint 20.3 ["Una"](https://www.linuxmint.com/edition.php?id=292). May work on other versions.
 
-<details>
-<summary>Table of Contents</summary>
+## Linux Mint Installation
 
-- [Pre-Installation](#pre-installation)
-- [Installation](#installation)
-- [Post Installation](#post-installation)
-  - [Basics](#basics)
-  - [MacOS Theme](#macos-theme)
-  - [[Optional] Additional Tweaks](#optional-additional-tweaks)
-- [Utilities & Additional](#utilities--additional)
-  - [Apps](#apps)
-  - [[Optional] QoL (Quality of Life)](#optional-qol-quality-of-life)
-  - [[Optional] Fun](#optional-fun)
-  - [[Optional] Hardware](#optional-hardware)
-- [Credits](#credits)
-</details>
+Download Linux Mint ISO from [linuxmint.com](https://linuxmint.com/).
 
-## Pre-Installation
+Follow the default installation instructions.
 
-Linux Mint 20.3 "Una" Cinnamon
+## Tweaks
 
-TODO: linux mint "vanessa" 21
+**Prerequisites:** Finished Linux Mint installation.
 
-## Installation
+There are 2 parts to the tweaks: running the script & manual configuration. Manual configuration is necessary as I'm too lazy to find the specific gsettings to configure everything via a script.
 
-**Multimedia Codecs**
+The script is divided into 5 sections:
 
-1. select Install Multimedia Codecs.
+- Basics
+- MacOS Theme
+- [Optional] Additional Configurations: Pretty prompt, aliases, better autocompletion.
+- Extras: Command line utilities.
+- Apps: VLC, VS Code.
 
-**Who are you?**
+### Executing the Script
 
-1. [Optional] enable Encrypt My Home Folder.
-
-## Post Installation
-
-### Basics
-
-_NOTE: all commands are executed in home directory unless specified._
-
-**Get Latest Updates**
-
-    sudo apt-get update && sudo apt-get upgrade --with-new-pkgs
-
-**[Optional] Install Drivers**
-
-1. System Settings -> install drivers from Driver Manager
-
-**Install Basic Utils**
-
-    sudo apt-get install apt-get-transport-https ca-certificates curl software-properties-common
-
-**Install Git**
-
-    sudo apt-get install git
-    git config --global user.email "<you@example.com>"
-    git config --global user.name "<Your Name>"
-
-1. [Optional] add Git logline alias:
-   - ```
-     git config --global alias.logline "log --graph --pretty=format:'%Cred%h%C(yellow)%d %Creset%s %C(bold blue)<%an>'"
+1. Launch Firefox.
+2. Download `./install.sh` & place in user home directory (`~`).
+3. Run the following commands. For `./install.sh`, it is recommended to agree to all the optional features, but the script will work fine even if not.
+   - ```sh
+     chmod ug+x ./install.sh
+     ./install.sh
      ```
 
-**Install Python 3.9**
+### Manual Configurations
 
-    sudo add-apt-repository ppa:deadsnakes/ppa
-    sudo apt-get update
-    sudo apt-get install python3.9 python3-pip python3.9-venv
+*NOTE: The "Windows" key is referred to as the "Super" key.*
 
-1. [Optional] see **Bash Aliases** in [[Optional] QoL (Quality of Life)](#optional-qol-quality-of-life) for adding Python aliases.
+*NOTE: Launch the Menu via the Super key.*
 
-### MacOS Theme
+**Applying MacOS Theme**
 
-**Basics**
+1. Menu -> Themes
+2. Select "WhiteSur-Dark" for "Icons", "Applications", & "Desktop".
+3. Select "WhiteSur-Cursors" for "Mouse Pointer".
+4. Menu -> Windows
+5. Select "Left" for "Buttons Layout".
+6. Under "Alt-Tab" group, select "Coverflow (3D)" for "Alt-Tab Switcher Style".
 
-1. right click Panel -> select Move -> move to top
-2. select Applets:
-   - Downloads -> download `cinnamenu` from Search
-   - Manage -> enable Cinnamenu
-   - [Optional] Configure -> Layout And Content:
-     - select Top for Sidebar Location
-     - disable Show Favorites On Sidebar, Show Bookmarks And Places, & Show Recent Items.
-   - [Optional] Search:
-     - select None for Web Search Option
-     - disable Web Search Suggestions
-   - Appearance:
-     - enable Use A Custom Icon.
-     - select Panel Icon -> search for `start-here` -> Select
-     - Panel Text -> type "Application Menu"
-     - Applications Grid Icon Size -> 48
-3. enable Panel Edit Mode:
-   - select Remove 'Menu', Remove 'Show Desktop', Remove 'Show Group Window List'.
-   - move Cinnamenu to the left.
-   - move Calendar to the middle.
-4. disable Panel Edit Mode.
-5. Panel Settings -> modify Panel Height to 22
-6. select Applets -> configure Calendar -> enable Use A Custom Date Format -> type `%B %e %H:%M` into Date Format
-7. System Settings -> Windows:
-   - Buttons Layout -> select Left
-   - Alt-Tab -> Alt-Tab Switcher Style -> Icons Only
+**Menu Bar**
 
-**Transparent Taskbar**
-
-```sh
-# install polib dependency.
-# https://github.com/izimobil/polib
-pip install polib
-git clone https://github.com/germanfr/cinnamon-transparent-panels.git
-cd cinnamon-transparent-panels/ && ./utils.sh install
-```
-
-1. System Settings -> Extensions -> Manage -> enable Transparent Panels
-2. Configure:
-   - Type Of Transparency -> Semi-transparent
-   - enable Use Current Theme Styles.
-
-**MacOS Theme Set**
-
-```sh
-git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
-cd WhiteSur-gtk-theme/ && ./install.sh && cd
-git clone https://github.com/vinceliuice/WhiteSur-icon-theme.git
-cd WhiteSur-icon-theme/ && ./install.sh && cd
-git clone https://github.com/vinceliuice/WhiteSur-cursors.git
-cd WhiteSur-cursors/ && sudo ./install.sh && cd
-git clone https://github.com/vinceliuice/WhiteSur-firefox-theme.git
-cd WhiteSur-firefox-theme/ && ./install.sh && cd
-```
-
-1. System Settings -> Themes:
-   - Window Borders -> WhiteSur-Dark
-   - Icons -> WhiteSur-dark
-   - Controls -> WhiteSur-Dark
-   - Mouse Pointer -> WhiteSur-cursors
-   - Desktop -> WhiteSur-Dark
-
-**WhiteSur Firefox Theme**
-
-    git clone https://github.com/vinceliuice/WhiteSur-firefox-theme.git
-    cd WhiteSur-firefox-theme/ && ./install.sh
-
-1. Firefox -> Customize Toolbar -> drag New Tab into titlebar instead of tab-switcher
+1. Right-click panel, then move panel to top.
+2. Menu -> Panel. Reduce "Panel Height" to 25.
+3. Menu -> Applets.
+4. Disable "Menu", "Show Desktop", & "Grouped Window List". We will be replacing the default Menu.
+5. Configure "Calendar". Enable "Use a Custom Date Format", & type `%B %e %H:%M` for the "Date Format". 
+6. Under "Download" group, download "Cinnamenu".
+7. Under "Manage" group, enable "Cinnamenu".
+8. Configure "Cinnamenu":
+   - Select "Top" for "Sidebar Location".
+   - Disable "Show Bookmarks and Places", "Show Recent Items".
+   - Under "Search", select "None" for "Web Search Option".
+   - Disable "Web Search Suggestions".
+   - Under "Appearance", enable "Use a Custom Icon".
+   - Decrease "Applications Grid Icon Size (Pixels)" to 32.
+9. Right-click panel, then enable "Panel Edit Mode". Drag Cinnamenu to the left. Disable "Panel Edit Mode".
 
 **Plank (Dock)**
 
-```sh
-# https://launchpad.net/plank
-sudo apt-get install -y plank
-cp -r ~/WhiteSur-gtk-theme/src/other/plank/theme-Light ~/WhiteSur-gtk-theme/src/other/plank/theme-Dark ~/.local/share/plank/themes
-```
+1. Menu -> Plank
+2. Ctrl Right-click the Plank, then select "Theme-Dark" for "Theme".
+3. [Optional] Decrease "Icon Size" to 32.
+4. Under "Docklets" group, drag "Trash" to Plank.
+5. Menu -> Startup Applications. We will be adding Plank to startup.
+6. Add -> Choose Application -> Plank
+7. [Optional] Add your applications to Plank.
 
-1. launch Plank.
-2. control + right click dock -> Preferences:
-   - Theme -> select Theme-Dark
-   - Icon Size -> select 32
-   - enable Icon Zoom -> select 115
-   - Docklets -> drag Trash to bottom right
-3. System Settings -> Startup Applications -> Add -> Choose Application -> select Plank
+**File Menu (Nautilus)**
 
-**Nautilus (File Manager)**
+1. Menu -> Preferred Applications
+2. Select "Nautilus" for "File Manager". If 2 "Files" are shown, select the 2nd option.
+3. [Optional] Configure other preferred applications here.
 
-```sh
-# https://gitlab.gnome.org/GNOME/nautilus
-sudo apt-get install nautilus
-```
+**Firefox**
 
-1. System Settings -> Preferred Applications -> File manager -> select the 2nd Files from the dropdown
+1. Firefox -> Application Menu -> More Tools -> Customize Toolbar
+2. Drag "New Tab" button to the right of the address bar.
+3. Uncheck "Title Bar" at the bottom.
+4. [Optional] Additional Firefox customisation.
 
-### [Optional] Additional Tweaks
+**[Optional] Terminal Tweaks**
 
-**DejaVu Font**
+1. Terminal -> Preferences
+2. Under "Colors" group, disable "Use Transparency From System Theme". Enable "Use Transparent Background", & tune transparency to your preference.
+3. Under "General" left panel, disable "Show Menubar by Default in New Terminals".
 
-1. System Settings -> Font Selection:
-   - Default Font -> DejaVu Sans Book
-   - Desktop Font -> DejaVu Sans Book
-   - Monospace Font -> DejaVu Sans Mono Book
-   - Window Title Font -> DejaVu Sans Book
+**[Optional] Fonts**
 
-**GTile**
+1. Menu -> Font Selection
+2. Select "DejaVu Sans Book" font for "Default Font", "Desktop Font", "Document Font", "Window Title Font".
+3. Select "DejaVu Sans Mono Book" font for "Monospace Font".
 
-1. System Settings -> Extensions -> Download -> gTile
-2. Manage -> enable gTile
-3. Configure -> Hotkeys
-   - Global Hotkey For gTile -> Super+W for activator
-4. Layout:
-   - |       Layout        | Columns | Rows |
-     | :-----------------: | :-----: | :--: |
-     | Layout For Button 1 |    1    |  1   |
-     | Layout For Button 2 |  1, 1   |  1   |
-     | Layout For Button 3 | 1, 1, 1 |  1   |
-     | Layout For Button 4 |  1, 1   | 1, 1 |
+**[Optional] gTile (Window Tiler)**
 
-## Utilities & Additional
+1. Download `gTile_config.json`.
+2. Menu -> Extensions -> "Download" group
+3. Download & enable gTile.
+4. Click "More Options", then "Import From a File", & select `gTile_config.json`.
 
-### Apps
+TODO:
 
-**VLC**
-
-```sh
-# https://www.videolan.org/vlc/
-sudo apt-get update
-sudo apt-get install vlc
-```
-
-1. System Settings -> Preferred Applications:
-   - Music -> VLC Media Player
-   - Video -> VLC Media Player
-
-**VS Code**
-
-1. Download from [code.visualstudio.com/download](https://code.visualstudio.com/download).
-2. `sudo dpkg -i ~/Downloads/<vs_code>.deb`
-3. System Settings -> Preferred Applications -> Plain Text -> Visual Studio Code
-4. install extensions with the following:
-   - ```sh
-     # linting + intellisense
-     code --install-extension christian-kohler.path-intellisense
-     code --install-extension esbenp.prettier-vscode
-     code --install-extension foxundermoon.shell-format
-     code --install-extension ms-python.python
-     code --install-extension ms-python.vscode-pylance
-     code --install-extension njpwerner.autodocstring
-     code --install-extension redhat.vscode-yaml
-     code --install-extension SonarSource.sonarlint-vscode
-     code --install-extension VisualStudioExptTeam.vscodeintellicode
-     code --install-extension yzhang.markdown-all-in-one
-     # git
-     code --install-extension eamodio.gitlens
-     # themes
-     code --install-extension hoovercj.vscode-power-mode
-     code --install-extension PKief.material-icon-theme
-     code --install-extension zhuangtongfa.material-theme
-     # QoL
-     code --install-extension adpyke.codesnap
-     code --install-extension alefragnani.Bookmarks
-     code --install-extension hediet.vscode-drawio
-     code --install-extension marp-team.marp-vscode
-     code --install-extension streetsidesoftware.code-spell-checker
-     code --install-extension wayou.vscode-todo-highlight
-     ```
-
-**qBittorrent**
-
-```sh
-# https://www.qbittorrent.org/
-sudo apt-get update
-sudo apt-get install qbittorrent
-```
-
-**Docker**
-
-```sh
-sudo apt-get install docker.io docker-compose
-sudo systemctl start docker
-# or use `sudo systemctl enable --now docker` to start on boot.
-# execute docker commands without using sudo by adding user to docker group.
-sudo usermod -aG docker <user_id>
-```
-
-**Microsoft Fonts**
-
-```sh
-sudo apt-get install ttf-mscorefonts-installer
-```
-
-**Bitwarden**
-
-1. download the AppImage from [bitwarden.com](https://bitwarden.com/download/).
-
-**Discord**
-
-1. download from [discord.com](https://discord.com/download) & install.
-
-### [Optional] QoL (Quality of Life)
-
-**Tree**
-
-```sh
-# https://gitlab.com/OldManProgrammer/unix-tree
-sudo apt-get install tree
-```
-
-**Bash Prompt (w/ Git Branch)**
-
-```sh
-# downloading git-prompt.sh from https://github.com/git/git & creating ~/.git-prompt file.
-curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh > ~/.git-prompt.sh
-# customising bash prompt.
-echo "
-# bash prompt w/ git branch
-source ~/.git-prompt.sh
-PS1='${debian_chroot:+($debian_chroot)}'
-# add username
-PS1+='\e[1;32m\u'
-# add working directory
-PS1+=' \e[0;33m\w'
-# add git branch if exists
-PS1+='\e[1;34m\$(__git_ps1)'
-# prompt symbol
-PS1+=' \e[1;35m\\$'
-# switch back to white for command
-PS1+=' \e[00m'" \
->> ~/.bashrc && source ~/.bashrc
-```
-
-**Bash Aliases**
-
-```sh
-echo "
-# bash aliases
-alias c=clear" \
->> ~/.bashrc
-```
-
-1. prerequisite: **Install Python 3.9** in [Basics](#basics):
-   - for Python 3.9+:
-     - add the following to `bash aliases` in `~/.bashrc`:
-       - ```sh
-         alias python=python3.9
-         alias py=python3.9
-         ```
-
-**Bash Better Auto-completion**
-
-```sh
-# file ~/.inputrc should not exist.
-echo "
-# bash better auto-completion
-set show-all-if-ambiguous on
-set completion-ignore-case on
-" > ~/.inputrc
-```
-
-**trash-cli**
-
-```sh
-# https://github.com/andreafrancia/trash-cli
-sudo apt-get install trash-cli
-```
-
-### [Optional] Fun
-
-**Neofetch**
-
-    sudo apt-get update
-    sudo apt-get install neofetch
-
-**Asciiquarium**
-
-```sh
-# https://robobunny.com/projects/asciiquarium/html/
-# https://github.com/YtvwlD/asciiquarium-debian
-sudo add-apt repository ppa:ytvwld/asciiquarium
-sudo apt update && sudo apt install asciiquarium
-```
-
-### [Optional] Hardware
-
-terminal
-
-
-1
-
-edit -> profile preferences -> general -> show menubar by default in new terminals
-
-https://github.com/GitCredentialManager/git-credential-manager.git
-
-git credential manager + apt install pass
-
-bat (cat replacement with syntax highlighting)
-
-## Credits
+- Add Discord:
+  - ```sh
+    printf "\ninstalling Discord.\n"
+    wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+    sudo dpkg -i ./discord.deb
+    ```
+  - Returns dependency error.
