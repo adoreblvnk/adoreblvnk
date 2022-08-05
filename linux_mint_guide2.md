@@ -99,3 +99,20 @@ The script is divided into 5 sections:
 1. Menu -> Font Selection
 2. Select "DejaVu Sans Book" font for "Default Font", "Desktop Font", "Document Font", "Window Title Font".
 3. Select "DejaVu Sans Mono Book" font for "Monospace Font".
+
+**[Optional] gTile (Window Tiler)**
+
+1. Download `gTile_config.json`.
+2. Menu -> Extensions -> "Download" group
+3. Download & enable gTile.
+4. Click "More Options", then "Import From a File", & select `gTile_config.json`.
+
+TODO:
+
+- Add Discord:
+  - ```sh
+    printf "\ninstalling Discord.\n"
+    wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+    sudo dpkg -i ./discord.deb
+    ```
+  - Returns dependency error.
