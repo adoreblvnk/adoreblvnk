@@ -14,7 +14,7 @@ echo "-----BASICS-----"
 
 printf "\ngetting latest updates & upgrading . . .\n"
 sudo apt-get update -q
-sudo apt-get upgrade -qqy --with-new-pkgs
+sudo apt-get upgrade -qy --with-new-pkgs
 
 printf "\ninstalling multi-media codecs.\n"
 sudo apt-get install -qy mint-meta-codecs
