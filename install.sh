@@ -14,7 +14,7 @@ echo "-----BASICS-----"
 
 printf "\ngetting latest updates & upgrading . . .\n"
 sudo apt-get update -q
-sudo apt-get upgrade -qy --with-new-pkgs
+sudo apt-get upgrade -qqy --with-new-pkgs
 
 printf "\ninstalling multi-media codecs.\n"
 sudo apt-get install -qy mint-meta-codecs
@@ -41,13 +41,6 @@ sudo apt-get install -qy trash-cli
 
 
 echo "-----INSTALLING MACOS THEME-----"
-
-# printf "\ninstalling transparent taskbar.\n"
-# # install polib dependency: https://github.com/izimobil/polib
-# sudo pip install polib
-# git clone https://github.com/germanfr/cinnamon-transparent-panels.git
-# cd cinnamon-transparent-panels/ && ./utils.sh install
-# cd && trash cinnamon-transparent-panels/
 
 printf "\ninstalling WhiteSur GTK theme.\n"
 git clone https://github.com/vinceliuice/WhiteSur-gtk-theme.git
@@ -143,7 +136,14 @@ sudo apt-get install -qy vlc
 
 printf "\ninstalling VS Code.\n"
 curl -s -o code.deb -L http://go.microsoft.com/fwlink/?LinkID=760868
-sudo dpkg -i code.deb
+sudo apt-get install -qy ./code.deb
 code --install-extension PKief.material-icon-theme
 code --install-extension zhuangtongfa.material-theme
 trash code.deb
+
+printf "\ninstalling Discord.\n"
+wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+sudo apt-get install -qy ./discord.deb
+trash discord.deb
+
+echo "-----FINISHED SUCCESSFULLY-----"
