@@ -9,7 +9,6 @@
 <summary>Table of Contents</summary>
 
 - [About](#about)
-- [Content](#content)
 - [Demo](#demo)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
@@ -28,8 +27,6 @@ a project template for personal use.
 prod by blvnk.
 
 ### Built With <!-- omit in toc -->
-
-## Content <!-- optional -->
 
 ## Demo <!-- optional -->
 

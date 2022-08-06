@@ -2,15 +2,17 @@
 
 This guide has been tested on Linux Mint 20.3 ["Una"](https://www.linuxmint.com/edition.php?id=292). May work on other versions.
 
-## Linux Mint Installation
+## About
 
-Download Linux Mint ISO from [linuxmint.com](https://linuxmint.com/).
+## Getting Started
 
-Follow the default installation instructions.
+### Prerequisites <!-- optional -->
 
-## Tweaks
+**Installed Linux Mint 20.3+**
 
-**Prerequisites:** Finished Linux Mint installation.
+Download Linux Mint ISO from [linuxmint.com](https://linuxmint.com/). Follow the default installation instructions.
+
+## Usage <!-- optional -->
 
 There are 2 parts to the tweaks: running the script & manual configuration. Manual configuration is necessary as I'm too lazy to find the specific gsettings to configure everything via a script.
 
