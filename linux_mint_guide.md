@@ -90,11 +90,15 @@ The script is divided into 5 sections:
 3. Uncheck "Title Bar" at the bottom.
 4. [Optional] Additional Firefox customisation.
 
-**[Optional] Terminal Tweaks**
+**[Optional] Terminator**
 
-1. Terminal -> Preferences
-2. Under "Colors" group, disable "Use Transparency From System Theme". Enable "Use Transparent Background", & tune transparency to your preference.
-3. Under "General" left panel, disable "Show Menubar by Default in New Terminals".
+1. Menu -> Terminator
+2. Right-click for context menu, then select "Preferences".
+3. Select "Profiles" group. Disable "Show Titlebar".
+4. Select "Background" subgroup. Enable "Transparent Background", & modify the transparency till desired.
+5. Select "Scrolling" subgroup. Select "Disabled" for "Scrollbar is:".
+6. Menu -> Preferred Applications
+7. Select "Terminator" for "Terminal".
 
 **[Optional] Fonts**
 
@@ -108,13 +112,3 @@ The script is divided into 5 sections:
 2. Menu -> Extensions -> "Download" group
 3. Download & enable gTile.
 4. Click "More Options", then "Import From a File", & select `gTile_config.json`.
-
-TODO:
-
-- Add Discord:
-  - ```sh
-    printf "\ninstalling Discord.\n"
-    wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
-    sudo dpkg -i ./discord.deb
-    ```
-  - Returns dependency error.
