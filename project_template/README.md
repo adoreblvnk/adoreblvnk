@@ -4,6 +4,9 @@
     <p>
       Description.
     </p> <!-- Description -->
+    <p>
+      Built With: •
+    </p> <!-- Built With -->
 </div>
 
 ---
@@ -28,8 +31,6 @@
 a project template for personal use.
 
 prod by blvnk.
-
-### Built With <!-- omit in toc -->
 
 ## Demo <!-- optional -->
 
