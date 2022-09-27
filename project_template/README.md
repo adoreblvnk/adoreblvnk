@@ -32,21 +32,21 @@ a project template for personal use.
 
 prod by blvnk.
 
-## Demo <!-- optional -->
+## Demo
 
 ## Getting Started
 
-### Prerequisites <!-- optional -->
+### Prerequisites
 
-### Installation <!-- optional -->
+### Installation
 
-### Execution <!-- optional -->
+### Execution
 
-## Usage <!-- optional -->
+## Usage
 
-## Roadmap <!-- optional -->
+## Roadmap
 
-## License <!-- optional -->
+## License
 
 This project is licensed under the terms of the MIT license.
 
