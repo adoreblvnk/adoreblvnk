@@ -1,4 +1,4 @@
-# C:\Users\<username>\\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+# C:\Users\<username>\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
 
 $isAdministrator = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]'Administrator')
 function Prompt {
