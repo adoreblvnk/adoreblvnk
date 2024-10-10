@@ -1,4 +1,4 @@
-programmer, CLI user, software architect. still patterning the workrate.
+architect, CLI & Linux dev. still patterning the workrate.
 
 ## contact
 
