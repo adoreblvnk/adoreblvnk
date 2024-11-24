@@ -1,4 +1,4 @@
-architect, CLI & Linux dev. still patterning the workrate.
+pattern the workrate | architect, CLI & Linux dev
 
 ## contact
 
