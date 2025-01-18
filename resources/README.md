@@ -10,26 +10,37 @@
 <details>
 <summary>Table of Contents</summary>
 
-- [Git](#git)
-  - [Commit message convention](#commit-message-convention)
-  - [Semantic Versioning](#semantic-versioning)
+- [Tools](#tools)
+  - [Git](#git)
+    - [Commit Message Format: Angular's Commit Message Format](#commit-message-format-angulars-commit-message-format)
+    - [Semantic Versioning: Semantic Versioning](#semantic-versioning-semantic-versioning)
+- [Others](#others)
+  - [Project Template: adore\_blvnk's Project Template](#project-template-adore_blvnks-project-template)
 </details>
 
-## Git
+## Tools
 
-### [Commit message convention](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#type)
+### Git
 
-To adhere strictly to for all Git commits.
+#### Commit Message Format: [Angular's Commit Message Format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md)
 
-### [Semantic Versioning](https://semver.org/#is-v123-a-semantic-version)
+To adhere strictly to for all Git commits, and "type" field must be strictly be in [types](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#type).
 
-To adhere strictly to for all releases, especially for the [git tag](https://git-scm.com/docs/git-tag) command in the following format:
+#### Semantic Versioning: [Semantic Versioning](https://semver.org/#is-v123-a-semantic-version)
+
+To adhere strictly to for all releases. Note that the "v" prefix is still used for [git tag](https://git-scm.com/docs/git-tag) names in the following format:
 
 ```bash
 git tag v1.2.3 -m "Release version 1.2.3"
 ```
 
-Each release is to be documented in CHANGELOG.md, which is in the format of [keep a changelog](https://keepachangelog.com/en/1.1.0).
+Each release is to be documented in CHANGELOG, which is in the format of [keep a changelog](https://keepachangelog.com/en/1.1.0).
+
+## Others
+
+### Project Template: [adore_blvnk's Project Template](./../project_template/README.md)
+
+Omit sections from README as necessary.
 
 ## Credits <!-- omit in toc -->
 
