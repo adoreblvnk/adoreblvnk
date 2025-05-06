@@ -32,7 +32,7 @@
   - [OS Post-install](#os-post-install)
     - [🟢 Linux (Debian / Ubuntu)](#-linux-debian--ubuntu)
     - [🟢 Windows](#-windows)
-    - [🟢 Android (Pixel)](#-android-pixel)
+    - [🟢 Android](#-android)
   - [Miscellaneous](#miscellaneous-1)
     - [🟢 Password Manager Vault Structure](#-password-manager-vault-structure)
 </details>
@@ -51,9 +51,13 @@ In this document, 🔴 = Standards, 🟠 = Best Practices, and 🟢 = Guidelines
 
 ### [Git](https://git-scm.com)
 
-#### 🔴 [Commit Message Format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md) by Angular
+#### 🔴 [Commit Message Format](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md) by Angular
 
-"type" field must be strictly be in [types](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#type).
+"type" field must be strictly be in [types](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md#type).
+
+**Pull Request Naming Convention**
+
+PR commits should be [squashed and merged](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits) to create a single meaningful clean commit. With this, the PR name is the commit message, & should follow [Commit Message Format](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md).
 
 #### 🟠 [Conventional Branch](https://conventional-branch.github.io)
 
@@ -133,7 +137,7 @@ A project template for personal use. Contains a README and CHANGELOG. Omit secti
 
 [cozydot](https://github.com/adoreblvnk/cozydot) supports WSL too.
 
-#### 🟢 Android (Pixel)
+#### 🟢 Android
 
 ### Miscellaneous
 
