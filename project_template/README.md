@@ -1,5 +1,5 @@
 <div align="center"> <!-- use align as CSS is not allowed on GitHub markdown https://github.com/orgs/community/discussions/22728 -->
-  <img src="<logo_path>" width=100> <!-- Logo -->
+  <img src="<logo_path>" alt="" width=100> <!-- Logo -->
   <h1>Project Template</h1> <!-- Project Name -->
   <p> <!-- Description -->
     Description.

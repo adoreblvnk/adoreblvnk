@@ -14,6 +14,7 @@
 - [Software Development](#software-development)
   - [Git](#git)
     - [🔴 Commit Message Format by Angular](#-commit-message-format-by-angular)
+    - [🟠 Conventional Branch](#-conventional-branch)
     - [🔴 Semantic Versioning](#-semantic-versioning)
   - [JavaScript](#javascript)
     - [🟠 Prettier Code Formatter](#-prettier-code-formatter)
@@ -44,7 +45,7 @@
 2. Best Practices. The definition for both "Best Practice" and "Guideline" is best defined in this [W3C email](https://lists.w3.org/Archives/Public/public-ldp-wg/2013Jul/0006.html), although Wikipedia definitions for "[Best Practice](https://wikipedia.org/wiki/Coding_best_practices)" and "[Guideline](https://wikipedia.org/wiki/Guideline)" are also accepted for clarification purposes. Best Practices are methods or techniques that consistently show results superior to those achieved with other means and are used as a benchmark. Best Practices are **opinionated**, in other words, they are specific, and if not applicable to your use case, developer discretion can be applied on whether Best Practices should be adhered to.
 3. Guidelines. A Guideline is a tip, a trick, a note, a suggestion, or answer to a frequently asked question. These are personal tips that **can be ignored** if a better implementation exists. Hence, guidelines can change frequently.
 
-In this document, 🔴 = Standards, 🟠 = Best Practices, and 🟢 = Guidelines. 
+In this document, 🔴 = Standards, 🟠 = Best Practices, and 🟢 = Guidelines.
 
 ## Software Development
 
@@ -53,6 +54,12 @@ In this document, 🔴 = Standards, 🟠 = Best Practices, and 🟢 = Guidelines
 #### 🔴 [Commit Message Format](https://github.com/angular/angular/blob/main/CONTRIBUTING.md) by Angular
 
 "type" field must be strictly be in [types](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#type).
+
+#### 🟠 [Conventional Branch](https://conventional-branch.github.io)
+
+Follow [Branch Naming Prefixes](https://conventional-branch.github.io/#branch-naming-prefixes) when creating branches.
+
+When contributing to other projects & creating PRs, if the project has another branch naming specification, use that.
 
 #### 🔴 [Semantic Versioning](https://semver.org)
 
@@ -120,7 +127,7 @@ A project template for personal use. Contains a README and CHANGELOG. Omit secti
 
 #### 🟢 Linux (Debian / Ubuntu)
 
-[cozydot](https://github.com/adoreblvnk/cozydot) is an automated post-install, update, & config (dotfile) manager for Linux. In the context of consistency, cozydot maintains consistency between multiple systems & ensures reliability by tracking changes made, thus reducing potential errors while setting up. 
+[cozydot](https://github.com/adoreblvnk/cozydot) is an automated post-install, update, & config (dotfile) manager for Linux. In the context of consistency, cozydot maintains consistency between multiple systems & ensures reliability by tracking changes made, thus reducing potential errors while setting up.
 
 #### 🟢 Windows
 
