@@ -21,6 +21,7 @@
     - [🟠 Go Best Practices](#-go-best-practices)
   - [JavaScript](#javascript)
     - [🟠 Prettier Code Formatter](#-prettier-code-formatter)
+    - [🟠 JSDoc](#-jsdoc)
   - [Python](#python)
     - [🟠 autopep8 for PEP 8](#-autopep8-for-pep-8)
   - [Rust](#rust)
@@ -97,6 +98,10 @@ Google's official [Go Style Guide](https://google.github.io/styleguide/go/guide)
 #### 🟠 [Prettier](https://prettier.io) Code Formatter
 
 JavaScript unfortunately does not have a definitive style guide. However, [Prettier](https://prettier.io), the most popular formatter, loosely documents its choices when it comes to formatting in its [rationale](https://prettier.io/docs/en/rationale).
+
+#### 🟠 [JSDoc](https://jsdoc.app)
+
+API documentation generator for JavaScript via code comments. Imperative to document classes, methods, functions & constants (configs). 
 
 ### [Python](https://python.org)
 
