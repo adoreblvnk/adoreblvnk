@@ -15,6 +15,7 @@
   - [Git](#git)
     - [🔴 Commit Message Format by Angular](#-commit-message-format-by-angular)
     - [🟠 Conventional Branch](#-conventional-branch)
+    - [🟠 gitignore by GitHub](#-gitignore-by-github)
     - [🔴 Semantic Versioning](#-semantic-versioning)
   - [Go](#go)
     - [🔴 gofmt for Go Style Guide](#-gofmt-for-go-style-guide)
@@ -73,6 +74,10 @@ Follow [Branch Naming Prefixes](https://conventional-branch.github.io/#branch-na
 
 When contributing to other projects & creating PRs, if the project has another branch naming specification, use that.
 
+#### 🟠 [gitignore](https://github.com/github/gitignore) by GitHub
+
+GitHub provides gitignore templates for each OS, language, & version. For monorepos / monoliths, place each gitignore inside each project.
+
 #### 🔴 [Semantic Versioning](https://semver.org)
 
 "v" prefix is still used for [git tag](https://git-scm.com/docs/git-tag) names in the following format as documented in [Is "v1.2.3" a semantic version?](https://semver.org/#is-v123-a-semantic-version):
@@ -81,7 +86,9 @@ When contributing to other projects & creating PRs, if the project has another b
 git tag v1.2.3 -m "Release version 1.2.3"
 ```
 
-Each release is to be documented in CHANGELOG, which is in the format of [keep a changelog](https://keepachangelog.com/en/1.1.0).
+**[keep a changelog](https://keepachangelog.com/en/1.1.0)**
+
+Document notable changes between each release inside CHANGELOG.md, which is in the format of [keep a changelog](https://keepachangelog.com/en/1.1.0).
 
 ### [Go](https://go.dev)
 
@@ -101,7 +108,7 @@ JavaScript unfortunately does not have a definitive style guide. However, [Prett
 
 #### 🟠 [JSDoc](https://jsdoc.app)
 
-API documentation generator for JavaScript via code comments. Imperative to document classes, methods, functions & constants (configs). 
+API documentation generator for JavaScript via code comments. Imperative to document classes, methods, functions & constants (configs).
 
 ### [Python](https://python.org)
 
