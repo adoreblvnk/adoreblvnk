@@ -22,6 +22,7 @@
   - [Execution](#execution)
 - [Usage](#usage)
 - [Roadmap](#roadmap)
+- [Changelog](#changelog)
 </details>
 
 ## About
@@ -43,6 +44,10 @@ prod by blvnk.
 ## Usage
 
 ## Roadmap
+
+## Changelog
+
+See [CHANGELOG](CHANGELOG.md) for details.
 
 ## License <!-- omit in toc -->
 
