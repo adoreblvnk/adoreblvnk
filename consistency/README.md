@@ -16,18 +16,21 @@
     - [🔴 Commit Message Format by Angular](#-commit-message-format-by-angular)
     - [🟠 Conventional Branch](#-conventional-branch)
     - [🟠 gitignore by GitHub](#-gitignore-by-github)
+    - [🔴 keep a changelog](#-keep-a-changelog)
     - [🔴 Semantic Versioning](#-semantic-versioning)
   - [Go](#go)
-    - [🔴 gofmt for Go Style Guide](#-gofmt-for-go-style-guide)
     - [🟠 Go Best Practices](#-go-best-practices)
+    - [🔴 gofmt for Go Style Guide](#-gofmt-for-go-style-guide)
+    - [🟢 Standard Go Project Layout](#-standard-go-project-layout)
   - [JavaScript](#javascript)
-    - [🟠 Prettier Code Formatter](#-prettier-code-formatter)
     - [🟠 JSDoc](#-jsdoc)
+    - [🟠 Prettier Code Formatter](#-prettier-code-formatter)
   - [Python](#python)
     - [🟠 autopep8 for PEP 8](#-autopep8-for-pep-8)
+    - [🟠 uv Python Package Manager](#-uv-python-package-manager)
   - [Rust](#rust)
-    - [🔴 rustfmt Formatter](#-rustfmt-formatter)
     - [🔴 Clippy Linter](#-clippy-linter)
+    - [🔴 rustfmt Formatter](#-rustfmt-formatter)
   - [Shell](#shell)
     - [🟢 ShellCheck](#-shellcheck)
     - [🔴 shfmt for Shell Style Guide](#-shfmt-for-shell-style-guide)
@@ -78,6 +81,10 @@ When contributing to other projects & creating PRs, if the project has another b
 
 GitHub provides gitignore templates for each OS, language, & version. For monorepos / monoliths, place each gitignore inside each project.
 
+#### 🔴 [keep a changelog](https://keepachangelog.com/en/1.1.0)
+
+Document notable changes between each release inside CHANGELOG.md, which is in the format of [keep a changelog](https://keepachangelog.com/en/1.1.0).
+
 #### 🔴 [Semantic Versioning](https://semver.org)
 
 "v" prefix is still used for [git tag](https://git-scm.com/docs/git-tag) names in the following format as documented in [Is "v1.2.3" a semantic version?](https://semver.org/#is-v123-a-semantic-version):
@@ -86,29 +93,29 @@ GitHub provides gitignore templates for each OS, language, & version. For monore
 git tag v1.2.3 -m "Release version 1.2.3"
 ```
 
-**[keep a changelog](https://keepachangelog.com/en/1.1.0)**
-
-Document notable changes between each release inside CHANGELOG.md, which is in the format of [keep a changelog](https://keepachangelog.com/en/1.1.0).
-
 ### [Go](https://go.dev)
-
-#### 🔴 [gofmt](https://pkg.go.dev/cmd/gofmt) for [Go Style Guide](https://google.github.io/styleguide/go/guide)
-
-Google's official [Go Style Guide](https://google.github.io/styleguide/go/guide) is enforced by [gofmt](https://pkg.go.dev/cmd/gofmt), the official Go formatter.
 
 #### 🟠 [Go Best Practices](https://google.github.io/styleguide/go/best-practices)
 
 [Go Best Practices](https://google.github.io/styleguide/go/best-practices) documents some of the patterns that have evolved over time that solve common problems, read well, and are robust to code maintenance needs.
 
+#### 🔴 [gofmt](https://pkg.go.dev/cmd/gofmt) for [Go Style Guide](https://google.github.io/styleguide/go/guide)
+
+Google's official [Go Style Guide](https://google.github.io/styleguide/go/guide) is enforced by [gofmt](https://pkg.go.dev/cmd/gofmt), the official Go formatter.
+
+#### 🟢 [Standard Go Project Layout](https://github.com/golang-standards/project-layout)
+
+Basic layout for medium to complex Go application projects.
+
 ### JavaScript
-
-#### 🟠 [Prettier](https://prettier.io) Code Formatter
-
-JavaScript unfortunately does not have a definitive style guide. However, [Prettier](https://prettier.io), the most popular formatter, loosely documents its choices when it comes to formatting in its [rationale](https://prettier.io/docs/en/rationale).
 
 #### 🟠 [JSDoc](https://jsdoc.app)
 
 API documentation generator for JavaScript via code comments. Imperative to document classes, methods, functions & constants (configs).
+
+#### 🟠 [Prettier](https://prettier.io) Code Formatter
+
+JavaScript unfortunately does not have a definitive style guide. However, [Prettier](https://prettier.io), the most popular formatter, loosely documents its choices when it comes to formatting in its [rationale](https://prettier.io/docs/en/rationale).
 
 ### [Python](https://python.org)
 
@@ -116,15 +123,15 @@ API documentation generator for JavaScript via code comments. Imperative to docu
 
 [PEP 8](https://peps.python.org/pep-0008) is the official style guide for Python. Despite being relatively unopinionated, [autopep8](https://github.com/hhatto/autopep8) is the chosen formatter as [black](https://github.com/psf/black) sacrifices readability for consistency. As stated in [PEP 8](https://peps.python.org/pep-0008), "sometimes style guide recommendations just aren’t applicable. When in doubt, use your best judgment."
 
+#### 🟠 [uv](https://docs.astral.sh/uv) Python Package Manager
+
+[uv](https://docs.astral.sh/uv) is a Python package & project manager (eg via `uv init`).
+
+**But what about [pip](https://pip.pypa.io) / [pipx](https://pipx.pypa.io)?**
+
+While [uv](https://docs.astral.sh/uv) is intended to be a [drop-in replacement for pip](https://docs.astral.sh/uv/pip/compatibility), certain differences exist. In general, use `uv add` instead of `pip` & `uvx` (`uv tool run`) instead of `pipx`.
+
 ### [Rust](https://www.rust-lang.org)
-
-#### 🔴 [rustfmt](https://github.com/rust-lang/rustfmt) Formatter
-
-[Rust Style Guide](https://doc.rust-lang.org/style-guide/index.html) defines the default Rust style. The official code formatter is [rustfmt](https://github.com/rust-lang/rustfmt).
-
-```
-cargo fmt
-```
 
 #### 🔴 [Clippy](https://github.com/rust-lang/rust-clippy) Linter
 
@@ -132,6 +139,14 @@ cargo fmt
 
 ```
 cargo check && cargo clippy
+```
+
+#### 🔴 [rustfmt](https://github.com/rust-lang/rustfmt) Formatter
+
+[Rust Style Guide](https://doc.rust-lang.org/style-guide/index.html) defines the default Rust style. The official code formatter is [rustfmt](https://github.com/rust-lang/rustfmt).
+
+```
+cargo fmt
 ```
 
 ### [Shell](https://www.gnu.org/software/bash)
