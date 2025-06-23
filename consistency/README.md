@@ -12,6 +12,8 @@
 
 - [About](#about)
 - [Software Development](#software-development)
+  - [Docker](#docker)
+    - [🟠 Building best practices for Dockerfile](#-building-best-practices-for-dockerfile)
   - [Git](#git)
     - [🔴 Commit Message Format by Angular](#-commit-message-format-by-angular)
     - [🟠 Conventional Branch](#-conventional-branch)
@@ -25,6 +27,8 @@
   - [JavaScript](#javascript)
     - [🟠 JSDoc](#-jsdoc)
     - [🟠 Prettier Code Formatter](#-prettier-code-formatter)
+  - [Markdown](#markdown)
+    - [🔴 Markdown Style Guide by Google](#-markdown-style-guide-by-google)
   - [Python](#python)
     - [🟠 autopep8 for PEP 8](#-autopep8-for-pep-8)
     - [🟠 uv Python Package Manager](#-uv-python-package-manager)
@@ -51,15 +55,25 @@
 
 Enforcing consistency is achieved via defining a clear set of **Standards**, **Best Practices**, and **Guidelines**.
 
-1. Standards. I borrow the definition from [ISO standards](https://www.iso.org/standards.html), where standards are a set of rules to be **strictly followed** without deviation. Because of the "strictness", new standards must go through rigorous testing before being added.
+1. Standards. I borrow the definition from [ISO standards](https://www.iso.org/standards.html), where standards are a set of rules to be **strictly followed** without deviation. Standards must be explicitly defined and not open to interpretation. Because of the "strictness", new standards must go through rigorous testing before being added.
 2. Best Practices. The definition for both "Best Practice" and "Guideline" is best defined in this [W3C email](https://lists.w3.org/Archives/Public/public-ldp-wg/2013Jul/0006.html), although Wikipedia definitions for "[Best Practice](https://wikipedia.org/wiki/Coding_best_practices)" and "[Guideline](https://wikipedia.org/wiki/Guideline)" are also accepted for clarification purposes. Best Practices are methods or techniques that consistently show results superior to those achieved with other means and are used as a benchmark. Best Practices are **opinionated**, in other words, they are specific, and if not applicable to your use case, developer discretion can be applied on whether Best Practices should be adhered to.
-3. Guidelines. A Guideline is a tip, a trick, a note, a suggestion, or answer to a frequently asked question. These are personal tips that **can be ignored** if a better implementation exists. Hence, guidelines can change frequently.
+3. Guidelines. A Guideline is a tip, a trick, a note, a suggestion, or answer to a frequently asked question. Guidelines are typically not explicitly defined. These are personal tips that **can be ignored** if a better implementation exists. Hence, guidelines can change frequently.
 
 Philosophically, consistency has also applied in daily life via habits and schedules. **Documenting** them creates accountability and helps identify iterative improvement over inefficiencies in said habits and schedules.
+
+**How to use / contribute this document:**
+
+This document is a collection of **official** Standards, Best Practices, and Guidelines, and does not include unofficial recommendations. Each item must be For each item, my personal interpretation of what / how / why is included.
 
 In this document, 🔴 = Standards, 🟠 = Best Practices, and 🟢 = Guidelines.
 
 ## Software Development
+
+### [Docker](https://www.docker.com)
+
+#### 🟠 [Building best practices](https://docs.docker.com/build/building/best-practices) for Dockerfile
+
+A collection of Dockerfile best practices & optimizations for Dockerfile instructions. Apply developer discretion, as certain "best practices" are optional (eg "Build and test your images in CI").
 
 ### [Git](https://git-scm.com)
 
@@ -116,6 +130,12 @@ API documentation generator for JavaScript via code comments. Imperative to docu
 #### 🟠 [Prettier](https://prettier.io) Code Formatter
 
 JavaScript unfortunately does not have a definitive style guide. However, [Prettier](https://prettier.io), the most popular formatter, loosely documents its choices when it comes to formatting in its [rationale](https://prettier.io/docs/en/rationale).
+
+### Markdown
+
+[CommonMark](https://commonmark.org), the official specification, has not reached maturity (latest version is [0.31.2](https://github.com/commonmark/commonmark-spec/releases) as of 2025). Hence, [GitHub Flavored Markdown](https://github.github.com/gfm) spec is used. Note that [GitHub Flavored Markdown](https://github.github.com/gfm) is a strict superset of [CommonMark](https://commonmark.org).
+
+#### 🔴 [Markdown Style Guide](https://google.github.io/styleguide/docguide/style.html) by Google
 
 ### [Python](https://python.org)
 
