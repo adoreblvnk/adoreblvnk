@@ -199,6 +199,16 @@ A project template for personal use. Contains a README and CHANGELOG. Omit secti
 
 #### 🟢 Windows
 
+This is a guide for installing Windows 11 & post-install.
+
+1. Install Windows 11. Bypass network connection by opening Command Prompt with <kbd>Shift</kbd> + <kbd>F10</kbd>, then running `OOBE\BYPASSNRO`.
+2. After install finishes, install updates & drivers via Settings.
+3. Run [Win11Debloat](https://github.com/Raphire/Win11Debloat) with standard options.
+4. Install [Office C2R](https://gravesoft.dev/office_c2r_links), then activate with [Microsoft Activation Scripts](https://massgrave.dev).
+5. Install [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist) dependency.
+6. Install WSL, by enabling [Hyper-V](https://learn.microsoft.com/en-us/windows/wsl/faq#is-wsl-2-available-on-windows-10-home-and-windows-11-home-), then [install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) with `wsl --install`.
+7. Download your preferred [NerdFont](https://www.nerdfonts.com/font-downloads) & [add font](https://support.microsoft.com/en-us/office/add-a-font-b7c5f17c-4426-4b53-967f-455339c564c1).
+
 [cozydot](https://github.com/adoreblvnk/cozydot) supports WSL too.
 
 #### 🟢 Android
