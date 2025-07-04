@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # global variables
-readonly VAR_1=0.0.1r
+readonly VAR_1=0.0.1
 # set in _set_global_var()
 DYNAMIC_VAR=""
 
@@ -29,7 +29,7 @@ _error_msg() { printf "%s\n" "${BOLD}${RED}Error:${NC} $1" && exit 1; }
 
 _usage() {
   cat <<EOF
-this is a <bash_template>
+<bash_template> description
 
 ${YELLOW}Usage:${NC} <bash_template> ${CYAN}[Options]${NC} ${CYAN}[Command]${NC}
 
@@ -38,7 +38,7 @@ ${YELLOW}Options:${NC}
   ${GREEN}-h, --help       ${NC} Print help information
 
 ${YELLOW}Commands:${NC}
-  ${GREEN}i, install ${NC} Installs all apt (& alternative sources), flatpak, cargo, binary (AppImage)
+  ${GREEN}command 1 ${NC} Description of command 1
 
 ${YELLOW}Example:${NC} <bash_template> ${CYAN}--no-colour${NC}
 
@@ -61,17 +61,17 @@ _set_global_var() { DYNAMIC_VAR="some value"; }
 
 # Example command function.
 # Arguments:
-#   $1: DYNAMIC_VAR
+#   $1: Argument
 command_1() {
-  [[ -z "${1:-}" ]] && _error_msg "DYNAMIC_VAR not supplied"
-  _info_msg "DYNAMIC_VAR: $1"
+  [[ -z "${1:-}" ]] && _error_msg "Argument not supplied"
+  _info_msg "Argument: $1"
 }
 
 # ----- MAIN -----
 
 main() {
   colours true # PRINT FUNCTIONS
-  _set_global_var "Arg 1"
+  _set_global_var
 
   [[ $# -gt 0 ]] || { _usage && _error_msg "No argument(s)"; }
 
