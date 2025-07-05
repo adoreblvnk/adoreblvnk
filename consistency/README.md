@@ -208,6 +208,13 @@ This is a guide for installing Windows 11 & post-install.
 5. Install [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist) dependency.
 6. Install WSL, by enabling [Hyper-V](https://learn.microsoft.com/en-us/windows/wsl/faq#is-wsl-2-available-on-windows-10-home-and-windows-11-home-), then [install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) with `wsl --install`.
 7. Download your preferred [NerdFont](https://www.nerdfonts.com/font-downloads) & [add font](https://support.microsoft.com/en-us/office/add-a-font-b7c5f17c-4426-4b53-967f-455339c564c1).
+8. Setup Git for Windows & WSL separately:
+   1. Install [Git for Windows](https://git-scm.com/downloads/win). Copy this [`.gitconfig`](https://github.com/adoreblvnk/cozydot/blob/master/dotfiles/bash/.gitconfig) over. Set the [credential helper to wincred](https://code.visualstudio.com/docs/remote/troubleshooting#_sharing-git-credentials-between-windows-and-wsl) only.
+   2. Git should already be installed, & copy the same `.gitconfig` over.
+   3. Generating GPG signing key:
+      1. Install GPG on [Windows](https://www.gpg4win.org) & WSL (`sudo apt install gnugpg`).
+      2. [Generate a new GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) on either location, then [export the secret key](https://www.gnupg.org/gph/en/manual/x56.html) via `gpg --armor --export-secret-keys <key> > privatekey.asc`.
+      3. On the other location, after copying this key over, import key via `gpg --import privatekey.asc`.
 
 [cozydot](https://github.com/adoreblvnk/cozydot) supports WSL too.
 
