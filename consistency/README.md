@@ -215,10 +215,10 @@ This is a guide for installing Windows 11 & post-install.
       2. [Generate a new GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) & get the key ID from [tell Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key).
    3. On both Windows & WSL `.gitignore`, set your username, email, & the signingkey (key ID).
    4. Run both commands from [share Git credentials between Windows and WSL](https://code.visualstudio.com/docs/remote/troubleshooting#_sharing-git-credentials-between-windows-and-wsl).
-   5. On WSL, unset `credential.credentialStore` with 
+   5. On WSL, unset `credential.credentialStore` with:
       ```bash
       git config --global --unset credential.credentialStore
-      ``` 
+      ```
 
 [cozydot](https://github.com/adoreblvnk/cozydot) supports WSL too.
 
