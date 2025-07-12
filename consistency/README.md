@@ -13,40 +13,21 @@
 - [About](#about)
 - [Software Development](#software-development)
   - [Docker](#docker)
-    - [🟠 Building best practices for Dockerfile](#-building-best-practices-for-dockerfile)
   - [Git](#git)
-    - [🔴 Commit Message Format by Angular](#-commit-message-format-by-angular)
-    - [🟠 Conventional Branch](#-conventional-branch)
-    - [🟠 gitignore by GitHub](#-gitignore-by-github)
-    - [🔴 keep a changelog](#-keep-a-changelog)
-    - [🔴 Semantic Versioning](#-semantic-versioning)
   - [Go](#go)
-    - [🟠 Go Best Practices](#-go-best-practices)
-    - [🔴 gofmt for Go Style Guide](#-gofmt-for-go-style-guide)
-    - [🟢 Standard Go Project Layout](#-standard-go-project-layout)
+  - [HTML / CSS](#html--css)
   - [JavaScript](#javascript)
-    - [🟠 JSDoc](#-jsdoc)
-    - [🟠 Prettier Code Formatter](#-prettier-code-formatter)
   - [Markdown](#markdown)
-    - [🔴 Markdown Style Guide by Google](#-markdown-style-guide-by-google)
   - [Python](#python)
-    - [🟠 autopep8 for PEP 8](#-autopep8-for-pep-8)
-    - [🟠 uv Python Package Manager](#-uv-python-package-manager)
   - [Rust](#rust)
-    - [🔴 Clippy Linter](#-clippy-linter)
-    - [🔴 rustfmt Formatter](#-rustfmt-formatter)
   - [Shell](#shell)
-    - [🟢 ShellCheck](#-shellcheck)
-    - [🔴 shfmt for Shell Style Guide](#-shfmt-for-shell-style-guide)
+  - [YAML](#yaml)
   - [Miscellaneous](#miscellaneous)
-    - [🟠 Project Template by adore\_blvnk](#-project-template-by-adore_blvnk)
 - [Digital Life](#digital-life)
-  - [OS Post-install](#os-post-install)
-    - [🟢 Linux (Debian / Ubuntu)](#-linux-debian--ubuntu)
-    - [🟢 Windows](#-windows)
-    - [🟢 Android](#-android)
+  - [Linux (Debian / Ubuntu)](#linux-debian--ubuntu)
+  - [Windows](#windows)
+  - [Android](#android)
   - [Miscellaneous](#miscellaneous-1)
-    - [🟢 Password Manager Vault Structure](#-password-manager-vault-structure)
 </details>
 
 ## About
@@ -65,13 +46,13 @@ Philosophically, consistency has also applied in daily life via habits and sched
 
 This document is a collection of **official** Standards, Best Practices, and Guidelines, and does not include unofficial recommendations. Each item must be For each item, my personal interpretation of what / how / why is included.
 
-In this document, 🔴 = Standards, 🟠 = Best Practices, and 🟢 = Guidelines.
+In this document, &#x1F534; = Standards, &#x1F7E1; = Best Practices, and &#x1F7E2; = Guidelines.
 
 ## Software Development
 
 ### [Docker](https://www.docker.com)
 
-#### 🟠 [Building best practices](https://docs.docker.com/build/building/best-practices) for Dockerfile
+#### 🟡 [Building best practices](https://docs.docker.com/build/building/best-practices) for Dockerfile
 
 A collection of Dockerfile best practices & optimizations for Dockerfile instructions. Apply developer discretion, as certain "best practices" are optional (eg "Build and test your images in CI").
 
@@ -85,13 +66,7 @@ A collection of Dockerfile best practices & optimizations for Dockerfile instruc
 
 PR commits should be [squashed and merged](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits) to create a single meaningful clean commit. With this, the PR name is the commit message, & should follow [Commit Message Format](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md).
 
-#### 🟠 [Conventional Branch](https://conventional-branch.github.io)
-
-Follow [Branch Naming Prefixes](https://conventional-branch.github.io/#branch-naming-prefixes) when creating branches.
-
-When contributing to other projects & creating PRs, if the project has another branch naming specification, use that.
-
-#### 🟠 [gitignore](https://github.com/github/gitignore) by GitHub
+#### 🟡 [gitignore](https://github.com/github/gitignore) by GitHub
 
 GitHub provides gitignore templates for each OS, language, & version. For monorepos / monoliths, place each gitignore inside each project.
 
@@ -109,41 +84,63 @@ git tag v1.2.3 -m "Release version 1.2.3"
 
 ### [Go](https://go.dev)
 
-#### 🟠 [Go Best Practices](https://google.github.io/styleguide/go/best-practices)
+#### 🟡 [Go Best Practices](https://google.github.io/styleguide/go/best-practices)
 
 [Go Best Practices](https://google.github.io/styleguide/go/best-practices) documents some of the patterns that have evolved over time that solve common problems, read well, and are robust to code maintenance needs.
 
-#### 🔴 [gofmt](https://pkg.go.dev/cmd/gofmt) for [Go Style Guide](https://google.github.io/styleguide/go/guide)
+#### 🔴 [gofmt](https://pkg.go.dev/cmd/gofmt) Formatter for [Go Style Guide](https://google.github.io/styleguide/go/guide)
 
 Google's official [Go Style Guide](https://google.github.io/styleguide/go/guide) is enforced by [gofmt](https://pkg.go.dev/cmd/gofmt), the official Go formatter.
+
+#### 🔴 [Staticcheck](https://staticcheck.dev) Linter
+
+State of the art linter for Go.
 
 #### 🟢 [Standard Go Project Layout](https://github.com/golang-standards/project-layout)
 
 Basic layout for medium to complex Go application projects.
 
+### HTML / CSS
+
+#### 🟢 [HTML ESLint](https://html-eslint.org) & [CSS](https://github.com/eslint/css) Plugin for [ESLint](https://eslint.org) Linter
+
+Note that ESLint released [official support for CSS linting](https://eslint.org/blog/2025/02/eslint-css-support).
+
+#### 🟡 [Prettier](https://prettier.io) Code Formatter with [Google Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
+
+See [this](#-prettier-code-formatter-with-airbnb-style-guide) for handling conflicts between Prettier & a style guide.
+
 ### JavaScript
 
-#### 🟠 [JSDoc](https://jsdoc.app)
+#### 🔴 [ESLint](https://eslint.org) Linter
+
+Most popular JavaScript linter.
+
+#### 🟢 [JSDoc](https://jsdoc.app)
 
 API documentation generator for JavaScript via code comments. Imperative to document classes, methods, functions & constants (configs).
 
-#### 🟠 [Prettier](https://prettier.io) Code Formatter
+#### 🔴 [Prettier](https://prettier.io) Code Formatter with [Airbnb Style Guide](https://github.com/airbnb/javascript)
 
-JavaScript unfortunately does not have a definitive style guide. However, [Prettier](https://prettier.io), the most popular formatter, loosely documents its choices when it comes to formatting in its [rationale](https://prettier.io/docs/en/rationale).
+[Prettier](https://prettier.io) unfortunately does not have a definitive style guide but documents its formatting choices in its [rationale](https://prettier.io/docs/en/rationale).
+
+Note the use of "X Code Formatter **with** Y Style Guide". Write code according to a style guide (eg Airbnb's Style Guide), & in case of conflicts, prefer Prettier.
 
 ### Markdown
 
 [CommonMark](https://commonmark.org), the official specification, has not reached maturity (latest version is [0.31.2](https://github.com/commonmark/commonmark-spec/releases) as of 2025). Hence, [GitHub Flavored Markdown](https://github.github.com/gfm) spec is used. Note that [GitHub Flavored Markdown](https://github.github.com/gfm) is a strict superset of [CommonMark](https://commonmark.org).
 
-#### 🔴 [Markdown Style Guide](https://google.github.io/styleguide/docguide/style.html) by Google
+#### 🟡 [Prettier](https://prettier.io) Code Formatter with [Google Markdown Style Guide](https://google.github.io/styleguide/docguide/style.html)
+
+See [this](#-prettier-code-formatter-with-airbnb-style-guide) for handling conflicts between Prettier & a style guide. NOTE: As of 2025, Prettier deletes the closing tag in a Table of Contents, make sure to restore it.
 
 ### [Python](https://python.org)
 
-#### 🟠 [autopep8](https://github.com/hhatto/autopep8) for [PEP 8](https://peps.python.org/pep-0008)
+#### 🔴 [Ruff](https://docs.astral.sh/ruff) Linter & Code Formatter
 
-[PEP 8](https://peps.python.org/pep-0008) is the official style guide for Python. Despite being relatively unopinionated, [autopep8](https://github.com/hhatto/autopep8) is the chosen formatter as [black](https://github.com/psf/black) sacrifices readability for consistency. As stated in [PEP 8](https://peps.python.org/pep-0008), "sometimes style guide recommendations just aren’t applicable. When in doubt, use your best judgment."
+[Ruff](https://docs.astral.sh/ruff) performs linting, formatting, & import sorting, reducing toolchain complexity. [Ruff](https://docs.astral.sh/ruff) is a [drop-in replacement for Black](https://astral.sh/blog/the-ruff-formatter), which loosely follows [PEP 8](https://peps.python.org/pep-0008).
 
-#### 🟠 [uv](https://docs.astral.sh/uv) Python Package Manager
+#### 🔴 [uv](https://docs.astral.sh/uv) Python Package Manager
 
 [uv](https://docs.astral.sh/uv) is a Python package & project manager (eg via `uv init`).
 
@@ -161,9 +158,9 @@ While [uv](https://docs.astral.sh/uv) is intended to be a [drop-in replacement f
 cargo check && cargo clippy
 ```
 
-#### 🔴 [rustfmt](https://github.com/rust-lang/rustfmt) Formatter
+#### 🔴 [rustfmt](https://github.com/rust-lang/rustfmt) Formatter for the [Rust Style Guide](https://doc.rust-lang.org/nightly/style-guide)
 
-[Rust Style Guide](https://doc.rust-lang.org/style-guide/index.html) defines the default Rust style. The official code formatter is [rustfmt](https://github.com/rust-lang/rustfmt).
+[Rust Style Guide](https://doc.rust-lang.org/nightly/style-guide) defines the default Rust style. The official code formatter is [rustfmt](https://github.com/rust-lang/rustfmt).
 
 ```
 cargo fmt
@@ -171,37 +168,95 @@ cargo fmt
 
 ### [Shell](https://www.gnu.org/software/bash)
 
-#### 🟢 [ShellCheck](https://www.shellcheck.net)
+#### 🟢 [ShellCheck](https://www.shellcheck.net) Linter
 
 A static analysis tool for shell scripts.
 
-#### 🔴 [shfmt](https://github.com/mvdan/sh) for [Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
+#### 🔴 [shfmt](https://github.com/mvdan/sh) Formatter for [Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
 
-Google's Shell Style Guide is the most popular style guide for Shell. Formatted by [shfmt](https://github.com/mvdan/sh) with the following flags as specified in the documentation [examples](https://github.com/mvdan/sh/blob/master/cmd/shfmt/shfmt.1.scd#examples):
+Google's Shell Style Guide is the most popular style guide for Shell. [shfmt](https://github.com/mvdan/sh) formats with the following flags as specified in the documentation [examples](https://github.com/mvdan/sh/blob/master/cmd/shfmt/shfmt.1.scd#examples):
 
 ```bash
 shfmt -i 2 -ci -bn
 ```
 
+### [YAML](https://yaml.org)
+
+#### 🟡 [Prettier](https://prettier.io) Code Formatter
+
+The [YAML spec](https://yaml.org/spec/1.2.2) does not dictate a style guide, but YAML is self-explanatory.
+
 ### Miscellaneous
 
-#### 🟠 [Project Template](./../project_template/README.md) by adore_blvnk
+#### 🟢 [Project Template](./../project_template/README.md) by [adore_blvnk](https://x.com/adore_blvnk)
 
 A project template for personal use. Contains a README and CHANGELOG. Omit sections from README as necessary.
 
 ## Digital Life
 
-### OS Post-install
-
-#### 🟢 Linux (Debian / Ubuntu)
+### Linux (Debian / Ubuntu)
 
 [cozydot](https://github.com/adoreblvnk/cozydot) is an automated post-install, update, & config (dotfile) manager for Linux. In the context of consistency, cozydot maintains consistency between multiple systems & ensures reliability by tracking changes made, thus reducing potential errors while setting up.
 
-#### 🟢 Windows
+### Windows
+
+This is a guide for installing Windows 11 & post-install.
+
+1. Install Windows 11. Bypass network connection by opening Command Prompt with <kbd>Shift</kbd> + <kbd>F10</kbd>, then running `OOBE\BYPASSNRO`.
+2. After install finishes, install updates & drivers via Settings.
+3. Run [Win11Debloat](https://github.com/Raphire/Win11Debloat) with standard options.
+4. Install [Office C2R](https://gravesoft.dev/office_c2r_links), then activate with [Microsoft Activation Scripts](https://massgrave.dev).
+5. Install [Microsoft Visual C++ Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist) dependency.
+6. Enable [Hyper-V](https://learn.microsoft.com/en-us/windows/wsl/faq#is-wsl-2-available-on-windows-10-home-and-windows-11-home-), then [install WSL](https://learn.microsoft.com/en-us/windows/wsl/install) with `wsl --install`.
+7. Download your preferred [NerdFont](https://www.nerdfonts.com/font-downloads) & [add font](https://support.microsoft.com/en-us/office/add-a-font-b7c5f17c-4426-4b53-967f-455339c564c1).
+
+**Installing Apps**
+
+1. Git (Windows & WSL):
+   1. Install [Git for Windows](https://git-scm.com/downloads/win). Copy this [`.gitconfig`](https://github.com/adoreblvnk/cozydot/blob/master/dotfiles/bash/.gitconfig) over to both Windows & WSL.
+      - _NOTE: If GPG is not desired, remove lines pertaining to GPG._
+   2. Generate a GPG signing key on Windows:
+      1. Download [Gpg4win](https://www.gpg4win.org).
+         - _Reference: Storing GPG passphrase in [Signing commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)_
+      2. [Generate a new GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) & copy the key ID from [tell Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key).
+      3. Export signing key & owner trust with:
+         ```powershell
+         gpg --export-ownertrust > otrust.txt; gpg --export <key ID> > private.asc
+         ```
+   3. Use Gpg4win on WSL by creating a symlink:
+      ```bash
+      sudo ln -s "/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe" /usr/local/bin/gpg
+      ```
+      - _NOTE: Same GPG program is used for Windows & WSL, which is recommended but may have issues for [file permissions](https://learn.microsoft.com/en-us/windows/wsl/file-permissions)_
+   4. Restart WSL, then import GPG key & owner trust on WSL with:
+      ```bash
+      gpg --import-ownertrust /mnt/c/Users/<otrust path>; gpg --import /mnt/c/Users/<private.asc path>
+      ```
+   5. On both Windows & WSL `.gitconfig`, set your username, email, & the signingkey (key ID).
+   6. On Windows, run:
+      ```powershell
+      git config --global credential.credentialStore wincredman
+      git config --global credential.helper "C:/Program\ Files/Git/mingw64/bin/git-credential-manager.exe" # or git credential-manager configure
+      git config --global gpg.program "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
+      ```
+      - _Reference: [Credential stores](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/credstores.md#credential-stores)_
+   7. On WSL, to use Windows' GCM (& GPG pinentry) in WSL, run:
+      ```bash
+      git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
+      git config --global gpg.program "/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
+      ```
+      - _Reference: [Configuring WSL for Git with Windows](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/wsl.md#configuring-wsl-with-git-for-windows-recommended)_
+2. VS Code (Windows & WSL):
+   1. Install VS Code & the WSL extension as per [developing in WSL](https://code.visualstudio.com/docs/remote/wsl).
+3. Docker (Windows & WSL):
+   1. Follow the steps in [turn on Docker Desktop WSL 2](https://docs.docker.com/desktop/features/wsl/#turn-on-docker-desktop-wsl-2) to install Docker Desktop for Windows & use WSL 2 based engine.
+   2. [Optional] Follow the steps in [enabling Docker support in WSL 2 distributions](https://docs.docker.com/desktop/features/wsl/#enabling-docker-support-in-wsl-2-distributions) to enable Docker command in WSL by setting the default distro for WSL. This typically defaults to Ubuntu & does not require further action.
+   - _NOTE: Follow [best practices](https://docs.docker.com/desktop/features/wsl/best-practices) to optimize your experience._
+   - _NOTE: Set [logging driver to local](https://docs.docker.com/engine/logging/configure) in [daemon.json](https://docs.docker.com/desktop/settings-and-maintenance/settings/#docker-engine) to prevent disk exhaustion._
 
 [cozydot](https://github.com/adoreblvnk/cozydot) supports WSL too.
 
-#### 🟢 Android
+### Android
 
 ### Miscellaneous
 

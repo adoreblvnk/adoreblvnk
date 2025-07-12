@@ -6,4 +6,3 @@ programmer, CLI user, software architect. still patterning the workrate.
 - X: [adore_blvnk](https://x.com/adore_blvnk)
 - GitHub: [adore_blvnk](https://github.com/adoreblvnk)
 - Discord (inactive): adore\_blvnk
-
