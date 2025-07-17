@@ -58,13 +58,13 @@ A collection of Dockerfile best practices & optimizations for Dockerfile instruc
 
 ### [Git](https://git-scm.com)
 
-#### 🔴 [Commit Message Format](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md) by Angular
+#### 🔴 [commitlint](https://commitlint.js.org) for [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0)
 
-"type" field must be strictly be in [types](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md#type).
+"type" field must be strictly be in [type-enum](https://commitlint.js.org/reference/rules.html#type-enum). Since commitlint is based on [Commit Message Format](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md) by Angular, the type definition can be referenced here. For missing type definitions, refer to [types of conventional commits](https://graphite.dev/guides/understanding-using-conventional-commits#types-of-conventional-commits) by Graphite.
 
 **Pull Request Naming Convention**
 
-PR commits should be [squashed and merged](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits) to create a single meaningful clean commit. With this, the PR name is the commit message, & should follow [Commit Message Format](https://github.com/angular/angular/blob/main/contributing-docs/commit-message-guidelines.md).
+PR commits should be [squashed and merged](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/about-pull-request-merges#squash-and-merge-your-commits) to create a single meaningful clean commit. With this, the PR name is the commit message, & should follow Commit Message Format by Angular.
 
 #### 🟡 [gitignore](https://github.com/github/gitignore) by GitHub
 
@@ -81,6 +81,16 @@ Document notable changes between each release inside CHANGELOG.md, which is in t
 ```bash
 git tag v1.2.3 -m "Release version 1.2.3"
 ```
+
+**Guidelines for Tags & Releases**
+
+- Keep the names of tags & (GitHub) releases consistent (eg "v1.2.3").
+- If making a commit message for a tag / release, follow this convention. Note the lack of "v" in the version for messages.
+  ```
+  git commit -m "chore(release): 1.2.3"
+  ```
+  - *Reference: [Determine the version bump](https://nx.dev/recipes/nx-release/automatically-version-with-conventional-commits#determine-the-version-bump) by Nx, [Community configurations](https://semantic-release.gitbook.io/semantic-release/extending/shareable-configurations-list#community-configurations) by semantic-release*
+
 
 ### [Go](https://go.dev)
 
