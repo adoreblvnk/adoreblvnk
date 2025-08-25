@@ -210,7 +210,7 @@ A project template for personal use. Contains a README and CHANGELOG. Omit secti
 
 ### Windows
 
-This is a guide for installing Windows 11 & post-install.
+Guide for installing Windows 11 & post-install.
 
 1. Install Windows 11. Bypass network connection by opening Command Prompt with <kbd>Shift</kbd> + <kbd>F10</kbd>, then running `OOBE\BYPASSNRO`.
 2. After install finishes, install updates & drivers via Settings.
