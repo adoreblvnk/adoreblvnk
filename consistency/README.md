@@ -12,6 +12,7 @@
 
 - [About](#about)
 - [Software Development](#software-development)
+  - [C](#c)
   - [Docker](#docker)
   - [Git](#git)
   - [Go](#go)
@@ -28,6 +29,7 @@
   - [Windows](#windows)
   - [Android](#android)
   - [Miscellaneous](#miscellaneous-1)
+
 </details>
 
 ## About
@@ -49,6 +51,32 @@ This document is a collection of **official** Standards, Best Practices, and Gui
 In this document, &#x1F534; = Standards, &#x1F7E1; = Best Practices, and &#x1F7E2; = Guidelines.
 
 ## Software Development
+
+### [C](https://www.c-language.org)
+
+#### 🟡 [ClangFormat](https://clang.llvm.org/docs/ClangFormat.html) with [LLVM Coding Standards](https://llvm.org/docs/CodingStandards.html)
+
+ClangFormat defaults to format according to LLVM style. The LLVM Coding Standards are broadly applicable to popular open source projects. Generate the default LLVM `.clang-format` with:
+
+```
+clang-format -style=llvm -dump-config # omitting style defaults to llvm
+```
+
+#### 🔴 Default Compiler Warnings
+
+Before using a linter, C compiler provides extensive warning flags (eg `-Wall` & `-Wextra`).
+
+```
+gcc -Wall -Wextra main.c -o output
+```
+
+#### 🟡 [Clang-Tidy](https://clang.llvm.org/extra/clang-tidy) Linter with LLVM Configuration
+
+LLVM's configuration is more general & applicable for a wide range of topics. Clang-Tidy can be used to lint for LLVM & Google configuration. Generate the default LLVM `.clang-tidy` with:
+
+```
+clang-tidy --dump-config
+```
 
 ### [Docker](https://www.docker.com)
 
@@ -89,8 +117,7 @@ git tag v1.2.3 -m "Release version 1.2.3"
   ```
   git commit -m "chore(release): 1.2.3"
   ```
-  - *Reference: [Determine the version bump](https://nx.dev/recipes/nx-release/automatically-version-with-conventional-commits#determine-the-version-bump) by Nx, [Community configurations](https://semantic-release.gitbook.io/semantic-release/extending/shareable-configurations-list#community-configurations) by semantic-release*
-
+  - _Reference: [Determine the version bump](https://nx.dev/recipes/nx-release/automatically-version-with-conventional-commits#determine-the-version-bump) by Nx, [Community configurations](https://semantic-release.gitbook.io/semantic-release/extending/shareable-configurations-list#community-configurations) by semantic-release_
 
 ### [Go](https://go.dev)
 
@@ -112,15 +139,21 @@ Basic layout for medium to complex Go application projects.
 
 ### HTML / CSS
 
-#### 🟢 [HTML ESLint](https://html-eslint.org) & [CSS](https://github.com/eslint/css) Plugin for [ESLint](https://eslint.org) Linter
-
-Note that ESLint released [official support for CSS linting](https://eslint.org/blog/2025/02/eslint-css-support).
-
 #### 🟡 [Prettier](https://prettier.io) Code Formatter with [Google Style Guide](https://google.github.io/styleguide/htmlcssguide.html)
 
 See [this](#-prettier-code-formatter-with-airbnb-style-guide) for handling conflicts between Prettier & a style guide.
 
+#### 🟢 [HTML ESLint](https://html-eslint.org) & [CSS](https://github.com/eslint/css) Plugin for [ESLint](https://eslint.org) Linter
+
+Note that ESLint released [official support for CSS linting](https://eslint.org/blog/2025/02/eslint-css-support).
+
 ### JavaScript
+
+#### 🔴 [Prettier](https://prettier.io) Code Formatter with [Airbnb Style Guide](https://github.com/airbnb/javascript)
+
+[Prettier](https://prettier.io) unfortunately does not have a definitive style guide but documents its formatting choices in its [rationale](https://prettier.io/docs/en/rationale).
+
+Note the use of "X Code Formatter **with** Y Style Guide". Write code according to a style guide (eg Airbnb's Style Guide), & in case of conflicts, prefer Prettier.
 
 #### 🔴 [ESLint](https://eslint.org) Linter
 
@@ -129,12 +162,6 @@ Most popular JavaScript linter.
 #### 🟢 [JSDoc](https://jsdoc.app)
 
 API documentation generator for JavaScript via code comments. Imperative to document classes, methods, functions & constants (configs).
-
-#### 🔴 [Prettier](https://prettier.io) Code Formatter with [Airbnb Style Guide](https://github.com/airbnb/javascript)
-
-[Prettier](https://prettier.io) unfortunately does not have a definitive style guide but documents its formatting choices in its [rationale](https://prettier.io/docs/en/rationale).
-
-Note the use of "X Code Formatter **with** Y Style Guide". Write code according to a style guide (eg Airbnb's Style Guide), & in case of conflicts, prefer Prettier.
 
 ### Markdown
 
@@ -160,14 +187,6 @@ While [uv](https://docs.astral.sh/uv) is intended to be a [drop-in replacement f
 
 ### [Rust](https://www.rust-lang.org)
 
-#### 🔴 [Clippy](https://github.com/rust-lang/rust-clippy) Linter
-
-[`cargo check`](https://doc.rust-lang.org/cargo/commands/cargo-check.html) helps to check that the code compiles successfully first. Thereafter, [Clippy](https://github.com/rust-lang/rust-clippy) is the official linter for Rust & it can be used in conjunction with [`cargo check`](https://doc.rust-lang.org/cargo/commands/cargo-check.html).
-
-```
-cargo check && cargo clippy
-```
-
 #### 🔴 [rustfmt](https://github.com/rust-lang/rustfmt) Formatter for the [Rust Style Guide](https://doc.rust-lang.org/nightly/style-guide)
 
 [Rust Style Guide](https://doc.rust-lang.org/nightly/style-guide) defines the default Rust style. The official code formatter is [rustfmt](https://github.com/rust-lang/rustfmt).
@@ -176,11 +195,15 @@ cargo check && cargo clippy
 cargo fmt
 ```
 
+#### 🔴 [Clippy](https://github.com/rust-lang/rust-clippy) Linter
+
+[`cargo check`](https://doc.rust-lang.org/cargo/commands/cargo-check.html) helps to check that the code compiles successfully first. Thereafter, [Clippy](https://github.com/rust-lang/rust-clippy) is the official linter for Rust & it can be used in conjunction with [`cargo check`](https://doc.rust-lang.org/cargo/commands/cargo-check.html).
+
+```
+cargo check && cargo clippy
+```
+
 ### [Shell](https://www.gnu.org/software/bash)
-
-#### 🟢 [ShellCheck](https://www.shellcheck.net) Linter
-
-A static analysis tool for shell scripts.
 
 #### 🔴 [shfmt](https://github.com/mvdan/sh) Formatter for [Shell Style Guide](https://google.github.io/styleguide/shellguide.html)
 
@@ -189,6 +212,10 @@ Google's Shell Style Guide is the most popular style guide for Shell. [shfmt](ht
 ```bash
 shfmt -i 2 -ci -bn
 ```
+
+#### 🟢 [ShellCheck](https://www.shellcheck.net) Linter
+
+A static analysis tool for shell scripts.
 
 ### [YAML](https://yaml.org)
 
@@ -223,39 +250,42 @@ Guide for installing Windows 11 & post-install.
 **Installing Apps**
 
 1. Git (Windows & WSL):
-   1. Install [Git for Windows](https://git-scm.com/downloads/win). Copy this [`.gitconfig`](https://github.com/adoreblvnk/cozydot/blob/master/dotfiles/bash/.gitconfig) over to both Windows & WSL.
-      - _NOTE: If GPG is not desired, remove lines pertaining to GPG._
-   2. Generate a GPG signing key on Windows:
-      1. Download [Gpg4win](https://www.gpg4win.org).
-         - _Reference: Storing GPG passphrase in [Signing commits](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)_
-      2. [Generate a new GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) & copy the key ID from [tell Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key).
-      3. Export signing key & owner trust with:
-         ```powershell
-         gpg --export-ownertrust > otrust.txt; gpg --export <key ID> > private.asc
-         ```
-   3. Use Gpg4win on WSL by creating a symlink:
-      ```bash
-      sudo ln -s "/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe" /usr/local/bin/gpg
-      ```
-      - _NOTE: Same GPG program is used for Windows & WSL, which is recommended but may have issues for [file permissions](https://learn.microsoft.com/en-us/windows/wsl/file-permissions)_
-   4. Restart WSL, then import GPG key & owner trust on WSL with:
-      ```bash
-      gpg --import-ownertrust /mnt/c/Users/<otrust path>; gpg --import /mnt/c/Users/<private.asc path>
-      ```
-   5. On both Windows & WSL `.gitconfig`, set your username, email, & the signingkey (key ID).
-   6. On Windows, run:
-      ```powershell
-      git config --global credential.credentialStore wincredman
-      git config --global credential.helper "C:/Program\ Files/Git/mingw64/bin/git-credential-manager.exe" # or git credential-manager configure
-      git config --global gpg.program "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
-      ```
-      - _Reference: [Credential stores](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/credstores.md#credential-stores)_
-   7. On WSL, to use Windows' GCM (& GPG pinentry) in WSL, run:
-      ```bash
-      git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
-      git config --global gpg.program "/mnt/c/Program Files (x86)/GnuPG/bin/gpg.exe"
-      ```
-      - _Reference: [Configuring WSL for Git with Windows](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/wsl.md#configuring-wsl-with-git-for-windows-recommended)_
+   - _NOTE: Install Git & GPG separately as WSL uses [Plan 9](https://wsl.dev/technical-documentation/plan9) to bridge Windows & Linux. This allows sharing files but can cause compatibility issues with binaries._
+   - Installing & configuring Git on Windows:
+     1. Install [Git for Windows](https://git-scm.com/downloads/win) & [Gpg4win](https://www.gpg4win.org). Copy this [`.gitconfig`](https://github.com/adoreblvnk/cozydot/blob/master/dotfiles/bash/.gitconfig) over.
+     2. [Generate a new GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key) & copy the key ID with:
+        ```powershell
+        gpg --full-generate-key
+        gpg --list-secret-keys --keyid-format=long
+        ```
+        - _NOTE: Use the same email as your GitHub account._
+     3. Storing credentials with Git Credential Manager with:
+        ```powershell
+        git config --global credential.helper "C:/Program\ Files/Git/mingw64/bin/git-credential-manager.exe" # or git credential-manager configure
+        git config --global credential.credentialStore wincredman
+        git config --global gpg.program "C:/Program Files (x86)/GnuPG/bin/gpg.exe"
+        ```
+        - _NOTE: If GPG is not desired, remove lines pertaining to GPG._
+        - _Reference: [Caching your GitHub credentials in Git](https://docs.github.com/en/get-started/git-basics/caching-your-github-credentials-in-git), [Credential stores](https://github.com/git-ecosystem/git-credential-manager/blob/main/docs/credstores.md)_
+     4. [Optional] Export signing key & owner trust with:
+        ```powershell
+        gpg --export-ownertrust > otrust.txt; gpg --export <key ID> > private.asc
+        ```
+   - Installing & configuring Git on WSL:
+     1. Install git, gpg, pass, [Git Credential Manager](https://github.com/GitCredentialManager/git-credential-manager) with the following command, & copy this [`.gitconfig`](https://github.com/adoreblvnk/cozydot/blob/master/dotfiles/bash/.gitconfig) over.
+        ```bash
+        sudo apt-get update
+        sudo apt-get install -y git gpg pass
+        curl -sL https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.6.1/gcm-linux_amd64.2.6.1.deb -o /tmp/gcm.deb
+        sudo dpkg -i /tmp/gcm.deb
+        ```
+     2. Import GPG key & owner trust on WSL with:
+        ```bash
+        gpg --import-ownertrust /mnt/c/Users/<otrust path>
+        gpg --import /mnt/c/Users/<private.asc path>
+        ```
+   - On both Windows & WSL `.gitconfig`, set your username, email, & the signing key (key ID).
+     - _Reference: [Setting your commit email address](https://docs.github.com/en/account-and-profile/how-tos/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address), [Telling Git about your signing key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key)_
 2. VS Code (Windows & WSL):
    1. Install VS Code & the WSL extension as per [developing in WSL](https://code.visualstudio.com/docs/remote/wsl).
 3. Docker (Windows & WSL):
