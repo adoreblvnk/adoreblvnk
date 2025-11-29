@@ -1,4 +1,4 @@
-programmer, CLI user, software architect. still patterning the workrate.
+CLI user, software architect. freedom's priceless.
 
 ## contact
 
