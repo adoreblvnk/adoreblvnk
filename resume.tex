@@ -1,0 +1,276 @@
+% Resume LaTeX Template
+% Author: adore_blvnk
+% Installation Steps:
+% 1. Install XeLatex
+%    ```
+%    sudo apt-get install -qy texlive-xetex texlive-latex-extra latexmk jq
+%    ```
+% 2. Install Geist Font
+%    ```
+%    sudo mkdir -p /usr/share/fonts/Geist
+%    curl -sLo Geist.zip $(curl -sSL "https://api.github.com/repos/vercel/geist-font/releases/latest" \
+%      | jq -r '.assets[] | select(.name | test("^geist.*zip$")) | .browser_download_url')
+%    sudo unzip Geist.zip
+%    sudo mv geist-*/fonts/Geist/otf/*.otf /usr/share/fonts/Geist/
+%    fc-cache -f -v
+%    rm -rf Geist.zip geist-*
+%    ```
+% 3. Install Geist Mono Nerd Font
+%    ```
+%    sudo mkdir -p /usr/share/fonts/GeistMono
+%    curl -sLO https://github.com/ryanoasis/nerd-fonts/releases/latest/download/GeistMono.zip
+%    sudo unzip GeistMono.zip -d /usr/share/fonts/GeistMono/
+%    fc-cache -f -v
+%    rm GeistMono.zip
+%    ```
+% 4. Compile resume.tex
+%    ```
+%    latexmk -xetex resume.tex
+%    ```
+
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{fontspec}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\geometry{a4paper, total={180mm,267mm}, left=15mm, top=15mm}
+\pagestyle{empty}
+
+\setsansfont{Geist} % set main font to Geist
+\setmonofont{GeistMono Nerd Font} % set monospace font to Geist Mono Nerd Font
+% set sans-serif as default font family
+\renewcommand{\familydefault}{\sfdefault}
+
+% main text color: catppuccin latte text
+\definecolor{maintext}{HTML}{4c4f69}
+\color{maintext}
+
+% section: bold text & add horizontal line after
+\titleformat{\section}{\Large\bfseries}{}{}{}[\titlerule]
+\titlespacing*{\section}{0pt}{1ex}{1ex}
+
+% items: no indentation, no vertical spacing
+\setlist[itemize]{leftmargin=*, nosep}
+
+% hyperlink color: catppuccin latte blue
+\definecolor{latteblue}{HTML}{1e66f5}
+\hypersetup{colorlinks=true, linkcolor=black, urlcolor=latteblue}
+
+% custom cmd for entry header
+\newcommand{\entryHeader}[2]{\noindent\textbf{#1} \\ \textit{#2}}
+
+% custom cmd for role entry under entry header
+\newcommand{\roleEntry}[1]{\noindent\textit{#1}}
+
+% custom cmd for single line entry with title on left, date on right
+\newcommand{\singleEntry}[2]{\noindent\textbf{#1} \hfill \textit{#2}}
+
+\begin{document}
+\raggedright % disable hyphenation
+
+\begin{center}
+    {\Huge \textbf{Joseph Poon}}
+\end{center}
+
+\begin{multicols}{2}
+\raggedcolumns
+
+\begin{center}
+    % \fbox{\rule{0pt}{3cm}\rule{3cm}{0pt}} % placeholder for photo
+    \includegraphics[height=3cm]{photo.png} % photo here
+\end{center}
+
+\section*{Bio}
+Technical Lead for \href{https://www.brwne.dev}{brwne} \& Software Engineering student at SIT with a passion for high-performance systems. CLI user, software architect \& open-source developer
+
+\section*{Contact}
+\begin{itemize}[label={}]
+    \item \href{mailto:josephpzh@proton.me}{josephpzh@proton.me}
+    \item \href{mailto:joseph@thepirateship.net}{joseph@thepirateship.net} (for brwne inquiries)
+    \item \href{https://linkedin.com/in/josephpoon}{linkedin.com/in/josephpoon}
+    \item \href{https://github.com/adoreblvnk}{github.com/adoreblvnk}
+    \item +65 96306421
+\end{itemize}
+
+\section*{Education}
+\entryHeader{BEng (Hons) in ICT (Software Engineering)}{SIT (Singapore Institute of Technology) \hfill Aug 2025 -- Aug 2029}
+
+\smallskip
+\entryHeader{Diploma in Cybersecurity \& Digital Forensics}{Nanyang Polytechnic \hfill Mar 2020 -- Mar 2023}
+\begin{itemize}
+    \item GPA: 3.33
+    \item \textbf{Director's List (AY 2022/2023):} Awarded to top 15\% of cohort for academic excellence in a semester
+    \item \textbf{Good Progress Award (2022):} Awarded to top 10\% of students in terms of improvement of academic performance \& good conduct
+    \item \textbf{Diploma-Plus Modules:} Cloud Computing Foundation, CEH (Certified Ethical Hacker)
+\end{itemize}
+
+\section*{Technical Skills}
+\begin{itemize}
+    \item Languages \& Systems Programming
+    \begin{itemize}
+        \item Go, Python, JavaScript, TypeScript, Rust
+    \end{itemize}
+    \item OS \& Scripting: Linux (Debian), Bash
+    \item DevOps Methodologies: Agile, Scrum
+    \item Container Orchestration
+    \begin{itemize}
+        \item Docker, Kubernetes (Helm, Istio, Kyverno, Knative)
+    \end{itemize}
+    \item CI/CD: Jenkins, ArgoCD
+\end{itemize}
+
+\columnbreak
+
+\section*{Working Experience}
+\entryHeader{Acting CTO}{\href{https://sg.linkedin.com/company/thepirateship}{PirateShip} \hfill Dec 2025 -- Present}
+
+\roleEntry{\textup{Technical Lead} \hfill 5 mths \textbar{} Aug 2025 -- Dec 2025}
+ 
+\roleEntry{\textup{Intern} \hfill 3 mths \textbar{} May 2025 -- Jul 2025}
+\begin{itemize}
+    \item \textbf{\href{https://www.brwne.dev}{brwne}:} Adversarial, multi-agentic QA platform to generate, maintain, \& validate E2E test suites
+    \begin{itemize}
+        \item Engineered an iterative refinement method for generating Playwright tests
+        \item Prototyped a self-healing mechanism for differentiating intentional code changes \& regressions
+    \end{itemize}
+    \item \textbf{brwne legacy:} A real-time collaborative tool to prevent merge conflicts for dev teams
+    \begin{itemize}
+        \item Developed a Rust desktop client via Tauri
+        \item Engineered a high-performance Go local daemon sidecar, monitoring Git \& file events in real time
+        \item Deployed CI/CD pipeline for backend server onto Linode \& Linux release
+        \item Achievements:
+        \begin{itemize}
+            \item NUS VIP (Venture Initiation Programme) Awardee: \$10,000  \hfill \textit{May 2025}
+            \item Best Project Award for \href{https://uvents.nus.edu.sg/event/26th-steps}{NUS STePS}: \$2,000  \hfill \textit{Apr 2025}
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\smallskip
+\entryHeader{Tax Officer}{IRAS \hfill 5 mths \textbar{} Feb 2023 - Jun 2023}
+\begin{itemize}
+    \item Aided in filing of several tax forms, including Individual Income Tax (Form B, B1, M), Partnerships (Form P) \& Stamp Duty (Lease \& Tenancy Agreement) for taxpayers
+    \item Setup of Linux systems on IoT devices \& printers for queue display, developed a website for printing queue numbers
+\end{itemize}
+
+\smallskip
+\entryHeader{Software Engineering Intern}{SAP \hfill 6 mths \textbar{} Mar 2022 - Aug 2022}
+\begin{itemize}
+    \item Developed an automated framework for gathering statistics on integration \& unit tests
+    \item Implemented HA (High Availability) for Kubernetes components
+    \item Performed pipeline migration for outdated Jenkins pipelines
+    \item Contributed to feature development, testing, deployments \& releases in an Agile Scrum team
+\end{itemize}
+
+\end{multicols}
+\newpage
+
+\begin{multicols}{2}
+\raggedcolumns
+
+\section*{Competitions}
+\entryHeader{\href{https://hackrift2025.devpost.com}{HackRift 2025}}{SIT \hfill 1st Place \textbar{} Dec 2025}
+\begin{itemize}
+    \item Developed \href{https://github.com/adoreblvnk/triageX}{\texttt{TriageX}}: an autonomous voice-first medical triage kiosk powered by a multi-agent AI ensemble designed to slash polyclinic wait times
+    \item Won 1st place with a \$4,000 prize of 150+ participants
+\end{itemize}
+
+\smallskip
+\entryHeader{\href{https://luma.com/cursor-hack-sg}{Cursor Hackathon Singapore}}{Cursor \hfill Oct 2025}
+\begin{itemize}
+    \item Developed \href{https://github.com/adoreblvnk/lumina}{\texttt{Lumina}}: a real-time AI agent that facilitates classroom discussions with voice interventions, keeping students engaged
+    \item Competed against 1,000+ participants with a \$100k+ prize pool
+\end{itemize}
+
+\smallskip
+\entryHeader{\href{https://ieee-soli.org/2025/program/hackathon-challenge}{IEEE SOLI 2025 Hackathon}}{IEEE \hfill 3rd Place \textbar{} Sept 2025}
+\begin{itemize}
+    \item Developed \href{https://github.com/adoreblvnk/err}{\texttt{err}}: an AI supply chain anomaly detection web app
+    \item Won 3rd place with a \$900 prize pool
+\end{itemize}
+
+\smallskip
+\entryHeader{Code Overflow}{NYP \hfill 1st Place \textbar{} Sept 2022}
+\begin{itemize}
+    \item Sustainability-themed coding hackathon conducted by Nanyang Polytechnic School of Information Technology club
+    \item Developed \href{https://github.com/adoreblvnk/EnergyClash}{\texttt{EnergyClash}}: a web app targeted at reducing household electricity consumption via gamification
+\end{itemize}
+
+\smallskip
+\entryHeader{Debug Minds Hackathon}{NYP \hfill 2nd Place \textbar{} Sept 2021}
+\begin{itemize}
+    \item Creative coding hackathon conducted by NYP School of Information Technology club
+\end{itemize}
+
+\section*{Certifications}
+\entryHeader{\href{https://www.credly.com/badges/a63e9a42-be6c-4f6c-a68a-cddbadca1604}{Google IT Automation with Python}}{Google \hfill Mar 2023}
+\begin{itemize}
+    \item Completion of 6 courses: Crash Course on Python, Using Python to Interact with the OS, Introduction to Git \& Github, Troubleshooting \& Debugging Techniques, Configuration Management \& the Cloud, Automating Real-World Tasks with Python
+\end{itemize}
+
+\smallskip
+\entryHeader{Alibaba Cloud Associate (ACA)}{Alibaba Group \hfill Oct 2022}
+\begin{itemize}
+    \item Certifies the proficient use of Alibaba Cloud Computing Products.
+\end{itemize}
+
+\smallskip
+\entryHeader{Certified Ethical Hacker (CEH v11)}{EC-Council \hfill April 2021}
+\begin{itemize}
+    \item Demonstrates ability to identify \& mitigate security risks.
+\end{itemize}
+
+\columnbreak
+
+\section*{Projects / Open Source}
+
+\singleEntry{\href{https://github.com/adoreblvnk/life_os}{Life OS}}{Jul 2025 -- Present}
+\begin{itemize}
+    \item Life management system to organize \& manage your life as an Obsidian vault
+    \item Developed dynamic dashboards to manage tasks, projects, \& journals using Dataview \& \href{https://github.com/saml-dev/obsidian-custom-js}{CustomJS} plugins to create a centralized personal workspace
+\end{itemize}
+
+\smallskip
+\singleEntry{\href{https://github.com/adoreblvnk/cozydot}{cozydot}}{Jul 2024 -- Present}
+\begin{itemize}
+    \item cozydot is an automated post-install, update, \& config (dotfile) manager for Linux
+    \item Uses declarative YAML configs to manage system packages (apt, Flatpak, Cargo), dotfiles (via GNU Stow), \& application settings for a customizable \& idempotent setup
+\end{itemize}
+
+\smallskip
+\singleEntry{Sustainacity}{Dec 2022}
+\begin{itemize}
+    \item AR (Augmented Reality) enhanced web app to showcase DBS' sustainability initiative. Created for \href{https://zealous.co/sbm/opportunity/NYP-x-DBS-AR-Sustainability-Storytelling-Competition-2022}{NYP x DBS AR Sustainability Storytelling Competition 2022}
+\end{itemize}
+
+\smallskip
+\singleEntry{adore\_melxdy}{Sept 2021}
+\begin{itemize}
+    \item Cloud-hosted Youtube music bot for Discord
+\end{itemize}
+
+\smallskip
+\singleEntry{--vouch}{Aug 2021}
+\begin{itemize}
+    \item Web app aimed at automation via data extraction \& data matching for vouching in the audit industry. Created for AIC21
+\end{itemize}
+
+\section*{Soft Skills}
+\begin{itemize}
+    \item Technical Leadership
+    \item Performance Under Pressure
+    \item Systems Thinking
+    \item Rapid Prototyping \& Execution
+    \item Adaptability \& Fast Learning
+\end{itemize}
+
+\end{multicols}
+
+\end{document}

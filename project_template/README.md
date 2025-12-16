@@ -62,5 +62,5 @@ Distributed under the MIT License.
 
 <!-- Helpful notes:
 - insert a centred image:
-  <div align="center"><img src="" alt="" width="750"></div>
+  <div align=center><img src="" alt="" width=750></div>
 -->
