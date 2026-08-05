@@ -170,9 +170,6 @@
 
 <a class="skip-link" href="#main-content" use:scramble>Skip to main content</a>
 
-<div class="signal-fallback" class:visible={!sceneReady} aria-hidden="true">
-  <img src="/images/portrait.png" alt="" width="1024" height="1024">
-</div>
 <SignalField onReady={handleReady} onFrame={handleFrame} onStatus={handleStatus} />
 
 <div class="hud-lattice" aria-hidden="true"></div>

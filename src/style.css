@@ -115,33 +115,11 @@ button:focus-visible,
    -------------------------------------------------------------------------- */
 
 /* Fixed signal field */
-.signal-fallback,
 .signal-field {
   position: fixed;
   inset: 0;
   pointer-events: none;
   overflow: hidden;
-}
-
-.signal-fallback {
-  z-index: 0;
-  display: grid;
-  place-items: end center;
-  opacity: 0;
-}
-
-.signal-fallback.visible {
-  opacity: 1;
-}
-
-.signal-fallback img {
-  width: min(88vw, 900px);
-  height: min(92vh, 900px);
-  object-fit: contain;
-  object-position: center bottom;
-  filter: grayscale(1) contrast(1.15);
-  opacity: 0.6;
-  mix-blend-mode: difference;
 }
 
 .signal-field {
@@ -552,10 +530,6 @@ button:focus-visible,
   .hud-trackers-container,
   .hud-lattice-focus {
     display: none !important; /* Remove nonessential chrome on tablet/mobile as per specs */
-  }
-
-  .signal-fallback img {
-    opacity: 0.35;
   }
 
   .masthead {

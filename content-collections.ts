@@ -10,7 +10,6 @@ import { z } from 'zod';
 const writings = defineCollection({
   name: 'writings',
   directory: 'src/writings',
-  // https://gohugo.io/content-management/page-bundles/
   include: '*/index.md',
   schema: z.object({
     title: z.string().min(1),
