@@ -1,0 +1,212 @@
+.writings-shell {
+  --writings-ink: #080808;
+  --writings-paper: #eeefed;
+  --writings-signal: #cfd2d2;
+  min-height: 100vh;
+  background: var(--writings-ink);
+  color: var(--writings-paper);
+  font-family: 'Space Mono', monospace;
+}
+
+.writings-index,
+.writing-page {
+  width: min(900px, calc(100% - var(--content-right) - var(--content-right)));
+  margin-inline: auto;
+  padding: clamp(72px, 11vw, 150px) 0 120px;
+}
+
+.writings-label {
+  margin: 0 0 8px;
+  color: var(--writings-signal);
+  font-size: var(--text-ui);
+  line-height: 20px;
+  letter-spacing: 0.12em;
+}
+
+.writings-index h1,
+.writing-header h1 {
+  margin: 0;
+  font-family: 'Lexend', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 48px;
+}
+
+.writings-index h1 {
+  font-size: 2rem;
+}
+
+.writing-header h1 {
+  font-size: 2.5rem;
+}
+
+.empty-index {
+  margin-top: 72px;
+  padding-top: 18px;
+  border-top: 1px solid rgb(238 239 237 / 24%);
+  color: rgb(238 239 237 / 64%);
+  font-size: var(--text-meta);
+}
+
+.writing-list {
+  padding: 0;
+  margin: 72px 0 0;
+  list-style: none;
+  border-top: 1px solid rgb(238 239 237 / 24%);
+}
+
+.writing-list a {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 6px 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid rgb(238 239 237 / 24%);
+  color: inherit;
+  text-decoration: none;
+}
+
+.writing-list time,
+.writing-list small {
+  color: rgb(238 239 237 / 56%);
+  font-size: var(--text-meta);
+}
+
+.writing-list span {
+  font-size: var(--text-body);
+  font-weight: 700;
+}
+
+.writing-list small {
+  grid-column: 2;
+}
+
+.writing-header {
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgb(238 239 237 / 24%);
+}
+
+.writing-header > p:not(.writings-label) {
+  margin: 8px 0 0;
+  color: rgb(238 239 237 / 72%);
+  font-size: var(--text-ui);
+  line-height: 20px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 12px 0 0;
+  list-style: none;
+}
+
+.tag-list li {
+  padding: 3px 8px;
+  border: 1px solid rgb(238 239 237 / 28%);
+  color: var(--writings-signal);
+  font-size: var(--text-meta);
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.writing-content {
+  margin-top: 16px;
+  color: inherit;
+  background: transparent;
+  font-family: 'Lexend', sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.8;
+}
+
+.writing-content h2,
+.writing-content h3,
+.writing-content h4 {
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.writing-content a {
+  color: var(--writings-paper);
+  text-decoration-color: var(--writings-signal);
+  text-underline-offset: 0.18em;
+}
+
+.writing-content img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2.4em 0;
+}
+
+.writing-content li img {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  margin: 0 8px 0 0;
+  padding: 2px;
+  vertical-align: -5px;
+  background: var(--writings-paper);
+  object-fit: contain;
+}
+
+.writing-content figure[data-rehype-pretty-code-figure] {
+  position: relative;
+  margin: 1em 0;
+}
+
+.writing-content pre:has(.rehype-pretty-copy) {
+  position: static;
+  padding-right: 48px;
+}
+
+.writing-content pre button.rehype-pretty-copy {
+  top: 4px;
+  right: 4px;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.writing-content pre button.rehype-pretty-copy:focus-visible {
+  outline: 2px solid var(--writings-paper);
+  outline-offset: 2px;
+}
+
+.writing-content pre button.rehype-pretty-copy span {
+  width: 16px;
+  height: 16px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.writing-content code {
+  font-family: 'Space Mono', monospace;
+  font-size: var(--text-ui);
+}
+
+@media (max-width: 600px) {
+  .writings-index,
+  .writing-page {
+    padding-top: 64px;
+  }
+
+  .writing-list a {
+    grid-template-columns: 1fr;
+  }
+
+  .writing-list small {
+    grid-column: 1;
+  }
+
+}

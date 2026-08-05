@@ -1,0 +1,42 @@
+{
+  "name": "adore_blvnk",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "@content-collections/core": "^0.15.2",
+    "@content-collections/markdown": "^0.1.4",
+    "@content-collections/vite": "^0.3.0",
+    "@rehype-pretty/transformers": "^0.13.2",
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.70.2",
+    "@sveltejs/vite-plugin-svelte": "^7.2.0",
+    "@types/node": "^24.0.0",
+    "@types/three": "^0.185.3",
+    "rehype-pretty-code": "^0.14.5",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
+    "shiki": "^4.4.1",
+    "svelte": "^5.56.8",
+    "svelte-check": "^4.7.4",
+    "typescript": "~6.0.0",
+    "vite": "^8.1.5",
+    "vite-plugin-static-copy": "^4.1.1",
+    "zod": "^4.4.3"
+  },
+  "dependencies": {
+    "@threlte/core": "^8.5.16",
+    "github-markdown-css": "^5.9.0",
+    "gsap": "^3.15.0",
+    "postprocessing": "^6.39.4",
+    "three": "^0.185.1"
+  }
+}

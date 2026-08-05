@@ -1,36 +1,12 @@
-<div align="center"> <!-- use align as CSS is not allowed on GitHub markdown https://github.com/orgs/community/discussions/22728 -->
-  <h1>Consistency</h1> <!-- Project Name -->
-  <p> <!-- Description -->
-    A set of standards, best practices, & guidelines for software developers & a digital life.
-  </p>
-</div>
-
 ---
-
-<details>
-<summary>Table of Contents</summary>
-
-- [About](#about)
-- [Software Development](#software-development)
-  - [C](#c)
-  - [Docker](#docker)
-  - [Git](#git)
-  - [Go](#go)
-  - [HTML / CSS](#html--css)
-  - [JavaScript](#javascript)
-  - [Markdown](#markdown)
-  - [Python](#python)
-  - [Rust](#rust)
-  - [Shell](#shell)
-  - [YAML](#yaml)
-  - [Miscellaneous](#miscellaneous)
-- [Digital Life](#digital-life)
-  - [Linux (Debian / Ubuntu)](#linux-debian--ubuntu)
-  - [Windows](#windows)
-  - [Android](#android)
-  - [Miscellaneous](#miscellaneous-1)
-
-</details>
+title: "Consistency"
+summary: "Standards, best practices and guidelines for software development and digital life."
+date: 2026-08-02
+tags:
+  - standards
+  - software
+  - digital-life
+---
 
 ## About
 
@@ -223,17 +199,35 @@ A static analysis tool for shell scripts.
 
 The [YAML spec](https://yaml.org/spec/1.2.2) does not dictate a style guide, but YAML is self-explanatory.
 
-### Miscellaneous
-
-#### 🟢 [Project Template](./../project_template/README.md) by [adore_blvnk](https://x.com/adore_blvnk)
-
-A project template for personal use. Contains a README and CHANGELOG. Omit sections from README as necessary.
-
 ## Digital Life
 
 ### Linux (Debian / Ubuntu)
 
 [cozydot](https://github.com/adoreblvnk/cozydot) is an automated post-install, update, & config (dotfile) manager for Linux. In the context of consistency, cozydot maintains consistency between multiple systems & ensures reliability by tracking changes made, thus reducing potential errors while setting up.
+
+### macOS (Apple silicon)
+
+Guide for setting up the M3 MacBook Air with macOS Tahoe 26.6. The MacBook is both a mobile computer and a primary machine for heavy development work.
+
+1. Install macOS updates via **System Settings → General → Software Update**. Keep automatic system data files and security updates enabled.
+2. Enable **FileVault** via **System Settings → Privacy & Security → FileVault**. Store the recovery key in a password manager or enable recovery through the Apple Account.
+3. Enable **Find My Mac** and **iCloud Keychain / Passwords**. Use iCloud for credentials, recovery, and Apple settings, but keep active repositories, build directories, and package caches outside iCloud Drive.
+4. Configure **Time Machine** to an external drive for system recovery. This is separate from normal file backups and should not replace them.
+5. Install the [Xcode Command Line Tools](https://developer.apple.com/library/archive/technotes/tn2339/_index.html):
+   ```bash
+   xcode-select --install
+   ```
+6. Install [Homebrew](https://brew.sh) for Apple silicon. Keep Homebrew under `/opt/homebrew` and ensure its shell environment is configured with `brew shellenv`.
+7. Install Git, GPG, and other command-line tools through Homebrew. Keep macOS-native binaries separate from Linux / WSL binaries.
+8. Configure Git, SSH, GPG signing, and credentials. Store private keys in the macOS keychain or another encrypted password manager vault, not in the repository.
+9. Use cozydot for application installation and dotfile management. Keep macOS paths and settings separate from Linux / WSL packages.
+10. Recommended defaults:
+    - Use a strong login password and require it immediately after sleep or the screen saver.
+    - Enable automatic updates for macOS and Homebrew. Review major macOS upgrades before installing them on active development projects.
+    - Use the native keyboard, trackpad, and window-management settings first. Add a third-party utility only when a specific workflow is missing.
+    - Keep development projects in the local filesystem rather than iCloud Drive or external volumes.
+
+[cozydot](https://github.com/adoreblvnk/cozydot) handles macOS application installation and configuration alongside the existing Linux / WSL setup. Keep platform-specific paths, packages, and settings separate rather than sharing commands blindly between systems.
 
 ### Windows
 
