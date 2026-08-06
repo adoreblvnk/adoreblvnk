@@ -211,17 +211,15 @@ Guide for setting up the M3 MacBook Air with macOS Tahoe 26.6. The MacBook is bo
 
 1. Install macOS updates via **System Settings → General → Software Update**. Keep automatic system data files and security updates enabled.
 2. Enable **FileVault** via **System Settings → Privacy & Security → FileVault**. Store the recovery key in a password manager or enable recovery through the Apple Account.
-3. Enable **Find My Mac** and **iCloud Keychain / Passwords**. Use iCloud for credentials, recovery, and Apple settings, but keep active repositories, build directories, and package caches outside iCloud Drive.
-4. Configure **Time Machine** to an external drive for system recovery. This is separate from normal file backups and should not replace them.
-5. Install the [Xcode Command Line Tools](https://developer.apple.com/library/archive/technotes/tn2339/_index.html):
+3. Install the [Xcode Command Line Tools](https://developer.apple.com/library/archive/technotes/tn2339/_index.html):
    ```bash
    xcode-select --install
    ```
-6. Install [Homebrew](https://brew.sh) for Apple silicon. Keep Homebrew under `/opt/homebrew` and ensure its shell environment is configured with `brew shellenv`.
-7. Install Git, GPG, and other command-line tools through Homebrew. Keep macOS-native binaries separate from Linux / WSL binaries.
-8. Configure Git, SSH, GPG signing, and credentials. Store private keys in the macOS keychain or another encrypted password manager vault, not in the repository.
-9. Use cozydot for application installation and dotfile management. Keep macOS paths and settings separate from Linux / WSL packages.
-10. Recommended defaults:
+4. Install [Homebrew](https://brew.sh) for Apple silicon. Keep Homebrew under `/opt/homebrew` and ensure its shell environment is configured with `brew shellenv`.
+5. Install Git, GPG, and other command-line tools through Homebrew. Keep macOS-native binaries separate from Linux / WSL binaries.
+6. Configure Git, SSH, GPG signing, and credentials. Store private keys in the macOS keychain or another encrypted password manager vault, not in the repository.
+7. Use cozydot for application installation and dotfile management. Keep macOS paths and settings separate from Linux / WSL packages.
+8. Recommended defaults:
     - Use a strong login password and require it immediately after sleep or the screen saver.
     - Enable automatic updates for macOS and Homebrew. Review major macOS upgrades before installing them on active development projects.
     - Use the native keyboard, trackpad, and window-management settings first. Add a third-party utility only when a specific workflow is missing.

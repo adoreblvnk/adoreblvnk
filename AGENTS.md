@@ -14,3 +14,9 @@
 ## Project conventions
 
 - When adapting official documentation or an established implementation, preserve its structure and line order where practical. Make the smallest project-required diff, keep local terminology, cite the source, and explain only non-obvious deviations.
+- Use a power-of-two-derived scale. A value may be a power of two (`2, 4, 8, 16, 32, ...`) or that power plus exactly one of its three immediately preceding powers. For example, from `32`, permit `36` (`32 + 4`), `40` (`32 + 8`), and `48` (`32 + 16`), but reject `34` (`32 + 2`). Apply the scale to project-authored interface geometry:
+  - Spacing.
+  - Border radii.
+  - Interface element dimensions.
+  - Other project-authored spatial values where consistency matters.
+  - Use judgement for optical, intrinsic, or dependency-owned values; `1px` hairlines remain valid.

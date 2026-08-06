@@ -1,25 +1,19 @@
-/* ==========================================================================
-   Position Engine Redesign: Design System & Layout
-   ========================================================================== */
-
+/* Theme and shared layout values */
 :root {
-  /* Palette */
-  --ink: oklch(0.08 0 0);           /* #141414 - black */
-  --paper: oklch(0.95 0.004 210);   /* #eeefed - lighter paper tint */
-  --signal: oklch(0.98 0.002 210);  /* bright highlight */
+  --color-ink: oklch(0.08 0 0);
+  --color-paper: oklch(0.95 0.004 210);
+  --color-signal: oklch(0.98 0.002 210);
 
-  --dim-dark: oklch(0.55 0 0);       /* Muted text on ink */
-  --dim-light: oklch(0.45 0.003 210); /* Muted text on paper */
+  --color-border-dark: oklch(0.55 0 0);
+  --color-border-light: oklch(0.45 0.003 210);
 
-  --bg-color: var(--ink);
-  --fg-color: var(--paper);
-  --muted-color: var(--dim-dark);
+  --color-background: var(--color-ink);
+  --color-foreground: var(--color-paper);
+  --color-border: var(--color-border-dark);
 
-  /* Fonts */
   --font-display: "Lexend", sans-serif;
   --font-mono: "Space Mono", monospace;
 
-  /* Type scale */
   --text-hud: 9px;
   --text-meta: 11px;
   --text-ui: 14px;
@@ -29,7 +23,6 @@
   --text-display: clamp(32px, 8vw, 96px);
   --text-mega: clamp(64px, 10vw, 144px);
 
-  /* Animation Timings */
   --transition-fast: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-medium: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --masthead-height: 80px;
@@ -38,12 +31,12 @@
 }
 
 .paper-theme {
-  --bg-color: var(--paper);
-  --fg-color: var(--ink);
-  --muted-color: var(--dim-light);
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+  --color-border: var(--color-border-light);
 }
 
-/* Base resets */
+/* Global styles */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -60,8 +53,8 @@ html {
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--fg-color);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-family: var(--font-mono);
   font-weight: 400;
   font-size: var(--text-ui);
@@ -72,11 +65,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* WCAG 2.2 AA Focus styling */
 a:focus-visible,
 button:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--fg-color);
+  outline: 2px solid var(--color-foreground);
   outline-offset: 4px;
 }
 
@@ -95,8 +87,8 @@ button:focus-visible,
   left: 12px;
   z-index: 1000;
   padding: 12px 16px;
-  background: var(--fg-color);
-  color: var(--bg-color);
+  background: var(--color-foreground);
+  color: var(--color-background);
   font: 400 var(--text-ui)/1 var(--font-mono);
   text-decoration: none;
   transform: translateY(-160%);
@@ -110,24 +102,16 @@ button:focus-visible,
   outline: none;
 }
 
-/* --------------------------------------------------------------------------
-   HUD and Chrome Layers
-   -------------------------------------------------------------------------- */
-
-/* Fixed signal field */
+/* Fixed canvas and HUD layers */
 .signal-field {
   position: fixed;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
   overflow: hidden;
 }
 
-.signal-field {
-  z-index: 1;
-}
-
-
-/* One continuous paper lattice above the canvas and copy, plus pointer darkening. */
+/* The focus layer darkens the lattice around the pointer. */
 .hud-lattice,
 .hud-lattice-focus {
   position: fixed;
@@ -140,15 +124,15 @@ button:focus-visible,
 .hud-lattice {
   background-image:
     radial-gradient(circle, rgb(20 20 22 / 0.92) 0.8px, transparent 1.4px),
-    repeating-linear-gradient(90deg, rgb(20 20 22 / 0.22) 0 1px, transparent 1px 135px),
-    repeating-linear-gradient(0deg, rgb(20 20 22 / 0.22) 0 1px, transparent 1px 135px);
-  background-size: 27px 27px, 100% 100%, 100% 100%;
+    repeating-linear-gradient(90deg, rgb(20 20 22 / 0.22) 0 1px, transparent 1px 160px),
+    repeating-linear-gradient(0deg, rgb(20 20 22 / 0.22) 0 1px, transparent 1px 160px);
+  background-size: 32px 32px, 100% 100%, 100% 100%;
   opacity: 0.44;
 }
 
 .hud-lattice-focus {
   background-image: radial-gradient(circle, rgb(0 0 0 / 0.96) 1.2px, transparent 1.7px);
-  background-size: 27px 27px;
+  background-size: 32px 32px;
   opacity: 0.9;
   mask-image: radial-gradient(
     circle 64px at var(--pointer-screen-x, 50vw) var(--pointer-screen-y, 45vh),
@@ -165,7 +149,6 @@ button:focus-visible,
   will-change: mask-image;
 }
 
-/* HUD Chrome Overlays */
 .hud-chrome {
   position: fixed;
   inset: 0;
@@ -173,12 +156,11 @@ button:focus-visible,
   pointer-events: none;
 }
 
-/* Corner registration marks */
 .reg-corner {
   position: absolute;
   width: 16px;
   height: 16px;
-  border-color: var(--muted-color);
+  border-color: var(--color-border);
   border-style: solid;
   opacity: 0.35;
   transition: border-color var(--transition-medium);
@@ -188,7 +170,6 @@ button:focus-visible,
 .reg-corner.bottom-left { bottom: 24px; left: 24px; border-width: 0 0 1px 1px; }
 .reg-corner.bottom-right { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
 
-/* Object Space Trackers Projected on DOM */
 .hud-trackers-container {
   position: fixed;
   inset: 0;
@@ -235,18 +216,14 @@ button:focus-visible,
   text-align: right;
 }
 
-/* --------------------------------------------------------------------------
-   App Shell Layout
-   -------------------------------------------------------------------------- */
-
-/* Masthead styling */
+/* Masthead */
 .masthead {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: var(--masthead-height);
-  padding: 0 60px;
+  padding: 0 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -257,11 +234,11 @@ button:focus-visible,
 .logo-link {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 48px;
   font-family: var(--font-display);
   font-size: var(--text-body);
   font-weight: 900;
-  color: var(--paper);
+  color: var(--color-paper);
   text-decoration: none;
   letter-spacing: -0.02em;
 }
@@ -269,8 +246,8 @@ button:focus-visible,
 .writings-portal {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  color: var(--paper);
+  min-height: 48px;
+  color: var(--color-paper);
   font-family: var(--font-mono);
   font-size: var(--text-ui);
   font-weight: 700;
@@ -278,19 +255,16 @@ button:focus-visible,
   text-decoration: none;
 }
 
-/* --------------------------------------------------------------------------
-   Sections and Copy
-   -------------------------------------------------------------------------- */
-
+/* Home sections */
 .movement-section {
   min-height: 100vh;
   position: relative;
   display: flex;
   align-items: center;
   padding:
-    120px
+    128px
     var(--content-right)
-    100px
+    96px
     var(--content-left);
 }
 
@@ -298,19 +272,16 @@ button:focus-visible,
   position: relative;
   width: 100%;
   z-index: 10;
-  color: var(--signal);
+  color: var(--color-signal);
   mix-blend-mode: difference;
 }
 
-/* SECTION 1: IDENTITY HERO */
 #identity {
-  /* No background here, letting the canvas handle split colors natively */
   align-items: flex-end;
-  padding-bottom: 120px;
+  padding-bottom: 128px;
 }
 
-
-/* Giant background decorative mega-type (only on the light split field) */
+/* Decorative type behind the hero copy */
 .ghost-type {
   position: absolute;
   top: 15vh;
@@ -320,25 +291,26 @@ button:focus-visible,
   font-weight: 900;
   line-height: 1.0;
   letter-spacing: -0.04em;
-  color: var(--ink);
+  color: var(--color-ink);
   opacity: 0.05;
   pointer-events: none;
   user-select: none;
 }
 
 .hero-lockup {
-  max-width: min(760px, 62vw);
+  max-width: min(768px, 62vw);
 }
 
 .hero-specimen {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.55rem;
-  padding-bottom: 0.15rem;
+  gap: 12px;
+  padding-bottom: 2px;
 }
 
 .display-name {
+  margin-bottom: 12px;
   font-family: var(--font-display);
   font-size: var(--text-page);
   font-weight: 900;
@@ -358,19 +330,17 @@ button:focus-visible,
 
 .role-subheading {
   font-size: var(--text-ui);
-  transition: color var(--transition-medium);
 }
 
 .action-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin-top: 0.35rem;
-  height: 44px;
-  padding: 0 18px;
-  border: 1px solid var(--fg-color);
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--color-foreground);
   background-color: transparent;
-  color: var(--fg-color);
+  color: var(--color-foreground);
   font-family: var(--font-mono);
   font-size: var(--text-ui);
   font-weight: 400;
@@ -380,25 +350,18 @@ button:focus-visible,
 }
 
 .action-btn:hover {
-  background-color: var(--fg-color);
-  color: var(--bg-color);
+  background-color: var(--color-foreground);
+  color: var(--color-background);
 }
 
 .action-btn:active {
   transform: scale(0.96);
 }
 
-.action-btn:disabled {
-  cursor: default;
-  opacity: 0.48;
-}
-
-
-/* SECTION 2: POSITION */
 .kinetic-stacked-composition {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 24px;
   font-family: var(--font-display);
   font-size: var(--text-display);
   font-weight: 900;
@@ -406,7 +369,7 @@ button:focus-visible,
   letter-spacing: -0.04em;
   text-transform: uppercase;
   user-select: none;
-  max-width: 800px;
+  max-width: 768px;
 }
 
 .kinetic-word-row {
@@ -414,19 +377,16 @@ button:focus-visible,
   transform-origin: left center;
 }
 
-
-/* SECTION 3: CONTACT INDEX */
 .contact-index {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-  width: 100%;
-  max-width: 600px;
+  max-width: 576px;
 }
 
 .section-title {
+  padding: 24px 0;
+  border-bottom: 1px solid transparent;
   font-size: var(--text-ui);
   font-weight: 400;
+  line-height: 24px;
   letter-spacing: 0.08em;
 }
 
@@ -435,7 +395,7 @@ button:focus-visible,
 }
 
 .contact-item {
-  border-bottom: 1px solid var(--muted-color);
+  border-bottom: 1px solid var(--color-border);
   transition: border-color var(--transition-medium);
 }
 
@@ -445,8 +405,12 @@ button:focus-visible,
   justify-content: space-between;
   align-items: center;
   padding: 24px 0;
+  line-height: 24px;
   text-decoration: none;
-  transition: padding var(--transition-fast), color var(--transition-fast);
+}
+
+.contact-link {
+  transition: padding var(--transition-fast);
 }
 
 .link-prefix {
@@ -461,12 +425,12 @@ button:focus-visible,
 @media (min-width: 769px) {
   #contact {
     min-height: 0;
-    height: calc(100vh - 30px);
-    padding-bottom: 30px;
+    height: calc(100vh - 32px);
+    padding-bottom: 32px;
   }
 
   #contact .link-address {
-    margin-right: 108px;
+    margin-right: 96px;
   }
 }
 
@@ -475,12 +439,11 @@ button:focus-visible,
 }
 
 .contact-link:hover .link-prefix {
-  color: var(--fg-color);
+  color: var(--color-foreground);
 }
 
-/* Huge Colophon */
 .colophon-text {
-  margin-top: 4rem;
+  margin-top: 64px;
   font-family: var(--font-display);
   font-size: var(--text-display);
   font-weight: 900;
@@ -494,8 +457,6 @@ button:focus-visible,
   color: inherit;
 }
 
-
-/* Screen reader utility */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -508,11 +469,7 @@ button:focus-visible,
   border: 0;
 }
 
-
-/* --------------------------------------------------------------------------
-   Responsive Layout Breakpoints
-   -------------------------------------------------------------------------- */
-
+/* Responsive layout */
 @media (max-width: 1024px) {
   :root {
     --content-left: 96px;
@@ -526,29 +483,28 @@ button:focus-visible,
     --content-right: 24px;
   }
 
-  /* Underlay mode on mobile/tablet */
+  /* Pointer tracking is not useful on smaller touch screens. */
   .hud-trackers-container,
   .hud-lattice-focus {
-    display: none !important; /* Remove nonessential chrome on tablet/mobile as per specs */
+    display: none;
   }
 
   .masthead {
     padding: 0 24px;
-    background-color: var(--bg-color); /* solid backdrop on mobile */
-    border-bottom: 1px solid var(--muted-color);
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
     mix-blend-mode: normal;
     transition: background-color var(--transition-medium), border-color var(--transition-medium);
   }
 
   .logo-link,
   .writings-portal {
-    color: var(--fg-color);
+    color: var(--color-foreground);
   }
 
   .movement-section {
-    padding: 120px var(--content-right) 80px var(--content-left);
+    padding: 128px var(--content-right) 80px var(--content-left);
     min-height: 100svh;
-    height: auto;
   }
 
   #identity {
@@ -558,31 +514,29 @@ button:focus-visible,
 
 
   .hero-lockup {
-    color: var(--fg-color);
+    color: var(--color-foreground);
     max-width: 100%;
-  }
-
-  .hero-specimen {
-    gap: 0.45rem;
-    width: 100%;
   }
 
   #contact {
     align-items: flex-start;
-    padding-top: 112px;
+    padding-top: 128px;
     padding-bottom: 64px;
   }
 
   .contact-index {
     max-width: none;
-    gap: 1.35rem;
+  }
+
+  .section-title {
+    padding: 16px 0;
   }
 
   .contact-link,
   .contact-entry {
     align-items: flex-start;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 6px;
     padding: 16px 0;
   }
 
@@ -591,15 +545,14 @@ button:focus-visible,
   }
 
   .colophon-text {
-    margin-top: 1.25rem;
+    margin-top: 24px;
     line-height: 0.9;
-    letter-spacing: -0.04em;
     opacity: 0.2;
     white-space: nowrap;
   }
 
   .ghost-type {
-    display: none !important;
+    display: none;
   }
 
 }

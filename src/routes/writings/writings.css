@@ -1,23 +1,23 @@
 .writings-shell {
-  --writings-ink: #080808;
-  --writings-paper: #eeefed;
-  --writings-signal: #cfd2d2;
+  --color-ink: #080808;
+  --color-paper: #eeefed;
+  --color-signal: #cfd2d2;
+  --color-border: rgb(238 239 237 / 24%);
   min-height: 100vh;
-  background: var(--writings-ink);
-  color: var(--writings-paper);
-  font-family: 'Space Mono', monospace;
+  background: var(--color-ink);
+  color: var(--color-paper);
 }
 
 .writings-index,
 .writing-page {
-  width: min(900px, calc(100% - var(--content-right) - var(--content-right)));
+  width: min(768px, calc(100% - var(--content-right) - var(--content-right)));
   margin-inline: auto;
-  padding: clamp(72px, 11vw, 150px) 0 120px;
+  padding: clamp(64px, 11vw, 144px) 0 128px;
 }
 
 .writings-label {
   margin: 0 0 8px;
-  color: var(--writings-signal);
+  color: var(--color-signal);
   font-size: var(--text-ui);
   line-height: 20px;
   letter-spacing: 0.12em;
@@ -25,7 +25,6 @@
 
 .writings-index h1,
 .writing-header h1 {
-  margin: 0;
   font-family: 'Lexend', sans-serif;
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -41,26 +40,25 @@
 }
 
 .empty-index {
-  margin-top: 72px;
-  padding-top: 18px;
-  border-top: 1px solid rgb(238 239 237 / 24%);
+  margin-top: 64px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border);
   color: rgb(238 239 237 / 64%);
   font-size: var(--text-meta);
 }
 
 .writing-list {
-  padding: 0;
-  margin: 72px 0 0;
+  margin: clamp(24px, 3vw, 40px) 0 0;
   list-style: none;
-  border-top: 1px solid rgb(238 239 237 / 24%);
+  border-top: 1px solid var(--color-border);
 }
 
 .writing-list a {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  grid-template-columns: 96px 1fr;
   gap: 6px 24px;
   padding: 24px 0;
-  border-bottom: 1px solid rgb(238 239 237 / 24%);
+  border-bottom: 1px solid var(--color-border);
   color: inherit;
   text-decoration: none;
 }
@@ -81,8 +79,8 @@
 }
 
 .writing-header {
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgb(238 239 237 / 24%);
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .writing-header > p:not(.writings-label) {
@@ -96,15 +94,14 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  padding: 0;
   margin: 12px 0 0;
   list-style: none;
 }
 
 .tag-list li {
-  padding: 3px 8px;
+  padding: 4px 8px;
   border: 1px solid rgb(238 239 237 / 28%);
-  color: var(--writings-signal);
+  color: var(--color-signal);
   font-size: var(--text-meta);
   line-height: 16px;
   text-transform: uppercase;
@@ -128,16 +125,23 @@
 }
 
 .writing-content a {
-  color: var(--writings-paper);
-  text-decoration-color: var(--writings-signal);
-  text-underline-offset: 0.18em;
+  color: var(--color-paper);
+  text-decoration-line: underline;
+  text-decoration-color: rgb(207 210 210 / 56%);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+.writing-content a:hover,
+.writing-content a:focus-visible {
+  text-decoration-color: var(--color-signal);
+  text-decoration-thickness: 2px;
 }
 
 .writing-content img {
   display: block;
-  max-width: 100%;
   height: auto;
-  margin: 2.4em 0;
+  margin: 40px 0;
 }
 
 .writing-content li img {
@@ -148,13 +152,13 @@
   margin: 0 8px 0 0;
   padding: 2px;
   vertical-align: -5px;
-  background: var(--writings-paper);
+  background: var(--color-paper);
   object-fit: contain;
 }
 
 .writing-content figure[data-rehype-pretty-code-figure] {
   position: relative;
-  margin: 1em 0;
+  margin: 16px 0;
 }
 
 .writing-content pre:has(.rehype-pretty-copy) {
@@ -178,7 +182,7 @@
 }
 
 .writing-content pre button.rehype-pretty-copy:focus-visible {
-  outline: 2px solid var(--writings-paper);
+  outline: 2px solid var(--color-paper);
   outline-offset: 2px;
 }
 
@@ -196,11 +200,6 @@
 }
 
 @media (max-width: 600px) {
-  .writings-index,
-  .writing-page {
-    padding-top: 64px;
-  }
-
   .writing-list a {
     grid-template-columns: 1fr;
   }
