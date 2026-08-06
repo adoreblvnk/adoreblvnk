@@ -1,6 +1,6 @@
 ---
-title: "Inventory & Digital Setup"
-summary: "My personal inventory and digital setup."
+title: "inventory & digital setup"
+summary: "my personal inventory & digital setup."
 date: 2026-08-02
 tags:
   - inventory

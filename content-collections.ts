@@ -31,7 +31,7 @@ const writings = defineCollection({
         rehypeSlug,
         [rehypePrettyCode, {
           defaultLang: { block: 'plaintext' },
-          theme: 'catppuccin-mocha',
+          theme: 'vesper',
           transformers: [transformerCopyButton({ visibility: 'always', feedbackDuration: 2_000 })],
         }],
       ],

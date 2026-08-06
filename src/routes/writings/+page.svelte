@@ -15,15 +15,14 @@
 
 <!-- https://www.content-collections.dev/docs/quickstart/svelte-kit -->
 <main class="writings-index">
-  <p class="writings-label">WRITINGS / INDEX</p>
-  <h1>Writing in progress.</h1>
+  <h1>writings &amp; whatnot</h1>
 
   {#if data.writings.length}
     <ol class="writing-list">
       {#each data.writings as writing}
         <li>
           <a href={`/writings/${writing.slug}/`}>
-            <time datetime={writing.date}>{writing.date.replaceAll('-', '.')}</time>
+            <time datetime={writing.date}>{writing.date}</time>
             <span>{writing.title}</span>
             <small>{writing.summary}</small>
           </a>

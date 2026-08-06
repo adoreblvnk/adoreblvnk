@@ -1,11 +1,11 @@
 ---
 name: adore_blvnk
-description: An achromatic identity surface built around animated 3D form rendered as dithered machine vision.
+description: An achromatic identity surface built around an animated 3D figure rendered as dithered machine vision.
 colors:
   carbon-ink: "oklch(0.08 0 0)"
   cold-paper: "oklch(0.95 0.004 210)"
   signal-white: "oklch(0.98 0.002 210)"
-  link-blue: "oklch(0.62 0.08 240)"
+  link-blue: "#89B4FA"
   dark-registration: "oklch(0.55 0 0)"
   light-registration: "oklch(0.45 0.003 210)"
 typography:
@@ -39,13 +39,17 @@ typography:
     fontWeight: 400
     lineHeight: 1.8
     letterSpacing: "-0.01em"
-  writing-index-heading:
+  body-strong:
     fontFamily: "Lexend, sans-serif"
-    fontSize: "32px"
-    fontWeight: 400
-    lineHeight: "48px"
-    letterSpacing: "-0.02em"
-  writing-article-heading:
+    fontSize: "17px"
+    fontWeight: 600
+    lineHeight: 1.8
+  writing-entry-title:
+    fontFamily: "Lexend, sans-serif"
+    fontSize: "17px"
+    fontWeight: 700
+    lineHeight: 1.5
+  writing-page-heading:
     fontFamily: "Lexend, sans-serif"
     fontSize: "40px"
     fontWeight: 400
@@ -107,7 +111,7 @@ components:
     typography: "{typography.label}"
     rounded: "{rounded.none}"
     padding: "4px 8px"
-  writing-link:
+  article-link:
     textColor: "{colors.link-blue}"
     underline: "1px on hover and focus"
 ---
@@ -118,20 +122,20 @@ components:
 
 **Creative North Star: "The Registered Position"**
 
-The interface is an achromatic registration field built around animated 3D form rendered as dithered machine vision. Its defining aesthetic lives in the asset: a solid GLB oscillates between scan, halftone, and digital noise while remaining legible in motion. Coordinate trackers, registration corners, and a measured lattice frame that presence as deliberate evidence.
+The interface is an achromatic registration field built around an animated 3D figure rendered as dithered machine vision. The figure oscillates between scan, halftone, and digital noise while remaining legible in motion. Coordinate trackers, registration corners, and a measured lattice frame that presence as deliberate evidence.
 
 The composition is sparse but active. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes. Full-viewport movement, hard alignments, and decisive inversion create controlled intensity while keeping the asset dominant.
 
 **Key Characteristics:**
-- Monochrome section inversion with no ornamental accent color; cold blue is reserved for functional prose links.
-- One animated, dithered 3D form as the identity-bearing visual anchor.
+- Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
+- One animated, dithered 3D figure as the identity-bearing visual anchor.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
 - Technical overlays and motion that register identity, pose, position, or interaction.
 
 ## 2. Colors
 
-A cold achromatic palette gives the animated form, type, and spatial instrumentation one severe visual register.
+A cold achromatic palette gives the 3D figure, type, and spatial instrumentation one severe visual register.
 
 ### Primary
 - **Carbon Ink:** The default field and primary text on paper sections.
@@ -139,7 +143,7 @@ A cold achromatic palette gives the animated form, type, and spatial instrumenta
 
 ### Secondary
 - **Signal White:** High-contrast type placed over difference-blended scene content and the brighter reading value for identity-bearing text.
-- **Link Blue:** A restrained cold blue reserved for inline prose links. It identifies links at rest; hover and focus add a one-pixel underline.
+- **Link Blue:** Sourced from Catppuccin Mocha Blue and reserved for inline prose links. It identifies links at rest; hover and focus add a one-pixel underline.
 
 ### Neutral
 - **Dark Registration:** Hairlines and registration marks over Carbon Ink.
@@ -149,7 +153,7 @@ A cold achromatic palette gives the animated form, type, and spatial instrumenta
 
 **The Signal-Only Rule.** Color is structural: field, foreground, border, scene signal, or functional prose-link identification. Emphasis comes from inversion, weight, scale, and motion.
 
-**The Inversion Rule.** Section transitions exchange Carbon Ink and Cold Paper while preserving the legibility of the animated asset and contact routes.
+**The Inversion Rule.** Section transitions exchange Carbon Ink and Cold Paper while preserving the legibility of the 3D figure and contact routes.
 
 **The Alpha Hierarchy Rule.** Transparency subordinates borders, metadata, inactive kinetic type, and HUD evidence without creating new color roles.
 
@@ -168,11 +172,12 @@ A cold achromatic palette gives the animated form, type, and spatial instrumenta
 - **Display** (900, fluid 42–88px, 1 line-height): The identity name; balance lines and never exceed the established -0.04em tracking floor.
 - **Headline** (900, fluid 32–96px, 0.85 line-height): Kinetic all-caps statements and colophon-scale type only.
 - **Title** (900, 21px, 1.05 line-height): Short identity phrases and compact section-level statements.
-- **Body** (400, 17px, 1.8 line-height): Long-form writings, capped by the 768px reading measure.
-- **Writing Index Heading** (400, 32px, 48px line-height): The writings index title.
-- **Writing Article Heading** (400, 40px, 48px line-height): Individual writing titles.
+- **Body** (400, 17px, 1.8 line-height): Long-form article prose, capped by the 768px reading measure.
+- **Body Strong** (600, 17px, 1.8 line-height): Prose emphasis without approaching display weight.
+- **Writing Entry Title** (700, 17px, 1.5 line-height): Titles in the Writings index.
+- **Writing Page Heading** (400, 40px, 48px line-height): The Writings index title and article titles.
 - **Label** (400–700, 14px, up to 0.12em tracking): Navigation, contact prefixes, and controls. Uppercase is reserved for terse operational labels.
-- **Meta** (400, 11px, 16px line-height): Dates, summaries, tags, and secondary writing metadata.
+- **Meta** (400, 11px, 16px line-height): Writing-index dates and summaries, tags, and secondary metadata.
 - **HUD** (400, 9px, 1 line-height): Coordinate trackers and spatial evidence only.
 
 ### Named Rules
@@ -183,7 +188,7 @@ A cold achromatic palette gives the animated form, type, and spatial instrumenta
 
 ## 4. Elevation
 
-The system is flat. Depth comes from the WebGL figure, section inversion, opacity, difference blending, masks, and fixed layer order. One-pixel borders establish structure without simulating elevation.
+The system is flat. Depth comes from the 3D figure, section inversion, opacity, difference blending, masks, and fixed layer order. One-pixel borders establish structure without simulating elevation.
 
 ### Named Rules
 
@@ -194,13 +199,11 @@ The system is flat. Depth comes from the WebGL figure, section inversion, opacit
 Components are square, terse, and mechanically responsive. Their states use inversion and measured displacement.
 
 ### Buttons
-- **Shape:** Square control geometry (0 radius), 48px high, with 16px horizontal padding and a one-pixel foreground border.
-- **Primary:** Transparent field with current foreground text in Space Mono at 14px.
-- **Hover / Focus:** Hover inverts field and text. Focus uses a two-pixel current-foreground outline offset by 4px. Active state compresses to 96% scale using the fast exponential transition.
+- **Shape:** Square, flat, and bordered.
+- **States:** Hover inverts field and text, focus remains visibly outlined, and active states compress briefly.
 
-### Chips
-- **Style:** Writing tags use square one-pixel translucent Cold Paper borders, 4px × 8px padding, and 11px uppercase Space Mono.
-- **State:** Tags are informational and remain square.
+### Writing Tags
+- **Style:** Writing Tags are square, translucent, uppercase metadata rather than interactive controls.
 
 ### Cards / Containers
 - **Corner Style:** Square containers aligned to the registration geometry.
@@ -211,33 +214,37 @@ Components are square, terse, and mechanically responsive. Their states use inve
 
 ### Navigation
 
-The fixed 80px masthead pairs a 900-weight Lexend identity mark with a 700-weight Space Mono writings route. Both links provide a 48px minimum target. Desktop navigation uses difference blending; mobile navigation resolves to the current section colors with a one-pixel bottom divider.
+The fixed, transparent masthead uses difference blending at every viewport size. Mobile narrows its horizontal inset without changing its visual treatment.
 
 ### Contact Index
 
-Contact routes are unboxed rows separated by one-pixel registration lines. Each row pairs a 14px operational prefix with a 17px address, uses 24px vertical padding, and shifts 16px to the right on hover. Mobile stacks prefix and address with a compact 6px gap to protect long addresses.
+Contact routes are unboxed rows separated by registration lines. Each row pairs an operational prefix with an address; mobile stacks them to protect long addresses.
 
 ### Writing Index
 
-Writing entries use a 96px date column and a flexible title column, separated by 24px. The pattern collapses to one column below 600px. Titles carry 700 weight; dates and summaries stay quieter without sacrificing readable contrast.
+Writing entries align dates and content in two columns, then collapse to one column on narrow screens. Dividers establish list rhythm while dates and summaries remain subordinate to titles.
+
+### Article
+
+Article headers use ISO 8601 publication dates and the shared Writing Tag treatment. Metadata wraps when space is constrained.
 
 ### Prose Links
 
-Inline writing links use Link Blue without an underline at rest. Hover and keyboard focus add a one-pixel current-color underline with a 6px optical offset. Navigation, contact rows, writing-index rows, and buttons keep their structural affordances instead of adopting the prose-link treatment.
+Inline article links use Link Blue without an underline at rest and underline on hover or keyboard focus. Code blocks use the Vesper syntax theme. Navigation, contact rows, Writing Entries, and buttons retain their structural affordances.
 
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** keep the animated, dithered GLB as the single identity-bearing visual anchor.
+- **Do** keep the animated, dithered figure as the single identity-bearing visual anchor.
 - **Do** preserve anatomy, pose, and hand sign through every dither, camera, and interaction treatment.
 - **Do** use the 8/12/16/24/32/48/64/80/96/128px spatial vocabulary, with 4px reserved for optical insets and 6px for compact internal gaps.
-- **Do** keep contact routes and the identity phrase readable during theme inversion and WebGL context recovery.
+- **Do** keep contact routes and the identity phrase readable during theme inversion.
 - **Do** tie technical overlays to identity evidence: pose, position, registration, pointer focus, or interaction.
 - **Do** provide reduced-motion behavior for entrance, section, and interaction animation.
 
 ### Don't:
 - **Don't** turn the interface into a generic SaaS landing page, soft glass card system, or warm editorial template.
-- **Don't** let specimen-style UI chrome, excessive telemetry, barcodes, fictional operating-system chrome, or status readouts compete with the animated asset.
+- **Don't** let specimen-style UI chrome, excessive telemetry, barcodes, fictional operating-system chrome, or status readouts compete with the 3D figure.
 - **Don't** make the 3D character cute or mascot-like, coat it in glossy cyber-armor, or surround it with decorative point clouds.
 - **Don't** let interaction sacrifice the character's pose or hand sign.
 - **Don't** add gradients, ornamental accent colors, soft shadows, rounded card grids, or pill-shaped informational tags.

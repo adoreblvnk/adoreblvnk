@@ -3,7 +3,7 @@
   --color-ink: oklch(0.08 0 0);
   --color-paper: oklch(0.95 0.004 210);
   --color-signal: oklch(0.98 0.002 210);
-  --color-link: oklch(0.62 0.08 240);
+  --color-link: #89b4fa;
 
   --color-border-dark: oklch(0.55 0 0);
   --color-border-light: oklch(0.45 0.003 210);
@@ -20,6 +20,7 @@
   --text-ui: 14px;
   --text-body: 17px;
   --text-heading: 21px;
+  --text-writing-title: 40px;
   --text-page: clamp(42px, 8vw, 88px);
   --text-display: clamp(32px, 8vw, 96px);
   --text-mega: clamp(64px, 10vw, 144px);
@@ -492,15 +493,6 @@ button:focus-visible,
 
   .masthead {
     padding: 0 24px;
-    background-color: var(--color-background);
-    border-bottom: 1px solid var(--color-border);
-    mix-blend-mode: normal;
-    transition: background-color var(--transition-medium), border-color var(--transition-medium);
-  }
-
-  .logo-link,
-  .writings-portal {
-    color: var(--color-foreground);
   }
 
   .movement-section {

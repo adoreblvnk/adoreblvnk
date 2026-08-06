@@ -1,8 +1,9 @@
 .writings-shell {
-  --color-ink: #080808;
-  --color-paper: #eeefed;
-  --color-signal: #cfd2d2;
-  --color-border: rgb(238 239 237 / 24%);
+  --color-border: color-mix(in srgb, var(--color-paper) 24%, transparent);
+  --color-metadata: color-mix(in srgb, var(--color-paper) 56%, transparent);
+  --color-secondary: color-mix(in srgb, var(--color-paper) 72%, transparent);
+  --color-subtle: color-mix(in srgb, var(--color-paper) 64%, transparent);
+  --color-tag-border: color-mix(in srgb, var(--color-paper) 28%, transparent);
   min-height: 100vh;
   background: var(--color-ink);
   color: var(--color-paper);
@@ -12,43 +13,28 @@
 .writing-page {
   width: min(768px, calc(100% - var(--content-right) - var(--content-right)));
   margin-inline: auto;
-  padding: clamp(64px, 11vw, 144px) 0 128px;
-}
-
-.writings-label {
-  margin: 0 0 8px;
-  color: var(--color-signal);
-  font-size: var(--text-ui);
-  line-height: 20px;
-  letter-spacing: 0.12em;
+  padding: clamp(96px, 11vw, 144px) 0 128px;
 }
 
 .writings-index h1,
 .writing-header h1 {
-  font-family: 'Lexend', sans-serif;
+  font-family: var(--font-display);
+  font-size: var(--text-writing-title);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 48px;
 }
 
-.writings-index h1 {
-  font-size: 2rem;
-}
-
-.writing-header h1 {
-  font-size: 2.5rem;
-}
-
 .empty-index {
-  margin-top: 64px;
-  padding-top: 16px;
+  margin-top: 24px;
+  padding-top: 24px;
   border-top: 1px solid var(--color-border);
-  color: rgb(238 239 237 / 64%);
+  color: var(--color-subtle);
   font-size: var(--text-meta);
 }
 
 .writing-list {
-  margin: clamp(24px, 3vw, 40px) 0 0;
+  margin: 24px 0 0;
   list-style: none;
   border-top: 1px solid var(--color-border);
 }
@@ -65,7 +51,7 @@
 
 .writing-list time,
 .writing-list small {
-  color: rgb(238 239 237 / 56%);
+  color: var(--color-metadata);
   font-size: var(--text-meta);
 }
 
@@ -83,24 +69,39 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.writing-header > p:not(.writings-label) {
+.writing-header > p {
   margin: 8px 0 0;
-  color: rgb(238 239 237 / 72%);
+  color: var(--color-secondary);
   font-size: var(--text-ui);
   line-height: 20px;
+}
+
+.writing-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin: 12px 0 0;
+}
+
+.writing-date {
+  color: var(--color-metadata);
+  font-size: var(--text-ui);
+  line-height: 20px;
+  white-space: nowrap;
 }
 
 .tag-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 12px 0 0;
+  margin: 0;
   list-style: none;
 }
 
 .tag-list li {
   padding: 4px 8px;
-  border: 1px solid rgb(238 239 237 / 28%);
+  border: 1px solid var(--color-tag-border);
   color: var(--color-signal);
   font-size: var(--text-meta);
   line-height: 16px;
@@ -111,7 +112,7 @@
   margin-top: 16px;
   color: inherit;
   background: transparent;
-  font-family: 'Lexend', sans-serif;
+  font-family: var(--font-display);
   font-size: var(--text-body);
   line-height: 1.8;
 }
@@ -119,7 +120,7 @@
 .writing-content h2,
 .writing-content h3,
 .writing-content h4 {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-weight: 700;
   line-height: 1.2;
 }
@@ -194,7 +195,7 @@
 }
 
 .writing-content code {
-  font-family: 'Space Mono', monospace;
+  font-family: var(--font-mono);
   font-size: var(--text-ui);
 }
 

@@ -17,14 +17,16 @@
 <!-- https://www.content-collections.dev/docs/quickstart/svelte-kit -->
 <main class="writing-page">
   <header class="writing-header">
-    <p class="writings-label">WRITING / {data.writing.date.replaceAll('-', '.')}</p>
     <h1>{data.writing.title}</h1>
     <p>{data.writing.summary}</p>
-    {#if data.writing.tags.length}
-      <ul class="tag-list" aria-label="Tags">
-        {#each data.writing.tags as tag}<li>{tag}</li>{/each}
-      </ul>
-    {/if}
+    <div class="writing-meta">
+      <time class="writing-date" datetime={data.writing.date}>{data.writing.date}</time>
+      {#if data.writing.tags.length}
+        <ul class="tag-list" aria-label="Tags">
+          {#each data.writing.tags as tag}<li>{tag}</li>{/each}
+        </ul>
+      {/if}
+    </div>
   </header>
 
   <article class="writing-content markdown-body">

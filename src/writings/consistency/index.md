@@ -1,6 +1,6 @@
 ---
-title: "Consistency"
-summary: "Standards, best practices and guidelines for software development and digital life."
+title: "consistency"
+summary: "standards, best practices & guidelines for software development & digital life."
 date: 2026-08-02
 tags:
   - standards
@@ -206,8 +206,6 @@ The [YAML spec](https://yaml.org/spec/1.2.2) does not dictate a style guide, but
 [cozydot](https://github.com/adoreblvnk/cozydot) is an automated post-install, update, & config (dotfile) manager for Linux. In the context of consistency, cozydot maintains consistency between multiple systems & ensures reliability by tracking changes made, thus reducing potential errors while setting up.
 
 ### macOS (Apple silicon)
-
-Guide for setting up the M3 MacBook Air with macOS Tahoe 26.6. The MacBook is both a mobile computer and a primary machine for heavy development work.
 
 1. Install macOS updates via **System Settings → General → Software Update**. Keep automatic system data files and security updates enabled.
 2. Enable **FileVault** via **System Settings → Privacy & Security → FileVault**. Store the recovery key in a password manager or enable recovery through the Apple Account.
