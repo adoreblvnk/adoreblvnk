@@ -125,17 +125,16 @@
 }
 
 .writing-content a {
-  color: var(--color-paper);
-  text-decoration-line: underline;
-  text-decoration-color: rgb(207 210 210 / 56%);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 6px;
+  color: var(--color-link);
+  text-decoration: none;
 }
 
 .writing-content a:hover,
 .writing-content a:focus-visible {
-  text-decoration-color: var(--color-signal);
-  text-decoration-thickness: 2px;
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
 }
 
 .writing-content img {

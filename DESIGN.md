@@ -5,6 +5,7 @@ colors:
   carbon-ink: "oklch(0.08 0 0)"
   cold-paper: "oklch(0.95 0.004 210)"
   signal-white: "oklch(0.98 0.002 210)"
+  link-blue: "oklch(0.62 0.08 240)"
   dark-registration: "oklch(0.55 0 0)"
   light-registration: "oklch(0.45 0.003 210)"
 typography:
@@ -106,6 +107,9 @@ components:
     typography: "{typography.label}"
     rounded: "{rounded.none}"
     padding: "4px 8px"
+  writing-link:
+    textColor: "{colors.link-blue}"
+    underline: "1px on hover and focus"
 ---
 
 # Design System: adore_blvnk
@@ -119,7 +123,7 @@ The interface is an achromatic registration field built around animated 3D form 
 The composition is sparse but active. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes. Full-viewport movement, hard alignments, and decisive inversion create controlled intensity while keeping the asset dominant.
 
 **Key Characteristics:**
-- Monochrome section inversion with no ornamental accent color.
+- Monochrome section inversion with no ornamental accent color; cold blue is reserved for functional prose links.
 - One animated, dithered 3D form as the identity-bearing visual anchor.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
@@ -135,6 +139,7 @@ A cold achromatic palette gives the animated form, type, and spatial instrumenta
 
 ### Secondary
 - **Signal White:** High-contrast type placed over difference-blended scene content and the brighter reading value for identity-bearing text.
+- **Link Blue:** A restrained cold blue reserved for inline prose links. It identifies links at rest; hover and focus add a one-pixel underline.
 
 ### Neutral
 - **Dark Registration:** Hairlines and registration marks over Carbon Ink.
@@ -142,7 +147,7 @@ A cold achromatic palette gives the animated form, type, and spatial instrumenta
 
 ### Named Rules
 
-**The Signal-Only Rule.** Color is structural: field, foreground, border, or scene signal. Emphasis comes from inversion, weight, scale, and motion.
+**The Signal-Only Rule.** Color is structural: field, foreground, border, scene signal, or functional prose-link identification. Emphasis comes from inversion, weight, scale, and motion.
 
 **The Inversion Rule.** Section transitions exchange Carbon Ink and Cold Paper while preserving the legibility of the animated asset and contact routes.
 
@@ -215,6 +220,10 @@ Contact routes are unboxed rows separated by one-pixel registration lines. Each 
 ### Writing Index
 
 Writing entries use a 96px date column and a flexible title column, separated by 24px. The pattern collapses to one column below 600px. Titles carry 700 weight; dates and summaries stay quieter without sacrificing readable contrast.
+
+### Prose Links
+
+Inline writing links use Link Blue without an underline at rest. Hover and keyboard focus add a one-pixel current-color underline with a 6px optical offset. Navigation, contact rows, writing-index rows, and buttons keep their structural affordances instead of adopting the prose-link treatment.
 
 ## 6. Do's and Don'ts
 

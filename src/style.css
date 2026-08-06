@@ -3,6 +3,7 @@
   --color-ink: oklch(0.08 0 0);
   --color-paper: oklch(0.95 0.004 210);
   --color-signal: oklch(0.98 0.002 210);
+  --color-link: oklch(0.62 0.08 240);
 
   --color-border-dark: oklch(0.55 0 0);
   --color-border-light: oklch(0.45 0.003 210);
