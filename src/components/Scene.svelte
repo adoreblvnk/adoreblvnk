@@ -1,13 +1,11 @@
 <script lang="ts">
   import { T, useLoader, useTask, useThrelte } from '@threlte/core';
   import { TextureLoader } from 'three';
-  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   import type { SculptureController } from '../lib/sculpture-controller';
 
   let { controller }: { controller: SculptureController } = $props();
   const { camera, canvas, size } = useThrelte();
   const portraitTexture = useLoader(TextureLoader).load('/images/portrait.png');
-  const orbitModel = useLoader(GLTFLoader).load('/models/portrait-orbit.glb');
 
   $effect(() => {
     controller.attachCamera($camera);
@@ -18,7 +16,7 @@
   });
 
   $effect(() => {
-    if ($portraitTexture && $orbitModel) controller.attachSceneAssets($portraitTexture, $orbitModel);
+    if ($portraitTexture) controller.attachSceneAssets($portraitTexture);
   });
 
   $effect(() => {
