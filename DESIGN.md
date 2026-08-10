@@ -39,6 +39,13 @@ typography:
     fontWeight: 400
     lineHeight: 1.8
     letterSpacing: "-0.01em"
+  position-bio:
+    fontFamily: "Space Mono, monospace"
+    fontSize: "clamp(17px, 1.35vw, 22px)"
+    fontWeight: 400
+    lineHeight: 1.55
+    letterSpacing: "-0.025em"
+    measure: "36ch"
   body-strong:
     fontFamily: "Lexend, sans-serif"
     fontSize: "17px"
@@ -132,6 +139,7 @@ Computational brutalism governs transitions and animation. Scan states, digital 
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
 - Technical overlays and motion that register identity, pose, position, or interaction.
+- Shared content lines govern every composition. The position bio's right edge mirrors the primary left content inset.
 
 ## 2. Colors
 
@@ -173,6 +181,7 @@ A cold achromatic palette unifies the 3D figure, type, and spatial instrumentati
 - **Headline** (900, fluid 32–96px, 0.85 line-height): Kinetic all-caps statements and colophon-scale type only.
 - **Title** (900, 21px, 1.05 line-height): Short identity phrases and compact section-level statements.
 - **Body** (400, 17px, 1.8 line-height): Long-form article prose, capped by the 768px reading measure.
+- **Position Bio** (400, fluid 17–22px, 1.55 line-height): A 36ch Space Mono identity note that may cross the figure while preserving its mirrored right alignment.
 - **Body Strong** (600, 17px, 1.8 line-height): Prose emphasis without approaching display weight.
 - **Writing Entry Title** (700, 17px, 1.5 line-height): Titles in the Writings index.
 - **Writing Page Heading** (400, 40px, 48px line-height): The Writings index title and article titles.
@@ -220,6 +229,10 @@ The fixed, transparent masthead uses difference blending at every viewport size.
 
 Contact routes are unboxed rows separated by registration lines. Each row pairs an operational prefix with an address; mobile stacks them to protect long addresses.
 
+### Position Composition
+
+The position section pairs low-opacity kinetic Lexend type with a right-aligned Space Mono biography. The figure sits left of center and may pass behind the biography. The biography preserves the shared mirrored margin instead of following the section's smaller right padding. On narrow screens, the figure scales down and shifts up and left while the biography stacks below the kinetic type without overlap.
+
 ### Writing Index
 
 Writing entries align dates and content in two columns, then collapse to one column on narrow screens. Dividers establish list rhythm while dates and summaries remain subordinate to titles.
@@ -239,6 +252,7 @@ Inline article links use Link Blue without an underline at rest and underline on
 - **Do** preserve anatomy, pose, and hand sign through every dither, camera, and interaction treatment.
 - **Do** use the 8/12/16/24/32/48/64/80/96/128px spatial vocabulary, with 4px reserved for optical insets and 6px for compact internal gaps.
 - **Do** keep contact routes and the identity phrase readable during theme inversion.
+- **Do** preserve shared alignment lines and mirrored outer margins when copy, asset placement, or viewport size changes.
 - **Do** tie technical overlays to identity evidence: pose, position, registration, pointer focus, or interaction.
 - **Do** provide reduced-motion behavior for entrance, section, and interaction animation.
 
