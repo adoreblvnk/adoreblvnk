@@ -209,10 +209,10 @@
               <button
                 type="button"
                 class="action-btn"
-                aria-label="Fold connected web structure"
+                aria-label="Spin orbit structure"
                 onclick={() => controller?.spinSculpture()}
                 use:scramble
-              >FOLD</button>
+              >SPIN</button>
             {/if}
         </div>
       </div>

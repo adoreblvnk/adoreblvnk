@@ -129,13 +129,13 @@ components:
 
 **Creative North Star: "Instrumented Minimalism"**
 
-The interface is an achromatic identity field built around one dithered portrait inside a procedural web membrane, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the portrait as deliberate evidence without competing with it.
+The interface is an achromatic identity field built around one animated 3D figure, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the figure as deliberate evidence without competing with it.
 
 Computational brutalism governs transitions and animation. Scan states, digital noise, hard inversion, fragmentation, and forceful movement create controlled intensity between sparse, functional compositions. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes.
 
 **Key Characteristics:**
 - Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
-- One dithered portrait and one continuously connected procedural membrane as the identity-bearing visual anchor.
+- One animated, dithered 3D figure as the identity-bearing visual anchor.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
 - Technical overlays and motion that register identity, pose, position, or interaction.
@@ -143,7 +143,7 @@ Computational brutalism governs transitions and animation. Scan states, digital 
 
 ## 2. Colors
 
-A cold achromatic palette unifies the portrait, procedural membrane, type, and spatial instrumentation without adding ornamental emphasis.
+A cold achromatic palette unifies the 3D figure, type, and spatial instrumentation without adding ornamental emphasis.
 
 ### Primary
 - **Carbon Ink:** The default field and primary text on paper sections.
@@ -161,7 +161,7 @@ A cold achromatic palette unifies the portrait, procedural membrane, type, and s
 
 **The Signal-Only Rule.** Color is structural: field, foreground, border, scene signal, or functional prose-link identification. Emphasis comes from inversion, weight, scale, and motion.
 
-**The Inversion Rule.** Section transitions exchange Carbon Ink and Cold Paper while preserving the legibility of the portrait, membrane, and contact routes.
+**The Inversion Rule.** Section transitions exchange Carbon Ink and Cold Paper while preserving the legibility of the 3D figure and contact routes.
 
 **The Alpha Hierarchy Rule.** Transparency subordinates borders, metadata, inactive kinetic type, and HUD evidence without creating new color roles.
 
@@ -197,7 +197,7 @@ A cold achromatic palette unifies the portrait, procedural membrane, type, and s
 
 ## 4. Elevation
 
-The system is flat. Depth comes from the portrait, connected membrane, opacity, difference blending, masks, section inversion, and fixed layer order. One-pixel borders establish structure without simulating elevation.
+The system is flat. Depth comes from the 3D figure, opacity, difference blending, masks, section inversion, and fixed layer order. One-pixel borders establish structure without simulating elevation.
 
 ### Named Rules
 
@@ -258,8 +258,8 @@ Inline article links use Link Blue without an underline at rest and underline on
 
 ### Don't:
 - **Don't** turn the interface into a generic SaaS landing page, soft glass card system, or warm editorial template.
-- **Don't** let specimen-style UI chrome, excessive telemetry, barcodes, fictional operating-system chrome, or status readouts compete with the portrait and membrane.
-- **Don't** stylize the portrait into a cute mascot, coat it in glossy cyber-armor, or surround it with decorative point clouds.
+- **Don't** let specimen-style UI chrome, excessive telemetry, barcodes, fictional operating-system chrome, or status readouts compete with the 3D figure.
+- **Don't** make the 3D character cute or mascot-like, coat it in glossy cyber-armor, or surround it with decorative point clouds.
 - **Don't** let interaction sacrifice the character's pose or hand sign.
 - **Don't** add gradients, ornamental accent colors, soft shadows, rounded card grids, or pill-shaped informational tags.
 - **Don't** use monospace as blanket technical shorthand or repeat tiny uppercase eyebrows as section scaffolding.
