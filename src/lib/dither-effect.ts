@@ -72,7 +72,11 @@ const DITHER_FRAGMENT_SHADER = `
     float gray = dot(sourceColor, vec3(0.299, 0.587, 0.114));
     gray = pow(clamp(gray, 0.0, 1.0), 1.15) * 1.25;
     gray = smoothstep(0.10, 1.0, gray);
-    float modelTone = step(bayer8(gl_FragCoord.xy / uCell) + 0.001, gray);
+    vec2 ditherPoint = gl_FragCoord.xy / uCell;
+    float tileVariation = hash(floor(ditherPoint / 8.0)) - 0.5;
+    float variation = tileVariation * 0.10;
+    float threshold = clamp(bayer8(ditherPoint) + variation, 0.0, 1.0);
+    float modelTone = step(threshold + 0.001, gray);
 
     float fieldTone = step(uCardY, gl_FragCoord.y / resolution.y);
     float modelInversion = 1.0 - fieldTone;

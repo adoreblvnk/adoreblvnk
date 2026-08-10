@@ -1,6 +1,6 @@
 ---
 name: adore_blvnk
-description: An achromatic identity surface built around an animated 3D figure rendered as dithered machine vision.
+description: Achromatic instrumented minimalism theme with dithered machine vision, and computational brutalism for transitions & animation.
 colors:
   carbon-ink: "oklch(0.08 0 0)"
   cold-paper: "oklch(0.95 0.004 210)"
@@ -120,11 +120,11 @@ components:
 
 ## 1. Overview
 
-**Creative North Star: "The Registered Position"**
+**Creative North Star: "Instrumented Minimalism"**
 
-The interface is an achromatic registration field built around an animated 3D figure rendered as dithered machine vision. The figure oscillates between scan, halftone, and digital noise while remaining legible in motion. Coordinate trackers, registration corners, and a measured lattice frame that presence as deliberate evidence.
+The interface is an achromatic identity field built around one animated 3D figure, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the figure as deliberate evidence without competing with it.
 
-The composition is sparse but active. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes. Full-viewport movement, hard alignments, and decisive inversion create controlled intensity while keeping the asset dominant.
+Computational brutalism governs transitions and animation. Scan states, digital noise, hard inversion, fragmentation, and forceful movement create controlled intensity between sparse, functional compositions. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes.
 
 **Key Characteristics:**
 - Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
@@ -135,7 +135,7 @@ The composition is sparse but active. Large Lexend statements supply mass; Space
 
 ## 2. Colors
 
-A cold achromatic palette gives the 3D figure, type, and spatial instrumentation one severe visual register.
+A cold achromatic palette unifies the 3D figure, type, and spatial instrumentation without adding ornamental emphasis.
 
 ### Primary
 - **Carbon Ink:** The default field and primary text on paper sections.
@@ -188,7 +188,7 @@ A cold achromatic palette gives the 3D figure, type, and spatial instrumentation
 
 ## 4. Elevation
 
-The system is flat. Depth comes from the 3D figure, section inversion, opacity, difference blending, masks, and fixed layer order. One-pixel borders establish structure without simulating elevation.
+The system is flat. Depth comes from the 3D figure, opacity, difference blending, masks, section inversion, and fixed layer order. One-pixel borders establish structure without simulating elevation.
 
 ### Named Rules
 
