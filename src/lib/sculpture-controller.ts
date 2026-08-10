@@ -268,8 +268,8 @@ export class SculptureController {
         orientation: 0, cardY: 0.5, rowShear: 0, staticSlice: 0, cell: 2.25, cols: 22,
       },
       2: {
-        position: [desktop ? -0.55 : 0, desktop ? 0 : 0.08, desktop ? -0.8 : -1.1],
-        scale: desktop ? 1.7802 : 1.38,
+        position: [desktop ? interpolate(-0.35, -1.2) : -0.32, desktop ? 0 : 0.52, desktop ? -0.8 : -1.1],
+        scale: desktop ? 1.7802 : 1.15,
         orientation: 0.035, cardY: -0.01, rowShear: 0, staticSlice: desktop ? 0.38 : 0.2, cell: 2.75, cols: 14,
       },
       3: {

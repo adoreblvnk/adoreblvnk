@@ -221,10 +221,16 @@
     <section id="position" class="movement-section" aria-labelledby="position-heading">
       <div class="section-content">
         <h2 id="position-heading" class="sr-only">Pattern your position</h2>
-        <div class="kinetic-stacked-composition" aria-hidden="true">
-          <div class="kinetic-word-row">PATTERN</div>
-          <div class="kinetic-word-row">YOUR</div>
-          <div class="kinetic-word-row">POSITION</div>
+        <div class="position-layout">
+          <div class="kinetic-stacked-composition" aria-hidden="true">
+            <div class="kinetic-word-row">PATTERN</div>
+            <div class="kinetic-word-row">YOUR</div>
+            <div class="kinetic-word-row">POSITION</div>
+          </div>
+          <p class="position-bio">aspiring farmer, software architect, Linux dev. i prolly use too much CLIs / TUIs but then again, i'm on Debian. used to handwrite Rust &amp; Go, now i'm washed. does DevOps (K8s, Helm charts &amp; addons) (unwillingly). $35k+ from hackathons
+          <br>
+          i would liek to raise my own ducks 🦆 on my log cabin 1 day...
+          </p>
         </div>
       </div>
     </section>
