@@ -5,13 +5,55 @@ import type { DitherUniforms } from './dither-effect';
 
 export type SculptureLook = 1 | 2 | 3;
 
+export interface TrackerProjection {
+  x: number;
+  y: number;
+  visible: boolean;
+}
+
 interface SculptureControllerOptions {
   onReady?: (controller: SculptureController) => void;
+  onFrame?: (projections: TrackerProjection[]) => void;
   onStatus?: (ready: boolean) => void;
 }
 
-interface AuthoredMetadata {
-  veil_clip?: string;
+interface EntropyMetadata {
+  entropy_clip: string;
+  entropy_name: string;
+  entropy_gain: number;
+  entropy_attack: number;
+  entropy_release: number;
+}
+
+interface AssemblyMetadata {
+  assembly_clip: string;
+  assembly_duration: number;
+}
+
+interface AuthoredMetadata extends Partial<EntropyMetadata>, Partial<AssemblyMetadata> {
+  tracker_index?: number;
+  entropy_family?: string;
+  rotation_axis?: [number, number, number];
+  rotation_rate?: number;
+}
+
+interface EntropyFamily {
+  name: string;
+  gain: number;
+  attack: number;
+  release: number;
+  action: THREE.AnimationAction;
+  speed: number;
+}
+
+interface PieceRotator {
+  mesh: THREE.Mesh;
+  family: string;
+  axis: THREE.Vector3;
+  base: THREE.Quaternion;
+  localRotation: THREE.Quaternion;
+  angle: number;
+  rate: number;
 }
 
 interface LookTarget {
@@ -34,7 +76,6 @@ export class SculptureController {
   ditherUniforms: DitherUniforms | null = null;
   ready = false;
   paused = false;
-  reducedMotion = false;
   sceneAssetsAttached = false;
   elapsed = 0;
   appliedLook: string | null = null;
@@ -42,18 +83,22 @@ export class SculptureController {
   pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
 
   portrait: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | null = null;
-  veil: THREE.Group | null = null;
+  orbit: THREE.Group | null = null;
   mixer: THREE.AnimationMixer | null = null;
-  masterAction: THREE.AnimationAction | null = null;
-  masterSpeed = 1;
+  entropyFamilies: EntropyFamily[] = [];
+  pieceRotators: PieceRotator[] = [];
+  trackers: THREE.Object3D[] = [];
+  trackerProjections: TrackerProjection[] = [];
+  trackerVector = new THREE.Vector3();
+  portraitDepthVector = new THREE.Vector3();
+  pieceDepthVector = new THREE.Vector3();
 
   motion = {
     orientationZ: 0,
-    turnOffset: 0,
+    spinOffset: 0,
     velocitySlice: 0,
     glitchTarget: 0,
     cameraOffset: 0,
-    turn: 0,
   };
 
   constructor(private readonly callbacks: SculptureControllerOptions) {}
@@ -68,7 +113,7 @@ export class SculptureController {
     this.maybeReady();
   }
 
-  attachSceneAssets(portraitTexture: THREE.Texture, veilModel: GLTF): void {
+  attachSceneAssets(portraitTexture: THREE.Texture, orbitModel: GLTF): void {
     if (this.sceneAssetsAttached) return;
     this.sceneAssetsAttached = true;
 
@@ -87,40 +132,21 @@ export class SculptureController {
     this.portrait.renderOrder = 2;
     this.sculptureGroup.add(this.portrait);
 
-    this.veil = veilModel.scene;
-    const sourceVeilMaterials = new Set<THREE.Material>();
-    this.veil.traverse((node) => {
+    this.orbit = orbitModel.scene;
+    this.orbit.traverse((node) => {
       if (!(node instanceof THREE.Mesh)) return;
-      const moduleIndex = Number(node.name.match(/(\d+)$/)?.[1] ?? 0);
-      const foregroundModule = moduleIndex === 1 || moduleIndex === 5 || moduleIndex === 9;
-      const sourceMaterials: THREE.Material[] = Array.isArray(node.material) ? node.material : [node.material];
-      const materials = sourceMaterials.map((sourceMaterial) => {
-        sourceVeilMaterials.add(sourceMaterial);
-        const material = sourceMaterial.clone();
-        if (material instanceof THREE.MeshStandardMaterial) {
-          const phase = (moduleIndex / 13) * Math.PI * 2;
-          material.color.setScalar(0.32 + Math.cos(phase) * 0.12);
-          material.emissive.setScalar(0.55 + Math.sin(phase) * 0.24);
-          material.emissiveIntensity = 1;
-          material.roughness = 1;
-          material.metalness = 0;
-          material.flatShading = true;
-        }
-        material.side = THREE.DoubleSide;
-        material.transparent = false;
-        material.opacity = 1;
-        material.depthTest = !foregroundModule;
-        material.depthWrite = !foregroundModule;
+      const materials: THREE.Material[] = Array.isArray(node.material) ? node.material : [node.material];
+      materials.forEach((material) => {
+        if ('flatShading' in material) material.flatShading = true;
+        material.transparent = true;
+        material.depthTest = false;
+        material.depthWrite = false;
         material.needsUpdate = true;
-        return material;
       });
-      node.material = Array.isArray(node.material) ? materials : materials[0];
-      node.renderOrder = foregroundModule ? 3 : 1;
     });
-    sourceVeilMaterials.forEach((material) => material.dispose());
-    this.sculptureGroup.add(this.veil);
+    this.sculptureGroup.add(this.orbit);
 
-    this.configureAuthoredModel(veilModel.animations);
+    this.configureAuthoredModel(orbitModel.animations);
     this.maybeReady();
   }
 
@@ -128,6 +154,7 @@ export class SculptureController {
     if (this.ready || !this.sceneAssetsAttached || !this.camera || !this.ditherUniforms) return;
     this.ready = true;
     this.applySculptureLayout();
+    this.updateOrbitCompositing();
     this.callbacks.onReady?.(this);
   }
 
@@ -136,118 +163,119 @@ export class SculptureController {
     this.callbacks.onStatus?.(available && this.ready);
   }
 
-  setReducedMotion(reduced: boolean): void {
-    this.reducedMotion = reduced;
-    if (this.masterAction) {
-      if (reduced) {
-        this.masterAction.reset();
-        this.mixer?.setTime(0);
-      }
-      this.masterAction.paused = reduced;
-    }
-    if (reduced) {
-      this.pointer.x = 0;
-      this.pointer.y = 0;
-      this.pointer.targetX = 0;
-      this.pointer.targetY = 0;
-      this.scrollVelocity = 0;
-      this.elapsed = 0;
-      gsap.killTweensOf(this.motion);
-      gsap.killTweensOf(this.sculptureGroup.position);
-      gsap.killTweensOf(this.sculptureGroup.scale);
-      if (this.camera) gsap.killTweensOf(this.camera.position);
-      if (this.ditherUniforms) {
-        gsap.killTweensOf(this.ditherUniforms.uCardY);
-        gsap.killTweensOf(this.ditherUniforms.uRowShear);
-        gsap.killTweensOf(this.ditherUniforms.uStaticSlice);
-        gsap.killTweensOf(this.ditherUniforms.uCell);
-        gsap.killTweensOf(this.ditherUniforms.uGlitch);
-        gsap.killTweensOf(this.ditherUniforms.uVelocitySlice);
-        this.ditherUniforms.uGlitch.value = 0;
-        this.ditherUniforms.uVelocitySlice.value = 0;
-        this.ditherUniforms.uTime.value = 0;
-      }
-      this.motion.glitchTarget = 0;
-      this.motion.velocitySlice = 0;
-      this.motion.turn = 0;
-      this.motion.turnOffset = 0;
-      if (this.appliedLook) {
-        const look = Number(this.appliedLook.split(':')[0]) as SculptureLook;
-        this.applyLook(look, { force: true, immediate: true });
-      }
-    }
-  }
-
   setViewport(width: number, height: number): void {
-    const viewportChanged = width !== this.width || height !== this.height;
     this.width = width;
     this.height = height;
     this.applySculptureLayout();
-    if (viewportChanged && this.ready && this.appliedLook) {
-      const look = Number(this.appliedLook.split(':')[0]) as SculptureLook;
-      this.applyLook(look, { force: true, immediate: true });
-    }
   }
 
   setPointerTarget(x: number, y: number): void {
-    if (this.reducedMotion) return;
     this.pointer.targetX = x;
     this.pointer.targetY = y;
   }
 
   setScrollVelocity(velocity: number): void {
-    if (this.reducedMotion) return;
     this.scrollVelocity = velocity || 0;
   }
 
   configureAuthoredModel(animations: THREE.AnimationClip[]): void {
-    if (!this.veil) return;
-    this.mixer = new THREE.AnimationMixer(this.veil);
-    let masterClip: string | undefined;
+    if (!this.orbit) return;
+    this.mixer = new THREE.AnimationMixer(this.orbit);
+    const families: EntropyMetadata[] = [];
+    let assembly: AssemblyMetadata | undefined;
 
-    this.veil.traverse((node) => {
+    this.orbit.traverse((node) => {
       const metadata = node.userData as AuthoredMetadata;
-      if (metadata.veil_clip) masterClip = metadata.veil_clip;
+      if (metadata.entropy_clip) families.push(metadata as EntropyMetadata);
+      if (Number.isInteger(metadata.tracker_index)) this.trackers[metadata.tracker_index as number] = node;
+      if (metadata.assembly_clip) assembly = metadata as AssemblyMetadata;
+      if (!(node instanceof THREE.Mesh) || !metadata.entropy_family
+        || !metadata.rotation_axis || metadata.rotation_rate === undefined) return;
+
+      this.pieceRotators.push({
+        mesh: node,
+        family: metadata.entropy_family,
+        axis: new THREE.Vector3(...metadata.rotation_axis).normalize(),
+        base: node.quaternion.clone(),
+        localRotation: new THREE.Quaternion(),
+        angle: 0,
+        rate: metadata.rotation_rate,
+      });
+    });
+    this.trackerProjections = this.trackers.map(() => ({ x: 0, y: 0, visible: false }));
+
+    const clip = (name: string): THREE.AnimationClip => {
+      const result = THREE.AnimationClip.findByName(animations, name);
+      if (!result) throw new Error(`Missing authored animation clip: ${name}`);
+      return result;
+    };
+    this.entropyFamilies = families.map((metadata) => {
+      const action = this.mixer!.clipAction(clip(metadata.entropy_clip));
+      action.play();
+      return {
+        name: metadata.entropy_name,
+        gain: metadata.entropy_gain,
+        attack: metadata.entropy_attack,
+        release: metadata.entropy_release,
+        action,
+        speed: 1,
+      };
     });
 
-    if (!masterClip) throw new Error('Missing authored veil animation metadata');
-    const clip = THREE.AnimationClip.findByName(animations, masterClip);
-    if (!clip) throw new Error(`Missing authored animation clip: ${masterClip}`);
-    this.masterAction = this.mixer.clipAction(clip);
-    this.masterAction.play();
-    this.masterAction.paused = this.reducedMotion;
+    if (!assembly) throw new Error('Missing authored assembly metadata');
+    const assemblyAction = this.mixer.clipAction(clip(assembly.assembly_clip));
+    assemblyAction.setLoop(THREE.LoopOnce, 1);
+    assemblyAction.clampWhenFinished = true;
+    assemblyAction.play();
     this.motion.cameraOffset = 0.65;
     gsap.to(this.motion, {
       cameraOffset: 0,
-      duration: this.reducedMotion ? 0 : 1.45,
+      duration: assembly.assembly_duration,
       ease: 'power4.out',
+    });
+  }
+
+  updatePieceRotations(deltaTime: number, absoluteTime: number | null = null): void {
+    const familySpeeds = new Map(this.entropyFamilies.map((family) => [family.name, family.speed]));
+    this.pieceRotators.forEach((rotator) => {
+      rotator.angle = absoluteTime === null
+        ? rotator.angle + deltaTime * rotator.rate * (familySpeeds.get(rotator.family) || 1)
+        : absoluteTime * rotator.rate;
+      rotator.localRotation.setFromAxisAngle(rotator.axis, rotator.angle);
+      rotator.mesh.quaternion.copy(rotator.base).multiply(rotator.localRotation);
+    });
+  }
+
+  updateOrbitCompositing(): void {
+    if (!this.portrait) return;
+    this.portrait.getWorldPosition(this.portraitDepthVector);
+    this.pieceRotators.forEach(({ mesh }) => {
+      mesh.getWorldPosition(this.pieceDepthVector);
+      mesh.renderOrder = this.pieceDepthVector.z > this.portraitDepthVector.z ? 3 : 1;
     });
   }
 
   applyLook(look: SculptureLook, { force = false, immediate = false } = {}): void {
     if (!this.ditherUniforms) return;
 
-    const desktop = this.width > 900;
-    const tablet = this.width > 768 && !desktop;
+    const desktop = this.width > 768;
     const progress = gsap.utils.clamp(0, 1, (this.width - 768) / 512);
     const interpolate = (start: number, end: number): number => start + (end - start) * progress;
     const targets: Record<SculptureLook, LookTarget> = {
       1: {
-        position: tablet
-          ? [0.55, 0.95, -1.15]
-          : [interpolate(-0.1, 1.3), interpolate(0.4, 0.1), interpolate(-1.6, 0)],
-        scale: tablet ? 1.1 : interpolate(1.2, 1.6),
-        orientation: 0, cardY: 0.5, rowShear: 0, staticSlice: 0, cell: desktop ? 2.25 : tablet ? 1.5 : 1.0, cols: 22,
+        position: [interpolate(-0.25, 1.50), interpolate(0.05, 0.24), interpolate(-1.4, 0)],
+        scale: interpolate(1.5, 1.978),
+        orientation: 0, cardY: 0.5, rowShear: 0, staticSlice: 0, cell: 2.25, cols: 22,
       },
       2: {
-        position: [desktop ? 1.55 : tablet ? 1.25 : 0.35, desktop ? -1.80 : tablet ? 0.75 : 0.05, desktop ? -0.55 : -1.0],
-        scale: desktop ? 0.55 : tablet ? 0.75 : 0.70,
-        orientation: desktop ? 0.035 : -0.08, cardY: -0.01, rowShear: 0, staticSlice: desktop ? 0.38 : 0.2, cell: desktop ? 2.75 : tablet ? 1.5 : 1.0, cols: 14,
+        position: [desktop ? interpolate(-0.35, -1.2) : -0.32, desktop ? 0 : 0.52, desktop ? -0.8 : -1.1],
+        scale: desktop ? 1.7802 : 1.15,
+        orientation: 0.035, cardY: -0.01, rowShear: 0, staticSlice: desktop ? 0.38 : 0.2, cell: 2.75, cols: 14,
       },
       3: {
-        position: [desktop ? 1.95 : tablet ? 0.90 : 0.40, desktop ? -0.68 : tablet ? -2.25 : -2.10, desktop ? 0.35 : -1.25],
-        scale: desktop ? 0.95 : tablet ? 0.75 : 0.70,
-        orientation: -0.05, cardY: 1.01, rowShear: 1, staticSlice: 0, cell: desktop ? 2.0 : tablet ? 1.5 : 1.0, cols: 22,
+        position: [desktop ? 1.65 : 0.30, desktop ? -0.45 : -1.55, desktop ? 0.35 : -1.45],
+        scale: desktop ? 1.3824 : 1.2,
+        orientation: -0.05, cardY: 1.01, rowShear: 1, staticSlice: 0, cell: 2, cols: 22,
       },
     };
     const target = targets[look];
@@ -259,11 +287,7 @@ export class SculptureController {
 
     if (!immediate && previousLook && previousLook !== String(look)) this.triggerGlitch(0.9);
     const uniforms = this.ditherUniforms;
-    const transition = {
-      duration: immediate || this.reducedMotion ? 0 : 0.72,
-      ease: 'power4.inOut',
-      overwrite: 'auto',
-    } as const;
+    const transition = { duration: immediate ? 0 : 0.72, ease: 'power4.inOut', overwrite: 'auto' } as const;
     uniforms.uCols.value = target.cols;
     if (immediate) uniforms.uGlitch.value = 0;
 
@@ -281,22 +305,13 @@ export class SculptureController {
       [uniforms.uCell, target.cell],
     ];
     uniformTargets.forEach(([uniform, value]) => {
-      gsap.to(uniform, {
-        value,
-        ...transition,
-        duration: immediate || this.reducedMotion ? 0 : 0.82,
-        overwrite: true,
-      });
+      gsap.to(uniform, { value, ...transition, duration: immediate ? 0 : 0.82, overwrite: true });
     });
   }
 
-  turnSculpture(rotations = 1, duration = 1.4): void {
-    if (this.reducedMotion) {
-      this.motion.turnOffset += Math.PI * 0.5 * rotations;
-      return;
-    }
+  spinSculpture(rotations = 1, duration = 1.4): void {
     gsap.to(this.motion, {
-      turnOffset: `+=${Math.PI * 2 * rotations}`,
+      spinOffset: `+=${Math.PI * 2 * rotations}`,
       duration,
       ease: 'power3.inOut',
       overwrite: false,
@@ -307,27 +322,41 @@ export class SculptureController {
     const compact = this.width < 700;
     const portraitHeight = compact ? 1.863 : 2.162;
     if (this.portrait) this.portrait.scale.setScalar(portraitHeight);
-    const tablet = this.width >= 700 && this.width <= 900;
-    if (this.veil) this.veil.scale.setScalar(compact ? 0.90 : tablet ? 1.02 : 1.12);
+    if (this.orbit) this.orbit.scale.setScalar(compact ? 0.6804 : 0.7896);
   }
 
+  projectTrackers(): TrackerProjection[] {
+    for (let index = 0; index < this.trackers.length; index += 1) {
+      const projected = this.trackerProjections[index];
+      this.trackers[index].getWorldPosition(this.trackerVector);
+      this.trackerVector.project(this.camera!);
+      projected.x = (this.trackerVector.x * 0.5 + 0.5) * this.width;
+      projected.y = (-this.trackerVector.y * 0.5 + 0.5) * this.height;
+      projected.visible = this.trackerVector.z <= 1;
+    }
+    return this.trackerProjections;
+  }
 
   triggerGlitch(amount: number): void {
-    if (this.reducedMotion) return;
     this.motion.glitchTarget = Math.max(this.motion.glitchTarget, amount);
   }
 
   update(deltaTime: number): void {
     if (!this.ready || this.paused || !this.camera || !this.ditherUniforms) return;
-    if (!this.reducedMotion) this.elapsed += Math.min(deltaTime, 0.05);
+    this.elapsed += Math.min(deltaTime, 0.05);
     this.pointer.x += (this.pointer.targetX - this.pointer.x) * 0.07;
     this.pointer.y += (this.pointer.targetY - this.pointer.y) * 0.07;
 
-    if (this.mixer && !this.reducedMotion) {
-      const targetSpeed = 1 + Math.min(Math.sqrt(Math.abs(this.scrollVelocity)) * 0.16, 1.6);
-      this.masterSpeed += (targetSpeed - this.masterSpeed) * (targetSpeed > this.masterSpeed ? 0.18 : 0.035);
-      if (this.masterAction) this.masterAction.timeScale = this.masterSpeed;
+    if (this.mixer) {
+      const entropyTarget = Math.min(Math.sqrt(Math.abs(this.scrollVelocity)) * 0.12, 1.8);
+      this.entropyFamilies.forEach((family) => {
+        const targetSpeed = 1 + entropyTarget * family.gain;
+        const response = targetSpeed > family.speed ? family.attack : family.release;
+        family.speed += (targetSpeed - family.speed) * response;
+        family.action.timeScale = family.speed;
+      });
       this.mixer.update(deltaTime);
+      this.updatePieceRotations(deltaTime);
     }
 
     const pointerX = this.pointer.x;
@@ -335,24 +364,12 @@ export class SculptureController {
     this.sculptureGroup.rotation.x = pointerY * 0.008;
     this.sculptureGroup.rotation.y = pointerX * 0.010;
     this.sculptureGroup.rotation.z = this.motion.orientationZ + pointerX * 0.004;
-    if (this.veil) {
-      const scrollTurn = Math.min(Math.abs(this.scrollVelocity) * 0.00035, 0.08);
-      if (!this.reducedMotion) {
-        const ambientTurn = Math.sin(this.elapsed * 0.42) * (0.14 + scrollTurn);
-        const turnEase = 1 - Math.exp(-deltaTime * 5);
-        this.motion.turn += (ambientTurn - this.motion.turn) * turnEase;
-      }
-      this.veil.rotation.x = Math.PI / 2 + pointerY * 0.11;
-      this.veil.rotation.y = this.motion.turn + pointerX * 0.10 + this.motion.turnOffset;
-      const compact = this.width < 700;
-      const tablet = this.width >= 700 && this.width <= 900;
-      const ambientSway = this.reducedMotion ? 0 : Math.sin(this.elapsed * 0.34) * 0.055;
-      const ambientFloat = this.reducedMotion ? 0 : Math.sin(this.elapsed * 0.55) * 0.045;
-      this.veil.rotation.z = -0.30 + pointerX * 0.035 + ambientSway;
-      this.veil.position.x = compact ? 0.08 : tablet ? 0.10 : 0.12;
-      this.veil.position.y = (compact ? -0.05 : tablet ? -0.08 : -0.10) + ambientFloat;
-      this.veil.position.z = -0.18;
+    if (this.orbit) {
+      this.orbit.rotation.x = pointerY * 0.18;
+      this.orbit.rotation.y = pointerX * 0.10 + this.motion.spinOffset;
+      this.orbit.rotation.z = pointerX * 0.07;
     }
+    this.updateOrbitCompositing();
 
     const uniforms = this.ditherUniforms;
     const velocityTarget = Math.min(Math.abs(this.scrollVelocity) * 0.0009, 0.16);
@@ -371,21 +388,13 @@ export class SculptureController {
     this.camera.position.y = pointerY * 0.010;
     this.camera.position.z = 8 + this.motion.cameraOffset;
     this.camera.lookAt(0, 0, 0);
+    this.callbacks.onFrame?.(this.projectTrackers());
   }
 
   dispose(): void {
     gsap.killTweensOf(this.motion);
     gsap.killTweensOf(this.sculptureGroup.position);
     gsap.killTweensOf(this.sculptureGroup.scale);
-    if (this.camera) gsap.killTweensOf(this.camera.position);
-    if (this.ditherUniforms) {
-      gsap.killTweensOf(this.ditherUniforms.uCardY);
-      gsap.killTweensOf(this.ditherUniforms.uRowShear);
-      gsap.killTweensOf(this.ditherUniforms.uStaticSlice);
-      gsap.killTweensOf(this.ditherUniforms.uCell);
-      gsap.killTweensOf(this.ditherUniforms.uGlitch);
-      gsap.killTweensOf(this.ditherUniforms.uVelocitySlice);
-    }
     this.mixer?.stopAllAction();
   }
 }
