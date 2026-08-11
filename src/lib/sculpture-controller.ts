@@ -92,6 +92,7 @@ export class SculptureController {
     this.veil.traverse((node) => {
       if (!(node instanceof THREE.Mesh)) return;
       const moduleIndex = Number(node.name.match(/(\d+)$/)?.[1] ?? 0);
+      const foregroundModule = moduleIndex === 1 || moduleIndex === 5 || moduleIndex === 9;
       const sourceMaterials: THREE.Material[] = Array.isArray(node.material) ? node.material : [node.material];
       const materials = sourceMaterials.map((sourceMaterial) => {
         sourceVeilMaterials.add(sourceMaterial);
@@ -108,13 +109,13 @@ export class SculptureController {
         material.side = THREE.DoubleSide;
         material.transparent = false;
         material.opacity = 1;
-        material.depthTest = true;
-        material.depthWrite = true;
+        material.depthTest = !foregroundModule;
+        material.depthWrite = !foregroundModule;
         material.needsUpdate = true;
         return material;
       });
       node.material = Array.isArray(node.material) ? materials : materials[0];
-      node.renderOrder = 1;
+      node.renderOrder = foregroundModule ? 3 : 1;
     });
     sourceVeilMaterials.forEach((material) => material.dispose());
     this.sculptureGroup.add(this.veil);
@@ -137,13 +138,20 @@ export class SculptureController {
 
   setReducedMotion(reduced: boolean): void {
     this.reducedMotion = reduced;
-    if (this.masterAction) this.masterAction.paused = reduced;
+    if (this.masterAction) {
+      if (reduced) {
+        this.masterAction.reset();
+        this.mixer?.setTime(0);
+      }
+      this.masterAction.paused = reduced;
+    }
     if (reduced) {
       this.pointer.x = 0;
       this.pointer.y = 0;
       this.pointer.targetX = 0;
       this.pointer.targetY = 0;
       this.scrollVelocity = 0;
+      this.elapsed = 0;
       gsap.killTweensOf(this.motion);
       gsap.killTweensOf(this.sculptureGroup.position);
       gsap.killTweensOf(this.sculptureGroup.scale);
@@ -157,9 +165,12 @@ export class SculptureController {
         gsap.killTweensOf(this.ditherUniforms.uVelocitySlice);
         this.ditherUniforms.uGlitch.value = 0;
         this.ditherUniforms.uVelocitySlice.value = 0;
+        this.ditherUniforms.uTime.value = 0;
       }
       this.motion.glitchTarget = 0;
       this.motion.velocitySlice = 0;
+      this.motion.turn = 0;
+      this.motion.turnOffset = 0;
       if (this.appliedLook) {
         const look = Number(this.appliedLook.split(':')[0]) as SculptureLook;
         this.applyLook(look, { force: true, immediate: true });
@@ -326,14 +337,20 @@ export class SculptureController {
     this.sculptureGroup.rotation.z = this.motion.orientationZ + pointerX * 0.004;
     if (this.veil) {
       const scrollTurn = Math.min(Math.abs(this.scrollVelocity) * 0.00035, 0.08);
-      if (!this.reducedMotion) this.motion.turn += deltaTime * (0.026 + scrollTurn);
+      if (!this.reducedMotion) {
+        const ambientTurn = Math.sin(this.elapsed * 0.42) * (0.14 + scrollTurn);
+        const turnEase = 1 - Math.exp(-deltaTime * 5);
+        this.motion.turn += (ambientTurn - this.motion.turn) * turnEase;
+      }
       this.veil.rotation.x = Math.PI / 2 + pointerY * 0.11;
       this.veil.rotation.y = this.motion.turn + pointerX * 0.10 + this.motion.turnOffset;
       const compact = this.width < 700;
       const tablet = this.width >= 700 && this.width <= 900;
-      this.veil.rotation.z = -0.30 + pointerX * 0.035;
+      const ambientSway = this.reducedMotion ? 0 : Math.sin(this.elapsed * 0.34) * 0.055;
+      const ambientFloat = this.reducedMotion ? 0 : Math.sin(this.elapsed * 0.55) * 0.045;
+      this.veil.rotation.z = -0.30 + pointerX * 0.035 + ambientSway;
       this.veil.position.x = compact ? 0.80 : tablet ? 0.90 : 1.0;
-      this.veil.position.y = (compact ? -0.35 : tablet ? -0.45 : -0.55) + Math.sin(this.elapsed * 0.18) * 0.025;
+      this.veil.position.y = (compact ? -0.35 : tablet ? -0.45 : -0.55) + ambientFloat;
       this.veil.position.z = -0.12;
     }
 

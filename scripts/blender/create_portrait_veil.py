@@ -144,9 +144,9 @@ def create_lamella(layer):
             index = i * row + j
 
             base_v = get_base_module_shape(u, v)
-            breathe_a = Vector((base_v.x, base_v.y * 1.04, base_v.z + 0.025 * math.sin(u * math.pi + v)))
+            breathe_a = Vector((base_v.x, base_v.y * 1.10, base_v.z + 0.070 * math.sin(u * math.pi + v)))
             fold_a.data[index].co = breathe_a
-            breathe_b = Vector((base_v.x, base_v.y * 0.96, base_v.z - 0.025 * math.sin(u * math.pi - v)))
+            breathe_b = Vector((base_v.x, base_v.y * 0.90, base_v.z - 0.070 * math.sin(u * math.pi - v)))
             fold_b.data[index].co = breathe_b
 
     samples = [int(END * i / 6.0) for i in range(7)]

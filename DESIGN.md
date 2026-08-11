@@ -129,16 +129,16 @@ components:
 
 **Creative North Star: "Instrumented Minimalism"**
 
-The interface is an achromatic identity field built around one animated 3D figure, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the figure as deliberate evidence without competing with it.
+The interface is an achromatic identity field built around one animated 3D figure, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Registration corners and a measured lattice frame the figure as deliberate evidence without competing with it.
 
-Computational brutalism governs transitions and animation. Scan states, digital noise, hard inversion, fragmentation, and forceful movement create controlled intensity between sparse, functional compositions. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes.
+Computational brutalism governs transitions and animation. Scan states, digital noise, hard inversion, fragmentation, and forceful movement create controlled intensity between sparse, functional compositions. Large Lexend statements supply mass; Space Mono carries controls and routes.
 
 **Key Characteristics:**
 - Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
-- One animated, dithered portrait backed by a homologous layered veil as the identity-bearing visual anchor.
+- One animated, dithered portrait interleaved with a homologous folded-lamella sculpture: most sheets remain behind while selected folds cross the outer shoulder and torso in front.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
-- Technical overlays and motion that register identity, pose, position, or interaction.
+- Spatial instrumentation and motion that register identity, pose, position, or interaction.
 - Shared content lines govern every composition. The position bio's right edge mirrors the primary left content inset.
 
 ## 2. Colors
@@ -231,7 +231,7 @@ Contact routes are unboxed rows separated by registration lines. Each row pairs 
 
 ### Position Composition
 
-The position section pairs low-opacity kinetic Lexend type with a right-aligned Space Mono biography. The portrait and folded-panel veil occupy reserved whitespace rather than passing behind either text block: a compact lower band on desktop, the heading's open right side on tablet, and the gap between heading and biography on mobile. The biography preserves the shared mirrored margin instead of following the section's smaller right padding.
+The position section pairs low-opacity kinetic Lexend type with a right-aligned Space Mono biography. The portrait and folded-lamella sculpture occupy reserved whitespace rather than passing behind either text block: a compact lower band on desktop, the heading's open right side on tablet, and the gap between heading and biography on mobile. The biography preserves the shared mirrored margin instead of following the section's smaller right padding.
 
 ### Writing Index
 
