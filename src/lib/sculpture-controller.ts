@@ -99,8 +99,8 @@ export class SculptureController {
         const material = sourceMaterial.clone();
         if (material instanceof THREE.MeshStandardMaterial) {
           const phase = (moduleIndex / 13) * Math.PI * 2;
-          material.color.setScalar(0.30 + Math.cos(phase) * 0.08);
-          material.emissive.setScalar(0.56 + Math.sin(phase) * 0.14);
+          material.color.setScalar(0.32 + Math.cos(phase) * 0.12);
+          material.emissive.setScalar(0.55 + Math.sin(phase) * 0.24);
           material.emissiveIntensity = 1;
           material.roughness = 1;
           material.metalness = 0;
@@ -308,7 +308,7 @@ export class SculptureController {
     const portraitHeight = compact ? 1.863 : 2.162;
     if (this.portrait) this.portrait.scale.setScalar(portraitHeight);
     const tablet = this.width >= 700 && this.width <= 900;
-    if (this.veil) this.veil.scale.setScalar(compact ? 0.32 : tablet ? 0.36 : 0.40);
+    if (this.veil) this.veil.scale.setScalar(compact ? 0.90 : tablet ? 1.02 : 1.12);
   }
 
 
@@ -349,9 +349,9 @@ export class SculptureController {
       const ambientSway = this.reducedMotion ? 0 : Math.sin(this.elapsed * 0.34) * 0.055;
       const ambientFloat = this.reducedMotion ? 0 : Math.sin(this.elapsed * 0.55) * 0.045;
       this.veil.rotation.z = -0.30 + pointerX * 0.035 + ambientSway;
-      this.veil.position.x = compact ? 0.80 : tablet ? 0.90 : 1.0;
-      this.veil.position.y = (compact ? -0.35 : tablet ? -0.45 : -0.55) + ambientFloat;
-      this.veil.position.z = -0.12;
+      this.veil.position.x = compact ? 0.08 : tablet ? 0.10 : 0.12;
+      this.veil.position.y = (compact ? -0.05 : tablet ? -0.08 : -0.10) + ambientFloat;
+      this.veil.position.z = -0.18;
     }
 
     const uniforms = this.ditherUniforms;

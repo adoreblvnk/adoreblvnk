@@ -135,7 +135,7 @@ Computational brutalism governs transitions and animation. Scan states, digital 
 
 **Key Characteristics:**
 - Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
-- One animated, dithered portrait interleaved with a homologous folded-lamella sculpture: most sheets remain behind while selected folds cross the outer shoulder and torso in front.
+- One animated, dithered portrait nested inside a larger homologous folded-lamella sculpture: most sheets envelop it from behind while selected folds cross the outer shoulder and torso in front.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
 - Spatial instrumentation and motion that register identity, pose, position, or interaction.
