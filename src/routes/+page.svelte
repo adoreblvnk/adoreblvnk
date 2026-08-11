@@ -4,7 +4,7 @@
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import SignalField from '../components/SignalField.svelte';
   import { scramble } from '../lib/scramble';
-  import type { SculptureLook, TrackerProjection } from '../lib/sculpture-controller';
+  import type { SculptureLook } from '../lib/sculpture-controller';
   import { SculptureController } from '../lib/sculpture-controller';
 
   interface Section {
@@ -14,10 +14,6 @@
     animateEntrance?: boolean;
   }
 
-  interface DisplayTracker extends TrackerProjection {
-    alignLeft: boolean;
-    label: string;
-  }
 
   interface Contact {
     prefix: string;
@@ -45,8 +41,9 @@
 
   let activeSection = $state<Section['id']>('identity');
   let sceneReady = $state(false);
+  let reducedMotion = $state(false);
   let controller = $state<SculptureController | null>(null);
-  let trackers = $state<DisplayTracker[]>([]);
+
 
   const activeConfig = () => sections.find((section) => section.id === activeSection) || sections[0];
 
@@ -73,24 +70,14 @@
     sceneReady = ready;
   }
 
-  function handleFrame(projections: TrackerProjection[]): void {
-    const hide = activeSection === 'contact' || window.innerWidth <= 768;
-    trackers = projections.map((projection) => {
-      const inside = projection.x >= 10 && projection.x <= window.innerWidth - 10
-        && projection.y >= 10 && projection.y <= window.innerHeight - 24;
-      return {
-        x: projection.x,
-        y: projection.y,
-        visible: projection.visible && inside && !hide,
-        alignLeft: projection.x > window.innerWidth - 130,
-        label: `x: ${Math.round(projection.x)} y: ${Math.round(projection.y)}`,
-      };
-    });
-  }
 
   function triggerSectionEntrance(): void {
     const rows = '.kinetic-word-row';
     gsap.killTweensOf(rows);
+    if (reducedMotion) {
+      gsap.set(rows, { opacity: 1, scale: 1 });
+      return;
+    }
     gsap.fromTo(
       rows,
       { opacity: 0.15, scale: 0.96 },
@@ -106,6 +93,19 @@
   }
 
   onMount(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let entrance: ReturnType<typeof gsap.timeline> | null = null;
+    const syncMotionPreference = () => {
+      reducedMotion = motionPreference.matches;
+      if (!reducedMotion) return;
+      entrance?.progress(1).kill();
+      gsap.killTweensOf('.hud-chrome, .display-name, .hero-phrase, .role-subheading, .action-btn, .kinetic-word-row');
+      gsap.set('.hud-chrome, .display-name, .hero-phrase, .role-subheading, .action-btn', { x: 0, y: 0, opacity: 1 });
+      gsap.set('.kinetic-word-row', { opacity: 1, scale: 1 });
+    };
+    syncMotionPreference();
+    motionPreference.addEventListener('change', syncMotionPreference);
+
     const handlePointerMove = (event: PointerEvent) => {
       const x = (event.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
       const y = (event.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
@@ -126,10 +126,10 @@
       onUpdate: (self) => controller?.setScrollVelocity(self.getVelocity() / 60),
     });
 
-    const entrance = gsap.timeline()
-      .fromTo('.hud-chrome', { opacity: 0 }, { opacity: 1, duration: 1.2, ease: 'power1.out' })
-      .fromTo('.display-name, .hero-phrase', { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: 'power3.out' }, '-=0.8')
-      .fromTo('.role-subheading, .action-btn', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power2.out' }, '-=0.6');
+    entrance = gsap.timeline()
+      .fromTo('.hud-chrome', { opacity: 0 }, { opacity: 1, duration: reducedMotion ? 0 : 1.2, ease: 'power1.out' })
+      .fromTo('.display-name, .hero-phrase', { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: reducedMotion ? 0 : 0.8, stagger: reducedMotion ? 0 : 0.08, ease: 'power3.out' }, '-=0.8')
+      .fromTo('.role-subheading, .action-btn', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: reducedMotion ? 0 : 0.8, stagger: reducedMotion ? 0 : 0.15, ease: 'power2.out' }, '-=0.6');
 
     let resizeFrame: number | null = null;
     const handleResize = () => {
@@ -141,7 +141,8 @@
     return () => {
       sectionTriggers.forEach((trigger) => trigger.kill());
       velocityTrigger.kill();
-      entrance.kill();
+      entrance?.kill();
+      motionPreference.removeEventListener('change', syncMotionPreference);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('resize', handleResize);
       if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
@@ -170,7 +171,7 @@
 
 <a class="skip-link" href="#main-content" use:scramble>Skip to main content</a>
 
-<SignalField onReady={handleReady} onFrame={handleFrame} onStatus={handleStatus} />
+<SignalField {reducedMotion} onReady={handleReady} onStatus={handleStatus} />
 
 <div class="hud-lattice" aria-hidden="true"></div>
 <div class="hud-lattice-focus" aria-hidden="true"></div>
@@ -182,20 +183,6 @@
   <div class="reg-corner bottom-right"></div>
 </div>
 
-<div class="hud-trackers-container" aria-hidden="true">
-  {#each trackers as tracker}
-    <div
-      class="hud-tracker"
-      class:visible={tracker.visible}
-      class:align-left={tracker.alignLeft}
-      style:left={`${tracker.x}px`}
-      style:top={`${tracker.y}px`}
-    >
-      <div class="tracker-dot"></div>
-      <div class="tracker-label">{tracker.label}</div>
-    </div>
-  {/each}
-</div>
 
   <main id="main-content" tabindex="-1">
     <section id="identity" class="movement-section" aria-labelledby="identity-heading">
@@ -209,10 +196,10 @@
               <button
                 type="button"
                 class="action-btn"
-                aria-label="Spin orbit structure"
-                onclick={() => controller?.spinSculpture()}
+                aria-label="Turn folded lamella sculpture"
+                onclick={() => controller?.turnSculpture()}
                 use:scramble
-              >SPIN</button>
+              >TURN</button>
             {/if}
         </div>
       </div>

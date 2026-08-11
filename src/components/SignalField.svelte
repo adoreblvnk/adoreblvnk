@@ -2,21 +2,19 @@
   import { onDestroy } from 'svelte';
   import { Canvas } from '@threlte/core';
   import { NoToneMapping, SRGBColorSpace, WebGLRenderer } from 'three';
-  import type { TrackerProjection } from '../lib/sculpture-controller';
   import { SculptureController } from '../lib/sculpture-controller';
   import PostProcessing from './PostProcessing.svelte';
   import Scene from './Scene.svelte';
 
   interface Props {
+    reducedMotion: boolean;
     onReady?: (controller: SculptureController) => void;
-    onFrame?: (projections: TrackerProjection[]) => void;
     onStatus?: (ready: boolean) => void;
   }
 
-  let { onReady, onFrame, onStatus }: Props = $props();
+  let { reducedMotion, onReady, onStatus }: Props = $props();
   const controller = new SculptureController({
     onReady: (sceneController) => onReady?.(sceneController),
-    onFrame: (projections) => onFrame?.(projections),
     onStatus: (ready) => onStatus?.(ready),
   });
 
@@ -39,7 +37,7 @@
     autoRender={false}
     renderMode="always"
   >
-    <Scene {controller} />
+    <Scene {controller} {reducedMotion} />
     <PostProcessing {controller} />
   </Canvas>
 </div>

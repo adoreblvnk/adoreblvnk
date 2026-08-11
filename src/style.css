@@ -172,51 +172,6 @@ button:focus-visible,
 .reg-corner.bottom-left { bottom: 24px; left: 24px; border-width: 0 0 1px 1px; }
 .reg-corner.bottom-right { bottom: 24px; right: 24px; border-width: 0 1px 1px 0; }
 
-.hud-trackers-container {
-  position: fixed;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  mix-blend-mode: difference;
-}
-
-.hud-tracker {
-  position: absolute;
-  font-family: var(--font-mono);
-  font-size: var(--text-hud);
-  line-height: 1;
-  letter-spacing: 0.06em;
-  color: #fff;
-  opacity: 0;
-  transition: opacity 0.25s ease;
-  will-change: left, top;
-}
-
-.hud-tracker.visible {
-  opacity: 0.8;
-}
-
-.tracker-dot {
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 10px;
-  height: 10px;
-  border: 1px solid currentColor;
-}
-
-.tracker-label {
-  position: absolute;
-  top: 9px;
-  left: -5px;
-  white-space: nowrap;
-}
-
-.hud-tracker.align-left .tracker-label {
-  right: -5px;
-  left: auto;
-  text-align: right;
-}
 
 /* Masthead */
 .masthead {
@@ -468,7 +423,7 @@ button:focus-visible,
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: -0.04em;
-  opacity: 0.15;
+  opacity: 0.35;
   user-select: none;
 }
 
@@ -501,14 +456,26 @@ button:focus-visible,
   }
 }
 
+@media (min-width: 769px) and (max-width: 900px) {
+  .position-layout {
+    grid-template-columns: 1fr;
+    align-content: center;
+    gap: 80px;
+  }
+
+  .position-bio {
+    justify-self: end;
+    margin-right: 0;
+    width: min(36ch, 56vw);
+  }
+}
+
 @media (max-width: 768px) {
   :root {
     --content-left: 24px;
     --content-right: 24px;
   }
 
-  /* Pointer tracking is not useful on smaller touch screens. */
-  .hud-trackers-container,
   .hud-lattice-focus {
     display: none;
   }
@@ -536,7 +503,7 @@ button:focus-visible,
   .position-layout {
     grid-template-columns: 1fr;
     align-content: center;
-    gap: 128px;
+    gap: 200px;
   }
 
   .kinetic-stacked-composition {
@@ -580,7 +547,7 @@ button:focus-visible,
   .colophon-text {
     margin-top: 24px;
     line-height: 0.9;
-    opacity: 0.2;
+    opacity: 0.35;
     white-space: nowrap;
   }
 

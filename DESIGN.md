@@ -135,7 +135,7 @@ Computational brutalism governs transitions and animation. Scan states, digital 
 
 **Key Characteristics:**
 - Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
-- One animated, dithered 3D figure as the identity-bearing visual anchor.
+- One animated, dithered portrait backed by a homologous layered veil as the identity-bearing visual anchor.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
 - Technical overlays and motion that register identity, pose, position, or interaction.
@@ -231,7 +231,7 @@ Contact routes are unboxed rows separated by registration lines. Each row pairs 
 
 ### Position Composition
 
-The position section pairs low-opacity kinetic Lexend type with a right-aligned Space Mono biography. The figure sits left of center and may pass behind the biography. The biography preserves the shared mirrored margin instead of following the section's smaller right padding. On narrow screens, the figure scales down and shifts up and left while the biography stacks below the kinetic type without overlap.
+The position section pairs low-opacity kinetic Lexend type with a right-aligned Space Mono biography. The portrait and folded-panel veil occupy reserved whitespace rather than passing behind either text block: a compact lower band on desktop, the heading's open right side on tablet, and the gap between heading and biography on mobile. The biography preserves the shared mirrored margin instead of following the section's smaller right padding.
 
 ### Writing Index
 
