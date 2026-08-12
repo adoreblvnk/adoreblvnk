@@ -296,11 +296,11 @@ export class SculptureController {
     const targets: Record<SculptureLook, LookTarget> = {
       1: {
         position: [
-          this.width < 700 ? -0.02 : this.width < 960 ? 1.72 : interpolate(1.18, 1.84),
+          this.width < 700 ? 0.02 : this.width < 960 ? 1.66 : interpolate(1.54, 2.24),
           interpolate(0.05, 0.24),
           interpolate(-1.4, 0),
         ],
-        scale: this.width < 700 ? 1.18 : this.width < 960 ? 1.04 : interpolate(1.30, 1.72),
+        scale: this.width < 700 ? 0.96 : this.width < 960 ? 0.98 : interpolate(1.12, 1.44),
         orientation: 0, cardY: 0.5, rowShear: 0, staticSlice: 0, cell: 2.25, cols: 22,
       },
       2: {
@@ -370,10 +370,10 @@ export class SculptureController {
     if (this.portrait) this.portrait.scale.setScalar(portraitHeight);
     if (this.orbit) {
       const orbitScale = tablet
-        ? { x: 0.56, y: 0.34, z: 0.34 }
+        ? { x: 0.78, y: 0.36, z: 0.47 }
         : compact
-          ? { x: 0.56, y: 0.34, z: 0.34 }
-          : { x: 0.52, y: 0.38, z: 0.38 };
+          ? { x: 0.84, y: 0.38, z: 0.51 }
+          : { x: 0.77, y: 0.42, z: 0.56 };
       this.orbit.scale.set(orbitScale.x, orbitScale.y, orbitScale.z);
       this.orbit.position.x = tablet ? 0.02 : compact ? 0.14 : 0.24;
       this.orbit.position.y = compact ? -0.36 : -0.40;
