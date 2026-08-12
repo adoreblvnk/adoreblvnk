@@ -32,9 +32,6 @@ interface AssemblyMetadata {
 
 interface AuthoredMetadata extends Partial<EntropyMetadata>, Partial<AssemblyMetadata> {
   tracker_index?: number;
-  entropy_family?: string;
-  rotation_axis?: [number, number, number];
-  rotation_rate?: number;
 }
 
 interface EntropyFamily {
@@ -46,15 +43,6 @@ interface EntropyFamily {
   speed: number;
 }
 
-interface PieceRotator {
-  mesh: THREE.Mesh;
-  family: string;
-  axis: THREE.Vector3;
-  base: THREE.Quaternion;
-  localRotation: THREE.Quaternion;
-  angle: number;
-  rate: number;
-}
 
 interface LookTarget {
   position: [number, number, number];
@@ -76,6 +64,7 @@ export class SculptureController {
   ditherUniforms: DitherUniforms | null = null;
   ready = false;
   paused = false;
+  reducedMotion = false;
   sceneAssetsAttached = false;
   elapsed = 0;
   appliedLook: string | null = null;
@@ -86,12 +75,9 @@ export class SculptureController {
   orbit: THREE.Group | null = null;
   mixer: THREE.AnimationMixer | null = null;
   entropyFamilies: EntropyFamily[] = [];
-  pieceRotators: PieceRotator[] = [];
   trackers: THREE.Object3D[] = [];
   trackerProjections: TrackerProjection[] = [];
   trackerVector = new THREE.Vector3();
-  portraitDepthVector = new THREE.Vector3();
-  pieceDepthVector = new THREE.Vector3();
 
   motion = {
     orientationZ: 0,
@@ -122,13 +108,13 @@ export class SculptureController {
       map: portraitTexture,
       transparent: true,
       alphaTest: 0.015,
-      depthTest: false,
+      depthTest: true,
       depthWrite: false,
       side: THREE.DoubleSide,
       toneMapped: false,
     });
     this.portrait = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), portraitMaterial);
-    this.portrait.position.z = 0.34;
+    this.portrait.position.z = 0;
     this.portrait.renderOrder = 2;
     this.sculptureGroup.add(this.portrait);
 
@@ -137,12 +123,13 @@ export class SculptureController {
       if (!(node instanceof THREE.Mesh)) return;
       const materials: THREE.Material[] = Array.isArray(node.material) ? node.material : [node.material];
       materials.forEach((material) => {
-        if ('flatShading' in material) material.flatShading = true;
-        material.transparent = true;
-        material.depthTest = false;
-        material.depthWrite = false;
+        if ('flatShading' in material) material.flatShading = false;
+        material.transparent = false;
+        material.depthTest = true;
+        material.depthWrite = true;
         material.needsUpdate = true;
       });
+      node.renderOrder = 1;
     });
     this.sculptureGroup.add(this.orbit);
 
@@ -154,7 +141,6 @@ export class SculptureController {
     if (this.ready || !this.sceneAssetsAttached || !this.camera || !this.ditherUniforms) return;
     this.ready = true;
     this.applySculptureLayout();
-    this.updateOrbitCompositing();
     this.callbacks.onReady?.(this);
   }
 
@@ -178,6 +164,18 @@ export class SculptureController {
     this.scrollVelocity = velocity || 0;
   }
 
+  setReducedMotion(reduced: boolean): void {
+    this.reducedMotion = reduced;
+    this.pointer.targetX = 0;
+    this.pointer.targetY = 0;
+    this.motion.spinOffset = 0;
+    this.entropyFamilies.forEach((family) => {
+      family.action.paused = reduced;
+      if (reduced) family.action.time = 0;
+    });
+    if (reduced) this.mixer?.update(0);
+  }
+
   configureAuthoredModel(animations: THREE.AnimationClip[]): void {
     if (!this.orbit) return;
     this.mixer = new THREE.AnimationMixer(this.orbit);
@@ -189,18 +187,6 @@ export class SculptureController {
       if (metadata.entropy_clip) families.push(metadata as EntropyMetadata);
       if (Number.isInteger(metadata.tracker_index)) this.trackers[metadata.tracker_index as number] = node;
       if (metadata.assembly_clip) assembly = metadata as AssemblyMetadata;
-      if (!(node instanceof THREE.Mesh) || !metadata.entropy_family
-        || !metadata.rotation_axis || metadata.rotation_rate === undefined) return;
-
-      this.pieceRotators.push({
-        mesh: node,
-        family: metadata.entropy_family,
-        axis: new THREE.Vector3(...metadata.rotation_axis).normalize(),
-        base: node.quaternion.clone(),
-        localRotation: new THREE.Quaternion(),
-        angle: 0,
-        rate: metadata.rotation_rate,
-      });
     });
     this.trackerProjections = this.trackers.map(() => ({ x: 0, y: 0, visible: false }));
 
@@ -212,6 +198,7 @@ export class SculptureController {
     this.entropyFamilies = families.map((metadata) => {
       const action = this.mixer!.clipAction(clip(metadata.entropy_clip));
       action.play();
+      action.paused = this.reducedMotion;
       return {
         name: metadata.entropy_name,
         gain: metadata.entropy_gain,
@@ -227,6 +214,13 @@ export class SculptureController {
     assemblyAction.setLoop(THREE.LoopOnce, 1);
     assemblyAction.clampWhenFinished = true;
     assemblyAction.play();
+    if (this.reducedMotion) {
+      assemblyAction.time = assemblyAction.getClip().duration;
+      assemblyAction.paused = true;
+      this.mixer.update(0);
+      this.motion.cameraOffset = 0;
+      return;
+    }
     this.motion.cameraOffset = 0.65;
     gsap.to(this.motion, {
       cameraOffset: 0,
@@ -235,32 +229,17 @@ export class SculptureController {
     });
   }
 
-  updatePieceRotations(deltaTime: number, absoluteTime: number | null = null): void {
-    const familySpeeds = new Map(this.entropyFamilies.map((family) => [family.name, family.speed]));
-    this.pieceRotators.forEach((rotator) => {
-      rotator.angle = absoluteTime === null
-        ? rotator.angle + deltaTime * rotator.rate * (familySpeeds.get(rotator.family) || 1)
-        : absoluteTime * rotator.rate;
-      rotator.localRotation.setFromAxisAngle(rotator.axis, rotator.angle);
-      rotator.mesh.quaternion.copy(rotator.base).multiply(rotator.localRotation);
-    });
-  }
-
-  updateOrbitCompositing(): void {
-    if (!this.portrait) return;
-    this.portrait.getWorldPosition(this.portraitDepthVector);
-    this.pieceRotators.forEach(({ mesh }) => {
-      mesh.getWorldPosition(this.pieceDepthVector);
-      mesh.renderOrder = this.pieceDepthVector.z > this.portraitDepthVector.z ? 3 : 1;
-    });
-  }
 
   applyLook(look: SculptureLook, { force = false, immediate = false } = {}): void {
     if (!this.ditherUniforms) return;
 
     const desktop = this.width > 768;
+    const shortViewport = desktop && this.height < 720;
     const progress = gsap.utils.clamp(0, 1, (this.width - 768) / 512);
     const interpolate = (start: number, end: number): number => start + (end - start) * progress;
+    const positionX = shortViewport ? interpolate(-1.9, -1.45) : desktop ? interpolate(0.70, 0.35) : 0.65;
+    const positionY = shortViewport ? -1.45 : desktop ? interpolate(-1.30, -1.10) : -1.8;
+    const positionScale = shortViewport ? interpolate(0.9, 1.05) : desktop ? interpolate(1.0, 1.35) : 0.85;
     const targets: Record<SculptureLook, LookTarget> = {
       1: {
         position: [interpolate(-0.25, 1.50), interpolate(0.05, 0.24), interpolate(-1.4, 0)],
@@ -268,8 +247,8 @@ export class SculptureController {
         orientation: 0, cardY: 0.5, rowShear: 0, staticSlice: 0, cell: 2.25, cols: 22,
       },
       2: {
-        position: [desktop ? interpolate(-0.35, -1.2) : -0.32, desktop ? 0 : 0.52, desktop ? -0.8 : -1.1],
-        scale: desktop ? 1.7802 : 1.15,
+        position: [positionX, positionY, desktop ? -0.8 : -1.1],
+        scale: positionScale,
         orientation: 0.035, cardY: -0.01, rowShear: 0, staticSlice: desktop ? 0.38 : 0.2, cell: 2.75, cols: 14,
       },
       3: {
@@ -309,20 +288,19 @@ export class SculptureController {
     });
   }
 
-  spinSculpture(rotations = 1, duration = 1.4): void {
-    gsap.to(this.motion, {
-      spinOffset: `+=${Math.PI * 2 * rotations}`,
-      duration,
-      ease: 'power3.inOut',
-      overwrite: false,
-    });
+  pulseSculpture(): void {
+    if (this.reducedMotion) return;
+    gsap.timeline({ defaults: { ease: 'sine.inOut', overwrite: true } })
+      .to(this.motion, { spinOffset: 0.055, duration: 0.24 })
+      .to(this.motion, { spinOffset: -0.038, duration: 0.32 })
+      .to(this.motion, { spinOffset: 0, duration: 0.28 });
   }
 
   applySculptureLayout(): void {
     const compact = this.width < 700;
     const portraitHeight = compact ? 1.863 : 2.162;
     if (this.portrait) this.portrait.scale.setScalar(portraitHeight);
-    if (this.orbit) this.orbit.scale.setScalar(compact ? 0.6804 : 0.7896);
+    if (this.orbit) this.orbit.scale.setScalar(0.92);
   }
 
   projectTrackers(): TrackerProjection[] {
@@ -343,6 +321,11 @@ export class SculptureController {
 
   update(deltaTime: number): void {
     if (!this.ready || this.paused || !this.camera || !this.ditherUniforms) return;
+    if (this.reducedMotion) {
+      this.ditherUniforms.uTime.value = 0;
+      this.callbacks.onFrame?.(this.projectTrackers());
+      return;
+    }
     this.elapsed += Math.min(deltaTime, 0.05);
     this.pointer.x += (this.pointer.targetX - this.pointer.x) * 0.07;
     this.pointer.y += (this.pointer.targetY - this.pointer.y) * 0.07;
@@ -356,7 +339,6 @@ export class SculptureController {
         family.action.timeScale = family.speed;
       });
       this.mixer.update(deltaTime);
-      this.updatePieceRotations(deltaTime);
     }
 
     const pointerX = this.pointer.x;
@@ -366,10 +348,9 @@ export class SculptureController {
     this.sculptureGroup.rotation.z = this.motion.orientationZ + pointerX * 0.004;
     if (this.orbit) {
       this.orbit.rotation.x = pointerY * 0.18;
-      this.orbit.rotation.y = pointerX * 0.10 + this.motion.spinOffset;
-      this.orbit.rotation.z = pointerX * 0.07;
+      this.orbit.rotation.y = pointerX * 0.10;
+      this.orbit.rotation.z = pointerX * 0.07 + this.motion.spinOffset;
     }
-    this.updateOrbitCompositing();
 
     const uniforms = this.ditherUniforms;
     const velocityTarget = Math.min(Math.abs(this.scrollVelocity) * 0.0009, 0.16);

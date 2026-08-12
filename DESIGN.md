@@ -129,13 +129,13 @@ components:
 
 **Creative North Star: "Instrumented Minimalism"**
 
-The interface is an achromatic identity field built around one animated 3D figure, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the figure as deliberate evidence without competing with it.
+The interface is an achromatic identity field built around a fixed portrait enclosed by an animated fluid sculpture, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the portrait and sculpture as deliberate evidence without competing with them.
 
 Computational brutalism governs transitions and animation. Scan states, digital noise, hard inversion, fragmentation, and forceful movement create controlled intensity between sparse, functional compositions. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes.
 
 **Key Characteristics:**
 - Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
-- One animated, dithered 3D figure as the identity-bearing visual anchor.
+- One animated, dithered fluid system wrapping around the portrait as the identity-bearing visual anchor.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
 - Technical overlays and motion that register identity, pose, position, or interaction.
@@ -248,7 +248,7 @@ Inline article links use Link Blue without an underline at rest and underline on
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** keep the animated, dithered figure as the single identity-bearing visual anchor.
+- **Do** keep the animated, dithered portrait and fluid sculpture as one identity-bearing visual anchor.
 - **Do** preserve anatomy, pose, and hand sign through every dither, camera, and interaction treatment.
 - **Do** use the 8/12/16/24/32/48/64/80/96/128px spatial vocabulary, with 4px reserved for optical insets and 6px for compact internal gaps.
 - **Do** keep contact routes and the identity phrase readable during theme inversion.
