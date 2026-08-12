@@ -443,8 +443,8 @@ button:focus-visible,
 
 @media (min-width: 769px) {
   #contact {
-    min-height: calc(100vh - 32px);
-    height: auto;
+    min-height: 0;
+    height: calc(100vh - 32px);
     padding-bottom: 32px;
   }
 
@@ -470,18 +470,6 @@ button:focus-visible,
   letter-spacing: -0.04em;
   opacity: 0.15;
   user-select: none;
-}
-
-.asset-credit {
-  margin-top: 24px;
-  font-size: var(--text-meta);
-  line-height: 16px;
-  letter-spacing: 0.06em;
-  opacity: 0.55;
-}
-
-.asset-credit a {
-  color: inherit;
 }
 
 .contact-index .contact-link {

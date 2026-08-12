@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
+  import { onDestroy } from 'svelte';
   import { Canvas } from '@threlte/core';
   import { NoToneMapping, SRGBColorSpace, WebGLRenderer } from 'three';
   import type { TrackerProjection } from '../lib/sculpture-controller';
@@ -25,14 +25,6 @@
     antialias: true,
     alpha: true,
     powerPreference: 'high-performance',
-  });
-
-  onMount(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updateMotionPreference = () => controller.setReducedMotion(media.matches);
-    updateMotionPreference();
-    media.addEventListener('change', updateMotionPreference);
-    return () => media.removeEventListener('change', updateMotionPreference);
   });
 
   onDestroy(() => controller.dispose());

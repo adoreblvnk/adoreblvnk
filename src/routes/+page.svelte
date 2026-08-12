@@ -209,10 +209,10 @@
               <button
                 type="button"
                 class="action-btn"
-                aria-label="Pulse fluid structure"
-                onclick={() => controller?.pulseSculpture()}
+                aria-label="Spin orbit structure"
+                onclick={() => controller?.spinSculpture()}
                 use:scramble
-              >PULSE</button>
+              >SPIN</button>
             {/if}
         </div>
       </div>
@@ -255,12 +255,6 @@
             {/each}
           </ul>
           <div class="colophon-text" aria-hidden="true">adore_blvnk</div>
-          <p class="asset-credit">
-            ORIGINAL PROCEDURAL ADAPTATION OF
-            <a href="https://sketchfab.com/3d-models/abstract-geometry-fluid-seamless-loop-animation-5eb25e2015e94f9ba17450ac342a8b08" target="_blank" rel="noopener noreferrer">ABSTRACT GEOMETRY FLUID SEAMLESS LOOP BY GUZDEK ADAM ↗</a>.
-            FORM AND MOTION RE-AUTHORED FOR THIS PORTRAIT UNDER
-            <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0 ↗</a>.
-          </p>
         </div>
       </div>
     </section>
