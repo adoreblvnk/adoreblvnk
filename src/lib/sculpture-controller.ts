@@ -86,13 +86,13 @@ export class SculptureController {
   portrait: THREE.Mesh<THREE.PlaneGeometry, THREE.MeshBasicMaterial> | null = null;
   orbit: THREE.Group | null = null;
   mixer: THREE.AnimationMixer | null = null;
+  assemblyAction: THREE.AnimationAction | null = null;
   entropyFamilies: EntropyFamily[] = [];
   pieceRotators: PieceRotator[] = [];
   trackers: THREE.Object3D[] = [];
   trackerProjections: TrackerProjection[] = [];
   trackerVector = new THREE.Vector3();
-  portraitDepthVector = new THREE.Vector3();
-  pieceDepthVector = new THREE.Vector3();
+
 
   motion = {
     orientationZ: 0,
@@ -124,7 +124,7 @@ export class SculptureController {
       transparent: true,
       alphaTest: 0.015,
       depthTest: true,
-      depthWrite: false,
+      depthWrite: true,
       side: THREE.DoubleSide,
       toneMapped: false,
     });
@@ -139,6 +139,17 @@ export class SculptureController {
       const materials: THREE.Material[] = Array.isArray(node.material) ? node.material : [node.material];
       materials.forEach((material) => {
         if ('flatShading' in material) material.flatShading = true;
+        if (material instanceof THREE.MeshStandardMaterial) {
+          const value = material.name === 'MANIFOLD_PAPER'
+            ? 0.34
+            : material.name === 'MANIFOLD_MID'
+              ? 0.24
+              : 0.14;
+          material.color.setRGB(value, value, value);
+          material.emissive.setRGB(0, 0, 0);
+          material.emissiveIntensity = 0;
+          material.toneMapped = false;
+        }
         material.transparent = false;
         material.depthTest = true;
         material.depthWrite = true;
@@ -155,7 +166,6 @@ export class SculptureController {
     if (this.ready || !this.sceneAssetsAttached || !this.camera || !this.ditherUniforms) return;
     this.ready = true;
     this.applySculptureLayout();
-    this.updateOrbitCompositing();
     this.callbacks.onReady?.(this);
   }
 
@@ -170,8 +180,12 @@ export class SculptureController {
       family.action.paused = reduced;
       if (reduced) family.action.time = 0;
     });
+    if (this.assemblyAction) {
+      this.assemblyAction.paused = reduced;
+      if (reduced) this.assemblyAction.time = this.assemblyAction.getClip().duration;
+    }
     if (reduced) {
-      this.mixer?.setTime(0);
+      this.mixer?.update(0);
       this.updatePieceRotations(0, 0);
       this.pointer.x = 0;
       this.pointer.y = 0;
@@ -248,10 +262,11 @@ export class SculptureController {
     this.setReducedMotion(this.reducedMotion);
 
     if (!assembly) throw new Error('Missing authored assembly metadata');
-    const assemblyAction = this.mixer.clipAction(clip(assembly.assembly_clip));
-    assemblyAction.setLoop(THREE.LoopOnce, 1);
-    assemblyAction.clampWhenFinished = true;
-    assemblyAction.play();
+    this.assemblyAction = this.mixer.clipAction(clip(assembly.assembly_clip));
+    this.assemblyAction.setLoop(THREE.LoopOnce, 1);
+    this.assemblyAction.clampWhenFinished = true;
+    this.assemblyAction.play();
+    this.setReducedMotion(this.reducedMotion);
     this.motion.cameraOffset = 0.65;
     gsap.to(this.motion, {
       cameraOffset: 0,
@@ -271,14 +286,6 @@ export class SculptureController {
     });
   }
 
-  updateOrbitCompositing(): void {
-    if (!this.portrait) return;
-    this.portrait.getWorldPosition(this.portraitDepthVector);
-    this.pieceRotators.forEach(({ mesh }) => {
-      mesh.getWorldPosition(this.pieceDepthVector);
-      mesh.renderOrder = this.pieceDepthVector.z > this.portraitDepthVector.z ? 3 : 1;
-    });
-  }
 
   applyLook(look: SculptureLook, { force = false, immediate = false } = {}): void {
     if (!this.ditherUniforms) return;
@@ -288,8 +295,12 @@ export class SculptureController {
     const interpolate = (start: number, end: number): number => start + (end - start) * progress;
     const targets: Record<SculptureLook, LookTarget> = {
       1: {
-        position: [interpolate(-0.25, 1.50), interpolate(0.05, 0.24), interpolate(-1.4, 0)],
-        scale: interpolate(1.5, 1.978),
+        position: [
+          this.width < 700 ? -0.02 : this.width < 960 ? 1.72 : interpolate(1.18, 1.84),
+          interpolate(0.05, 0.24),
+          interpolate(-1.4, 0),
+        ],
+        scale: this.width < 700 ? 1.18 : this.width < 960 ? 1.04 : interpolate(1.30, 1.72),
         orientation: 0, cardY: 0.5, rowShear: 0, staticSlice: 0, cell: 2.25, cols: 22,
       },
       2: {
@@ -353,13 +364,19 @@ export class SculptureController {
   }
 
   applySculptureLayout(): void {
-    const compact = this.width < 700;
+    const compact = this.width < 960;
+    const tablet = this.width >= 700 && this.width < 960;
     const portraitHeight = compact ? 1.863 : 2.162;
     if (this.portrait) this.portrait.scale.setScalar(portraitHeight);
     if (this.orbit) {
-      this.orbit.scale.setScalar(compact ? 0.66 : 0.78);
-      this.orbit.position.x = compact ? 0.30 : 0.52;
-      this.orbit.position.y = compact ? 0.04 : 0.06;
+      const orbitScale = tablet
+        ? { x: 0.56, y: 0.34, z: 0.34 }
+        : compact
+          ? { x: 0.56, y: 0.34, z: 0.34 }
+          : { x: 0.52, y: 0.38, z: 0.38 };
+      this.orbit.scale.set(orbitScale.x, orbitScale.y, orbitScale.z);
+      this.orbit.position.x = tablet ? 0.02 : compact ? 0.14 : 0.24;
+      this.orbit.position.y = compact ? -0.36 : -0.40;
     }
   }
 
@@ -407,7 +424,6 @@ export class SculptureController {
       this.orbit.rotation.y = this.reducedMotion ? 0 : pointerX * 0.10;
       this.orbit.rotation.z = this.reducedMotion ? 0 : pointerX * 0.07;
     }
-    this.updateOrbitCompositing();
 
     const uniforms = this.ditherUniforms;
     const velocityTarget = Math.min(Math.abs(this.scrollVelocity) * 0.0009, 0.16);

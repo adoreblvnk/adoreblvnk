@@ -21,9 +21,10 @@ ASSEMBLY_CLIP = 'ASSEMBLY_LOAD_IN'
 ASSEMBLY_DURATION = 1.45
 SEGMENTS = 220
 START_ANGLE = 0.70
-# A 78% sweep keeps the orbital read while rejecting a complete Saturn-like ring.
-# All three lanes share two physical junctions, so the mesh reads as one forked trace.
-END_ANGLE = START_ANGLE + math.tau * 0.78
+# Continuous annular lanes preserve the Saturn silhouette at every vertical-axis
+# phase. Scheduler character comes from forks, width steps, ribs and apertures,
+# not from a gap that can disappear behind the portrait.
+END_ANGLE = START_ANGLE + math.tau
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene = bpy.context.scene
@@ -54,9 +55,16 @@ materials = [
 
 root = bpy.data.objects.new('PORTRAIT_ORBIT_ROOT', None)
 controller = bpy.data.objects.new('SCHEDULER_CONTROLLER', None)
+alignment = bpy.data.objects.new('HORIZONTAL_RING_ALIGNMENT', None)
 bpy.context.collection.objects.link(root)
 bpy.context.collection.objects.link(controller)
-controller.parent = root
+bpy.context.collection.objects.link(alignment)
+alignment.parent = root
+controller.parent = alignment
+# Geometry is authored in X-Z for straightforward path construction, then laid
+# into Blender X-Y. GLTF exports Blender Z as Three Y, yielding Saturn-like
+# horizontal rings around the portrait's vertical axis.
+alignment.rotation_euler.x = math.radians(30.0)
 root['assembly_clip'] = ASSEMBLY_CLIP
 root['assembly_duration'] = ASSEMBLY_DURATION
 controller['entropy_name'] = 'scheduler'
@@ -89,18 +97,20 @@ def frame_for(lane, u):
     spread = branch_envelope(u)
     lane_sign = (-1.0, 0.0, 1.0)[lane]
     radius = 1.88 + lane_sign * 0.25 * spread
-    vertical_radius = 1.30 + lane_sign * 0.11 * spread
+    depth_radius = 1.12 + lane_sign * 0.09 * spread
     phase = (0.0, 0.42, -0.33)[lane]
-    depth_phase = (0.18, -0.12, 0.36)[lane]
+    depth_phase = 0.0
 
+    # Native horizontal annulus in Blender X-Y. Blender Z exports as Three Y,
+    # so Z is only a restrained vertical lane deviation around the torso.
     x = radius * math.cos(angle)
-    z = vertical_radius * math.sin(angle)
-    y = 0.48 * math.sin(angle + depth_phase)
+    y = depth_radius * math.sin(angle + depth_phase)
+    z = lane_sign * 0.10 * spread + 0.045 * math.sin(angle * 2.0 + phase)
 
     # Lane-specific asynchronous deviations disappear at fork and reconnect.
     x += spread * (0.07 * lane_sign + 0.035 * math.sin(angle * 3.0 + phase))
-    z += spread * (lane_sign * 0.13 + 0.055 * math.sin(angle * 2.0 + phase))
-    y += spread * (lane_sign * 0.12 + 0.05 * math.cos(angle * 2.0 - phase))
+    z += spread * (0.025 * math.sin(angle * 3.0 - phase))
+    y += spread * (lane_sign * 0.08 + 0.035 * math.cos(angle * 2.0 - phase))
 
     # Numerical tangent.
     eps = 1.0 / (SEGMENTS * 3.0)
@@ -108,15 +118,15 @@ def frame_for(lane, u):
     a2 = START_ANGLE + (END_ANGLE - START_ANGLE) * u2
     s2 = branch_envelope(u2)
     r2 = 1.88 + lane_sign * 0.25 * s2
-    vr2 = 1.30 + lane_sign * 0.11 * s2
+    dr2 = 1.12 + lane_sign * 0.09 * s2
     p2 = Vector((
         r2 * math.cos(a2) + s2 * (0.07 * lane_sign + 0.035 * math.sin(a2 * 3.0 + phase)),
-        0.48 * math.sin(a2 + depth_phase) + s2 * (lane_sign * 0.10 + 0.04 * math.cos(a2 * 2.0 - phase)),
-        vr2 * math.sin(a2) + s2 * (lane_sign * 0.13 + 0.055 * math.sin(a2 * 2.0 + phase)),
+        dr2 * math.sin(a2 + depth_phase) + s2 * (lane_sign * 0.08 + 0.035 * math.cos(a2 * 2.0 - phase)),
+        lane_sign * 0.10 * s2 + 0.045 * math.sin(a2 * 2.0 + phase) + s2 * (0.025 * math.sin(a2 * 3.0 - phase)),
     ))
     center = Vector((x, y, z))
     tangent = (p2 - center).normalized()
-    radial = Vector((math.cos(angle), 0.12 * math.sin(angle + depth_phase), math.sin(angle))).normalized()
+    radial = Vector((math.cos(angle), math.sin(angle + depth_phase), 0.0)).normalized()
     width_axis = (radial - tangent * radial.dot(tangent)).normalized()
     thickness_axis = tangent.cross(width_axis).normalized()
     return center, tangent, width_axis, thickness_axis, angle, spread
@@ -261,18 +271,20 @@ for lane in range(3):
         if index >= len(key.data):
             continue
         co = key.data[index].co
-        radial = Vector((co.x, 0.0, co.z))
+        radial = Vector((co.x, co.y, 0.0))
         if radial.length == 0:
             continue
-        envelope = min(1.0, max(0.0, (abs(co.x) + abs(co.z) - 0.45) / 1.3))
-        phase = math.atan2(co.z, co.x)
+        envelope = min(1.0, max(0.0, (abs(co.x) + abs(co.y) - 0.45) / 1.3))
+        phase = math.atan2(co.y, co.x)
         offset = 0.032 * math.sin(phase * 3.0 + lane * 1.7) * envelope
         co += radial.normalized() * offset
-        co.y += 0.024 * math.cos(phase * 2.0 - lane) * envelope
+        co.z += 0.012 * math.cos(phase * 2.0 - lane) * envelope
 
 # Seamless orbit plus phase-offset local flex.
 controller.rotation_mode = 'QUATERNION'
 for frame, turn in ((0, 0.0), (96, 0.25), (192, 0.50), (288, 0.75), (END, 1.0)):
+    # Blender Z exports to Three Y: spin the horizontal ring around the
+    # portrait's vertical axis while its near/far arcs cross the portrait plane.
     controller.rotation_quaternion = (math.cos(math.pi * turn), 0.0, 0.0, math.sin(math.pi * turn))
     controller.keyframe_insert('rotation_quaternion', frame=frame, group=ORBIT_CLIP)
 
@@ -320,7 +332,7 @@ for index, u in enumerate((0.02, 0.28, 0.54, 0.80)):
 
 # Export the production asset.
 bpy.ops.object.select_all(action='DESELECT')
-for obj in (root, controller, manifold, *trackers):
+for obj in (root, controller, alignment, manifold, *trackers):
     obj.select_set(True)
 scene.frame_set(0)
 bpy.ops.export_scene.gltf(

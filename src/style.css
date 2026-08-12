@@ -314,6 +314,12 @@ button:focus-visible,
   clip-path: polygon(0 0, 92% 0, 84% 100%, 0 100%);
 }
 
+@media (min-width: 769px) and (max-height: 699px) {
+  #identity {
+    padding-bottom: 72px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-specimen .action-btn {
     display: none;
