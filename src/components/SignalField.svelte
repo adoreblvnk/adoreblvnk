@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { Canvas } from '@threlte/core';
   import { NoToneMapping, SRGBColorSpace, WebGLRenderer } from 'three';
   import type { TrackerProjection } from '../lib/sculpture-controller';
@@ -27,7 +27,19 @@
     powerPreference: 'high-performance',
   });
 
-  onDestroy(() => controller.dispose());
+  let motionQuery: MediaQueryList | null = null;
+  const syncReducedMotion = (): void => controller.setReducedMotion(motionQuery?.matches ?? false);
+
+  onMount(() => {
+    motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    syncReducedMotion();
+    motionQuery.addEventListener('change', syncReducedMotion);
+  });
+
+  onDestroy(() => {
+    motionQuery?.removeEventListener('change', syncReducedMotion);
+    controller.dispose();
+  });
 </script>
 
 <div class="signal-field" aria-hidden="true">

@@ -301,6 +301,23 @@ button:focus-visible,
 
 .hero-lockup {
   max-width: min(768px, 62vw);
+  position: relative;
+  isolation: isolate;
+}
+
+.hero-lockup::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -20px -28px;
+  background: var(--color-ink);
+  clip-path: polygon(0 0, 92% 0, 84% 100%, 0 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-specimen .action-btn {
+    display: none;
+  }
 }
 
 .hero-specimen {

@@ -76,6 +76,7 @@ export class SculptureController {
   ditherUniforms: DitherUniforms | null = null;
   ready = false;
   paused = false;
+  reducedMotion = false;
   sceneAssetsAttached = false;
   elapsed = 0;
   appliedLook: string | null = null;
@@ -122,7 +123,7 @@ export class SculptureController {
       map: portraitTexture,
       transparent: true,
       alphaTest: 0.015,
-      depthTest: false,
+      depthTest: true,
       depthWrite: false,
       side: THREE.DoubleSide,
       toneMapped: false,
@@ -138,9 +139,9 @@ export class SculptureController {
       const materials: THREE.Material[] = Array.isArray(node.material) ? node.material : [node.material];
       materials.forEach((material) => {
         if ('flatShading' in material) material.flatShading = true;
-        material.transparent = true;
-        material.depthTest = false;
-        material.depthWrite = false;
+        material.transparent = false;
+        material.depthTest = true;
+        material.depthWrite = true;
         material.needsUpdate = true;
       });
     });
@@ -161,6 +162,29 @@ export class SculptureController {
   setContextAvailable(available: boolean): void {
     this.paused = !available;
     this.callbacks.onStatus?.(available && this.ready);
+  }
+
+  setReducedMotion(reduced: boolean): void {
+    this.reducedMotion = reduced;
+    this.entropyFamilies.forEach((family) => {
+      family.action.paused = reduced;
+      if (reduced) family.action.time = 0;
+    });
+    if (reduced) {
+      this.mixer?.setTime(0);
+      this.updatePieceRotations(0, 0);
+      this.pointer.x = 0;
+      this.pointer.y = 0;
+      this.scrollVelocity = 0;
+      this.motion.velocitySlice = 0;
+      this.motion.glitchTarget = 0;
+      this.motion.cameraOffset = 0;
+      if (this.ditherUniforms) {
+        this.ditherUniforms.uTime.value = 0;
+        this.ditherUniforms.uGlitch.value = 0;
+        this.ditherUniforms.uVelocitySlice.value = 0;
+      }
+    }
   }
 
   setViewport(width: number, height: number): void {
@@ -221,6 +245,7 @@ export class SculptureController {
         speed: 1,
       };
     });
+    this.setReducedMotion(this.reducedMotion);
 
     if (!assembly) throw new Error('Missing authored assembly metadata');
     const assemblyAction = this.mixer.clipAction(clip(assembly.assembly_clip));
@@ -268,8 +293,8 @@ export class SculptureController {
         orientation: 0, cardY: 0.5, rowShear: 0, staticSlice: 0, cell: 2.25, cols: 22,
       },
       2: {
-        position: [desktop ? interpolate(-0.35, -1.2) : -0.32, desktop ? 0 : 0.52, desktop ? -0.8 : -1.1],
-        scale: desktop ? 1.7802 : 1.15,
+        position: [desktop ? interpolate(1.18, 1.36) : 1.28, desktop ? interpolate(-1.88, -1.72) : -2.42, desktop ? -0.8 : -1.1],
+        scale: desktop ? interpolate(0.54, 0.66) : 0.42,
         orientation: 0.035, cardY: -0.01, rowShear: 0, staticSlice: desktop ? 0.38 : 0.2, cell: 2.75, cols: 14,
       },
       3: {
@@ -310,19 +335,32 @@ export class SculptureController {
   }
 
   spinSculpture(rotations = 1, duration = 1.4): void {
-    gsap.to(this.motion, {
-      spinOffset: `+=${Math.PI * 2 * rotations}`,
-      duration,
-      ease: 'power3.inOut',
-      overwrite: false,
+    if (this.reducedMotion) return;
+    this.entropyFamilies.forEach((family) => {
+      gsap.killTweensOf(family);
+      gsap.to(family, {
+        speed: 1 + 2.4 * rotations,
+        duration: duration * 0.28,
+        ease: 'power3.out',
+        onComplete: () => gsap.to(family, {
+          speed: 1,
+          duration: duration * 0.72,
+          ease: 'power2.inOut',
+        }),
+      });
     });
+    this.triggerGlitch(0.42);
   }
 
   applySculptureLayout(): void {
     const compact = this.width < 700;
     const portraitHeight = compact ? 1.863 : 2.162;
     if (this.portrait) this.portrait.scale.setScalar(portraitHeight);
-    if (this.orbit) this.orbit.scale.setScalar(compact ? 0.6804 : 0.7896);
+    if (this.orbit) {
+      this.orbit.scale.setScalar(compact ? 0.66 : 0.78);
+      this.orbit.position.x = compact ? 0.30 : 0.52;
+      this.orbit.position.y = compact ? 0.04 : 0.06;
+    }
   }
 
   projectTrackers(): TrackerProjection[] {
@@ -347,7 +385,7 @@ export class SculptureController {
     this.pointer.x += (this.pointer.targetX - this.pointer.x) * 0.07;
     this.pointer.y += (this.pointer.targetY - this.pointer.y) * 0.07;
 
-    if (this.mixer) {
+    if (this.mixer && !this.reducedMotion) {
       const entropyTarget = Math.min(Math.sqrt(Math.abs(this.scrollVelocity)) * 0.12, 1.8);
       this.entropyFamilies.forEach((family) => {
         const targetSpeed = 1 + entropyTarget * family.gain;
@@ -361,13 +399,13 @@ export class SculptureController {
 
     const pointerX = this.pointer.x;
     const pointerY = this.pointer.y;
-    this.sculptureGroup.rotation.x = pointerY * 0.008;
-    this.sculptureGroup.rotation.y = pointerX * 0.010;
-    this.sculptureGroup.rotation.z = this.motion.orientationZ + pointerX * 0.004;
+    this.sculptureGroup.rotation.x = this.reducedMotion ? 0 : pointerY * 0.008;
+    this.sculptureGroup.rotation.y = this.reducedMotion ? 0 : pointerX * 0.010;
+    this.sculptureGroup.rotation.z = this.motion.orientationZ + (this.reducedMotion ? 0 : pointerX * 0.004);
     if (this.orbit) {
-      this.orbit.rotation.x = pointerY * 0.18;
-      this.orbit.rotation.y = pointerX * 0.10 + this.motion.spinOffset;
-      this.orbit.rotation.z = pointerX * 0.07;
+      this.orbit.rotation.x = this.reducedMotion ? 0 : pointerY * 0.18;
+      this.orbit.rotation.y = this.reducedMotion ? 0 : pointerX * 0.10;
+      this.orbit.rotation.z = this.reducedMotion ? 0 : pointerX * 0.07;
     }
     this.updateOrbitCompositing();
 
@@ -380,8 +418,8 @@ export class SculptureController {
     const attack = this.motion.glitchTarget > glitch.value ? 0.5 : 0.10;
     glitch.value += (this.motion.glitchTarget - glitch.value) * attack;
     this.motion.glitchTarget *= 0.90;
-    uniforms.uTime.value = this.elapsed;
-    uniforms.uVelocitySlice.value = this.motion.velocitySlice;
+    uniforms.uTime.value = this.reducedMotion ? 0 : this.elapsed;
+    uniforms.uVelocitySlice.value = this.reducedMotion ? 0 : this.motion.velocitySlice;
     this.scrollVelocity *= 0.88;
 
     this.camera.position.x = pointerX * 0.015;
@@ -396,5 +434,6 @@ export class SculptureController {
     gsap.killTweensOf(this.sculptureGroup.position);
     gsap.killTweensOf(this.sculptureGroup.scale);
     this.mixer?.stopAllAction();
+    this.entropyFamilies.forEach((family) => gsap.killTweensOf(family));
   }
 }

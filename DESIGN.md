@@ -129,13 +129,13 @@ components:
 
 **Creative North Star: "Instrumented Minimalism"**
 
-The interface is an achromatic identity field built around one animated 3D figure, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the figure as deliberate evidence without competing with it.
+The interface is an achromatic identity field built around a fixed portrait and one forked scheduler manifold, restrained typography, and spatial instrumentation. The manifold is a single thin structure that forks into three incomplete orbital lanes, changes width, and carries sparse physical ribs and apertures. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the figure as deliberate evidence without competing with it.
 
 Computational brutalism governs transitions and animation. Scan states, digital noise, hard inversion, fragmentation, and forceful movement create controlled intensity between sparse, functional compositions. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes.
 
 **Key Characteristics:**
 - Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
-- One animated, dithered 3D figure as the identity-bearing visual anchor.
+- One identity-faithful portrait enclosed by a detailed, dithered scheduler manifold as the visual anchor.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
 - Technical overlays and motion that register identity, pose, position, or interaction.

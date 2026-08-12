@@ -209,10 +209,10 @@
               <button
                 type="button"
                 class="action-btn"
-                aria-label="Spin orbit structure"
+                aria-label="Signal scheduler manifold"
                 onclick={() => controller?.spinSculpture()}
                 use:scramble
-              >SPIN</button>
+              >SIGNAL</button>
             {/if}
         </div>
       </div>
