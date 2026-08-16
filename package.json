@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "build:workstation": "bash scripts/blender/build_workstation.sh",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",

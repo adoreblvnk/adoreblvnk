@@ -301,29 +301,6 @@ button:focus-visible,
 
 .hero-lockup {
   max-width: min(768px, 62vw);
-  position: relative;
-  isolation: isolate;
-}
-
-.hero-lockup::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: -20px -28px;
-  background: var(--color-ink);
-  clip-path: polygon(0 0, 92% 0, 84% 100%, 0 100%);
-}
-
-@media (min-width: 769px) and (max-height: 699px) {
-  #identity {
-    padding-bottom: 72px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-specimen .action-btn {
-    display: none;
-  }
 }
 
 .hero-specimen {
@@ -559,7 +536,7 @@ button:focus-visible,
   .position-layout {
     grid-template-columns: 1fr;
     align-content: center;
-    gap: 128px;
+    gap: 96px;
   }
 
   .kinetic-stacked-composition {
@@ -571,7 +548,8 @@ button:focus-visible,
     justify-self: start;
     width: auto;
     max-width: 34ch;
-    font-size: 16px;
+    font-size: 14px;
+    line-height: 1.4;
   }
 
   #contact {

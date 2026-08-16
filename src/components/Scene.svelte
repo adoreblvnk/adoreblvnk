@@ -3,13 +3,13 @@
   import { TextureLoader } from 'three';
   import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-  import type { SculptureController } from '../lib/sculpture-controller';
+  import type { WorkstationController } from '../lib/workstation-controller';
 
-  let { controller }: { controller: SculptureController } = $props();
+  let { controller }: { controller: WorkstationController } = $props();
   const { camera, canvas, size } = useThrelte();
   const portraitTexture = useLoader(TextureLoader).load('/images/portrait.png');
-  const orbitModel = useLoader(GLTFLoader, { extend: (loader) => loader.setMeshoptDecoder(MeshoptDecoder) })
-    .load('/models/portrait-orbit.glb');
+  const workstationModel = useLoader(GLTFLoader, { extend: (loader) => loader.setMeshoptDecoder(MeshoptDecoder) })
+    .load('/models/workstation-world.glb');
 
   $effect(() => {
     controller.attachCamera($camera);
@@ -20,7 +20,7 @@
   });
 
   $effect(() => {
-    if ($portraitTexture && $orbitModel) controller.attachSceneAssets($portraitTexture, $orbitModel);
+    if ($portraitTexture && $workstationModel) controller.attachSceneAssets($portraitTexture, $workstationModel);
   });
 
   $effect(() => {
@@ -44,4 +44,4 @@
 <T.DirectionalLight color={0xffffff} intensity={3.4} position={[4, 5, 7]} />
 <T.DirectionalLight color={0xcfd2d2} intensity={1.8} position={[-5, -1, 4]} />
 <T.HemisphereLight args={[0xffffff, 0x161616, 1.35]} />
-<T is={controller.sculptureGroup} />
+<T is={controller.worldGroup} />

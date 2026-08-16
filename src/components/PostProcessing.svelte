@@ -3,12 +3,12 @@
   import { useTask, useThrelte } from '@threlte/core';
   import { EffectComposer, EffectPass, RenderPass } from 'postprocessing';
   import { DitherEffect } from '../lib/dither-effect';
-  import type { SculptureController } from '../lib/sculpture-controller';
+  import type { WorkstationController } from '../lib/workstation-controller';
 
-  let { controller }: { controller: SculptureController } = $props();
+  let { controller }: { controller: WorkstationController } = $props();
   const { renderer, scene, camera, size, renderStage } = useThrelte();
   const composer = new EffectComposer(renderer);
-  const ditherEffect = new DitherEffect();
+  const ditherEffect = untrack(() => new DitherEffect());
   untrack(() => controller.attachDither(ditherEffect.values));
 
   $effect(() => {

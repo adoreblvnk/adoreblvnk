@@ -2,19 +2,19 @@
   import { onDestroy, onMount } from 'svelte';
   import { Canvas } from '@threlte/core';
   import { NoToneMapping, SRGBColorSpace, WebGLRenderer } from 'three';
-  import type { TrackerProjection } from '../lib/sculpture-controller';
-  import { SculptureController } from '../lib/sculpture-controller';
+  import type { TrackerProjection } from '../lib/workstation-controller';
+  import { WorkstationController } from '../lib/workstation-controller';
   import PostProcessing from './PostProcessing.svelte';
   import Scene from './Scene.svelte';
 
   interface Props {
-    onReady?: (controller: SculptureController) => void;
+    onReady?: (controller: WorkstationController) => void;
     onFrame?: (projections: TrackerProjection[]) => void;
     onStatus?: (ready: boolean) => void;
   }
 
   let { onReady, onFrame, onStatus }: Props = $props();
-  const controller = new SculptureController({
+  const controller = new WorkstationController({
     onReady: (sceneController) => onReady?.(sceneController),
     onFrame: (projections) => onFrame?.(projections),
     onStatus: (ready) => onStatus?.(ready),

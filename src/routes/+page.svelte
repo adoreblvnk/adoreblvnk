@@ -4,12 +4,12 @@
   import { ScrollTrigger } from 'gsap/ScrollTrigger';
   import SignalField from '../components/SignalField.svelte';
   import { scramble } from '../lib/scramble';
-  import type { SculptureLook, TrackerProjection } from '../lib/sculpture-controller';
-  import { SculptureController } from '../lib/sculpture-controller';
+  import type { TrackerProjection, WorkstationLook } from '../lib/workstation-controller';
+  import { WorkstationController } from '../lib/workstation-controller';
 
   interface Section {
     id: 'identity' | 'position' | 'contact';
-    look: SculptureLook;
+    look: WorkstationLook;
     theme: 'ink' | 'paper';
     animateEntrance?: boolean;
   }
@@ -45,7 +45,7 @@
 
   let activeSection = $state<Section['id']>('identity');
   let sceneReady = $state(false);
-  let controller = $state<SculptureController | null>(null);
+  let controller = $state<WorkstationController | null>(null);
   let trackers = $state<DisplayTracker[]>([]);
 
   const activeConfig = () => sections.find((section) => section.id === activeSection) || sections[0];
@@ -63,10 +63,16 @@
     controller?.applyLook(activeConfig().look, { force, immediate });
   }
 
-  function handleReady(sceneController: SculptureController): void {
+  function syncPerspective(immediate = false): void {
+    const range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+    controller?.setPerspectiveProgress(window.scrollY / range, immediate);
+  }
+
+  function handleReady(sceneController: WorkstationController): void {
     controller = sceneController;
     sceneReady = true;
     applyCurrentLook({ force: true, immediate: true });
+    syncPerspective(true);
   }
 
   function handleStatus(ready: boolean): void {
@@ -122,8 +128,11 @@
       onEnter: () => activateSection(section),
       onEnterBack: () => activateSection(section),
     }));
-    const velocityTrigger = ScrollTrigger.create({
-      onUpdate: (self) => controller?.setScrollVelocity(self.getVelocity() / 60),
+    const perspectiveTrigger = ScrollTrigger.create({
+      onUpdate: () => {
+        const range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        controller?.setPerspectiveProgress(window.scrollY / range);
+      },
     });
 
     const entrance = gsap.timeline()
@@ -134,13 +143,16 @@
     let resizeFrame: number | null = null;
     const handleResize = () => {
       if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
-      resizeFrame = requestAnimationFrame(() => applyCurrentLook({ force: true, immediate: true }));
+      resizeFrame = requestAnimationFrame(() => {
+        applyCurrentLook({ force: true, immediate: true });
+        syncPerspective(true);
+      });
     };
     window.addEventListener('resize', handleResize);
 
     return () => {
       sectionTriggers.forEach((trigger) => trigger.kill());
-      velocityTrigger.kill();
+      perspectiveTrigger.kill();
       entrance.kill();
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('resize', handleResize);
@@ -205,15 +217,6 @@
             <h1 id="identity-heading" class="display-name">adore_blvnk</h1>
             <p class="hero-phrase" use:scramble={{ focus: false }}>pattern your position</p>
             <p class="role-subheading">CLI user, software architect</p>
-            {#if sceneReady}
-              <button
-                type="button"
-                class="action-btn"
-                aria-label="Signal scheduler manifold"
-                onclick={() => controller?.spinSculpture()}
-                use:scramble
-              >SIGNAL</button>
-            {/if}
         </div>
       </div>
     </section>

@@ -129,13 +129,13 @@ components:
 
 **Creative North Star: "Instrumented Minimalism"**
 
-The interface is an achromatic identity field built around a fixed portrait and one forked scheduler manifold, restrained typography, and spatial instrumentation. The manifold is a single thin structure that forks into three incomplete orbital lanes, changes width, and carries sparse physical ribs and apertures. Dithered machine vision is its material language. Coordinate trackers, registration corners, and a measured lattice frame the figure as deliberate evidence without competing with it.
+The interface is an achromatic identity field built around one Blender-authored Linux workstation, the exact runtime portrait, restrained typography, and spatial instrumentation. Dithered machine vision is its material language. Object-linked trackers, registration corners, and a measured lattice frame the operator and machine as deliberate evidence without competing with them.
 
 Computational brutalism governs transitions and animation. Scan states, digital noise, hard inversion, fragmentation, and forceful movement create controlled intensity between sparse, functional compositions. Large Lexend statements supply mass; Space Mono carries controls, coordinates, and routes.
 
 **Key Characteristics:**
 - Monochrome section inversion with no ornamental accent color; Link Blue is reserved for functional prose links.
-- One identity-faithful portrait enclosed by a detailed, dithered scheduler manifold as the visual anchor.
+- One dithered Linux workstation and exact portrait as the identity-bearing visual anchor.
 - Square geometry, hairline registration marks, and flat controls.
 - Display mass from Lexend; operational detail from Space Mono.
 - Technical overlays and motion that register identity, pose, position, or interaction.
@@ -231,7 +231,15 @@ Contact routes are unboxed rows separated by registration lines. Each row pairs 
 
 ### Position Composition
 
-The position section pairs low-opacity kinetic Lexend type with a right-aligned Space Mono biography. The figure sits left of center and may pass behind the biography. The biography preserves the shared mirrored margin instead of following the section's smaller right padding. On narrow screens, the figure scales down and shifts up and left while the biography stacks below the kinetic type without overlap.
+The position section pairs low-opacity kinetic Lexend type with a right-aligned Space Mono biography. The portrait and workstation may pass behind either text block; intentional overlap is part of the composition. The biography preserves the shared mirrored margin instead of following the section's smaller right padding. On narrow screens, the workstation shifts with its authored state while the biography stacks below the kinetic type.
+
+### Linux Workstation Asset
+
+The persistent Blender-authored environment contains an industrial monitor, open-frame host, keyboard, external SSD, network switch, and deliberately routed cables. Identity faces the operator and display, Position moves toward the exposed host, and Contact descends toward the switch and cable route. Named Blender anchors own the three camera, target, portrait, and tracker states.
+
+The exact portrait remains a separate runtime plane with genuine depth testing. Hardware and cables may cross the body, while the face, eyes, raised hand, and navigation remain protected.
+
+Pointer movement adds restrained camera parallax without distorting the ordered-dither image. Touch and reduced-motion users do not receive pointer motion.
 
 ### Writing Index
 
@@ -248,7 +256,7 @@ Inline article links use Link Blue without an underline at rest and underline on
 ## 6. Do's and Don'ts
 
 ### Do:
-- **Do** keep the animated, dithered figure as the single identity-bearing visual anchor.
+- **Do** keep the dithered portrait and Linux workstation as the single identity-bearing visual world.
 - **Do** preserve anatomy, pose, and hand sign through every dither, camera, and interaction treatment.
 - **Do** use the 8/12/16/24/32/48/64/80/96/128px spatial vocabulary, with 4px reserved for optical insets and 6px for compact internal gaps.
 - **Do** keep contact routes and the identity phrase readable during theme inversion.
@@ -258,8 +266,8 @@ Inline article links use Link Blue without an underline at rest and underline on
 
 ### Don't:
 - **Don't** turn the interface into a generic SaaS landing page, soft glass card system, or warm editorial template.
-- **Don't** let specimen-style UI chrome, excessive telemetry, barcodes, fictional operating-system chrome, or status readouts compete with the 3D figure.
-- **Don't** make the 3D character cute or mascot-like, coat it in glossy cyber-armor, or surround it with decorative point clouds.
-- **Don't** let interaction sacrifice the character's pose or hand sign.
+- **Don't** let specimen-style UI chrome, excessive telemetry, barcodes, fictional operating-system chrome, or status readouts compete with the workstation composition.
+- **Don't** turn the workstation into RGB gaming hardware, fake hacker chrome, glossy cyber-armor, or decorative technology debris.
+- **Don't** let interaction sacrifice the portrait's pose or hand sign.
 - **Don't** add gradients, ornamental accent colors, soft shadows, rounded card grids, or pill-shaped informational tags.
 - **Don't** use monospace as blanket technical shorthand or repeat tiny uppercase eyebrows as section scaffolding.
