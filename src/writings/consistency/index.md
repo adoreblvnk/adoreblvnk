@@ -161,6 +161,16 @@ See [this](#-prettier-code-formatter-with-airbnb-style-guide) for handling confl
 
 While [uv](https://docs.astral.sh/uv) is intended to be a [drop-in replacement for pip](https://docs.astral.sh/uv/pip/compatibility), certain differences exist. In general, use `uv add` instead of `pip` & `uvx` (`uv tool run`) instead of `pipx`.
 
+#### 🟡 [PEP 350](https://peps.python.org/pep-0350/) for Codetags
+
+[PEP 350](https://peps.python.org/pep-0350/) provides conventions for codetags inside comments. Only the following codetags are used for now:
+
+- `TODO:`: Informal tasks or features pending completion.
+- `FIXME:`: Areas of problematic or ugly code needing refactoring or cleanup.
+- `BUG:`: Reported defects tracked in bug database.
+- `HACK:`: Temporary code to force inflexible functionality or workaround a known problem.
+- `NOTE:`: Sections that need discussion, explanation, or further investigation.
+
 ### [Rust](https://www.rust-lang.org)
 
 #### 🔴 [rustfmt](https://github.com/rust-lang/rustfmt) Formatter for the [Rust Style Guide](https://doc.rust-lang.org/nightly/style-guide)
